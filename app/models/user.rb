@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
   # callbacks:
 
   # class methods:
-  def activate
-    UserMailer.registration_confirmation(self)
+  def send_activation_email
+    UserMailer.registration_confirmation(self).deliver
   end
 
   def self.authenticate(email, password)

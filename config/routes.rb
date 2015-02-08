@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   get   'signin' => 'sessions#new'
   get   'static/index'
 
-  resources :users
   resource  :session
+  resources :users
 
 
 end

@@ -3,7 +3,15 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  layout :set_layout
+
+  add_flash_types(:success, :info, :warning, :danger)
+
   private
+
+  def set_layout
+    current_user ? 'signed_in' : 'not_signed_in'
+  end
 
   def require_signin
     unless current_user

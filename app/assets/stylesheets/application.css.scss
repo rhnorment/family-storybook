@@ -11,11 +11,12 @@
  * file per style scope.
  *
  *= require_self
- *= require normalize
- *= require layout
- *= require elements
- *= require buttons
- *= require forms
  */
+
+
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'inline';
+
 
 

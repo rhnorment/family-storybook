@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <%= render 'layouts/head' %>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+  <div id="sidebar-wrapper">
+
+    <ul class="sidebar-nav">
+
+      <%= content_tag :li, link_to('FamilyShare', root_path, class:'logo'), class:'sidebar-brand' %>
+
+      <%= content_tag :li, link_to('Storybooks', "#") %>
+
+      <%= content_tag :li, link_to('Stories', "#") %>
+
+      <%= content_tag :li, link_to('Family', "#") %>
+
+    </ul>
+
+  </div>
+
+  <div id="page-content-wrapper">
+
+    <div class="container-fluid">
+
+        <div class="panel panel-default">
+
+            <div class="panel-body">
+
+              <%= yield :sub_menu %>
+
+            </div>
+
+        </div>
+
+        <%= yield %>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+
+</html>

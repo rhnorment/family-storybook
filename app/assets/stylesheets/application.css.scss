@@ -10,13 +10,33 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_self
  */
 
+/* modules */
+@import 'modules/mixins';
+@import 'modules/elements';
 
+/* vendor */
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
-@import 'inline';
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import 'bootstrap-overrides';
+
+/* modules */
+@import 'partials/config';
+@import 'partials/layout';
+
+/* page styles */
+@import 'partials/pages/index';
+
+
+
+
+
+
+
+
 
 
 

@@ -21,7 +21,7 @@
 		border-bottom: 1px solid #E4E4E4;
 
 		.slideshow {
-			background: url("../../images/slider-bg.png") 0 0 no-repeat;
+			background: #ffffff;
 			margin: 0 auto;
 			margin-top: 35px;
 			width: 844px;
@@ -69,7 +69,7 @@
 				}
 
 				&.prev {
-					background: url("../../images/slider/slide-left.png")  0 0 no-repeat;
+					background: image_url('slide-left.png')  0 0 no-repeat;
 					left: 91px;
 					@include transform(translateX(-48px));
 
@@ -78,7 +78,7 @@
 					}
 				}
 				&.next {
-					background: url("../../images/slider/slide-right.png")  0 0 no-repeat;
+					background: image_url('slide-right.png')  0 0 no-repeat;
 					right: 91px;
 					@include transform(translateX(48px));
 

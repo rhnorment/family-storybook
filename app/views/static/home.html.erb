@@ -60,6 +60,250 @@
 </div>
 
 <div id="pricing">
+  <div class="container">
 
+    <div class="row header">
+      <div class="col-md-12">
+        <h3>Free trial. No contract. Cancel when you want.</h3>
+        <p>All plans include a 7-day free trial</p>
+      </div>
+    </div>
 
+    <div class="row charts">
+
+      <div class="col-md-4">
+        <div class="chart first">
+          <div class="quantity">
+            <span class="dollar">$</span>
+            <span class="price">29</span>
+            <span class="period">/month</span>
+          </div>
+          <div class="plan-name">Freelance</div>
+          <div class="specs">
+            <div class="spec">
+              <span class="variable">5</span>
+              team members
+            </div>
+            <div class="spec">
+              <span class="variable">Digital</span>
+              recurring billing
+            </div>
+            <div class="spec">
+              <span class="variable">Virtual</span>
+              online terminal
+            </div>
+            <div class="spec">
+              <span class="variable">10</span>
+              total products
+            </div>
+            <div class="spec">
+              <span class="variable">1.0%</span>
+              Transaction fee
+            </div>
+          </div>
+          <%= link_to content_tag(:span, 'Start free trial'), signup_path, class:'btn-signup button-clear' %>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="chart featured">
+          <div class="popular">Most popular</div>
+          <div class="quantity">
+            <span class="dollar">$</span>
+            <span class="price">79</span>
+            <span class="period">/month</span>
+          </div>
+          <div class="plan-name">Profesional</div>
+          <div class="specs">
+            <div class="spec">
+              <span class="variable">15</span>
+              team members
+            </div>
+            <div class="spec">
+              <span class="variable">Digital</span>
+              recurring billing
+            </div>
+            <div class="spec">
+              <span class="variable">Virtual</span>
+              online terminal
+            </div>
+            <div class="spec">
+              <span class="variable">15</span>
+              total products
+            </div>
+            <div class="spec">
+              <span class="variable">0.5%</span>
+              Transaction fee
+            </div>
+          </div>
+          <%= link_to content_tag(:span, 'Start free trial'), signup_path, class:'btn-signup button-clear' %>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="chart last">
+          <div class="quantity">
+            <span class="dollar">$</span>
+            <span class="price">119</span>
+            <span class="period">/month</span>
+          </div>
+          <div class="plan-name">Premium</div>
+          <div class="specs">
+            <div class="spec">
+              <span class="variable">Unlimited</span>
+              team members
+            </div>
+            <div class="spec">
+              <span class="variable">Digital</span>
+              recurring billing
+            </div>
+            <div class="spec">
+              <span class="variable">Virtual</span>
+              online terminal
+            </div>
+            <div class="spec">
+              <span class="variable">25</span>
+              total products
+            </div>
+            <div class="spec">
+              <span class="variable">No</span>
+              Transaction fee
+            </div>
+          </div>
+          <%= link_to content_tag(:span, 'Start free trial'), signup_path, class:'btn-signup button-clear' %>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div id="slider">
+  <div class="container">
+
+    <div class="row header">
+      <div class="col-md-12">
+        <h3>Includes all pages that a complete theme should have</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 slide-wrapper">
+        <div class="slideshow">
+          <%= content_tag :div, nil, class:'btn-nav prev' %>
+          <%= content_tag :div, nil, class:'btn-nav next' %>
+          <div class="slide active">
+            <%= holder_tag '664x332', 'Image-1' %>
+          </div>
+          <div class="slide">
+            <%= holder_tag '664x332', 'Image-2' %>
+          </div>
+          <div class="slide">
+            <%= holder_tag '664x332', 'Image-3' %>
+          </div>
+          <div class="slide">
+            <%= holder_tag '664x332', 'Image-4' %>
+          </div>
+          <div class="slide">
+            <%= holder_tag '664x332', 'Image-5' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="testimonials">
+  <div class="container">
+
+    <div class="row header">
+      <div class="col-md-12">
+        <h3>Read what some of our satisfied customers think of Family Storybook:</h3>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-4">
+        <div class="testimonial pull-right">
+          <div class="quote">
+            This thing is one of those tools that everybody should be using. I really like it and
+            with this ease to use, you can kickstart your projects and apps and just focus on your business!
+            <div class="arrow-down">
+              <%= content_tag :div, nil, class:'arrow' %>
+              <%= content_tag :div, nil, class:'arrow-border' %>
+            </div>
+          </div>
+          <div class="author">
+            <%= holder_tag '128x128', nil, class:'pic' %>
+            <div class="name">John McClane</div>
+            <div class="company">Atlanta, GA</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="testimonial">
+          <div class="quote">
+            This thing is one of those tools that everybody should be using. I really like it and
+            with this ease to use, you can kickstart your projects and apps and just focus on your business!
+            <div class="arrow-down">
+              <%= content_tag :div, nil, class:'arrow' %>
+              <%= content_tag :div, nil, class:'arrow-border' %>
+            </div>
+          </div>
+          <div class="author">
+            <%= holder_tag '128x128', nil, class:'pic' %>
+            <div class="name">John McClane</div>
+            <div class="company">Madison, WI</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="testimonial">
+          <div class="quote">
+            This thing is one of those tools that everybody should be using. I really like it and
+            with this ease to use, you can kickstart your projects and apps and just focus on your business!
+            <div class="arrow-down">
+              <%= content_tag :div, nil, class:'arrow' %>
+              <%= content_tag :div, nil, class:'arrow-border' %>
+            </div>
+          </div>
+          <div class="author">
+            <%= holder_tag '128x128', nil, class:'pic' %>
+            <div class="name">John McClane</div>
+            <div class="company">Bloomington, MN</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div id="cta">
+  <p>Start your 14 day trial!</p>
+  <%= link_to 'Sign up for free', signin_path %>
+</div>
+
+<div id="clients">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Publishing Formats</h3>
+        <p>
+          Publish your Family Storybooks to various and devices and sites:
+        </p>
+        <div class="logos">
+            <%= image_tag 'apple.png' %>
+            <%= image_tag 'facebook.png' %>
+            <%= image_tag 'etsy.png' %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,13 +1,17 @@
 class StaticController < ApplicationController
 
-  layout  'static', except: :home
+  layout  'static'
 
   def home
     @page_title = 'Home'
   end
 
-  def about
-    @page_titla = 'About us'
+  def how
+    @page_title = 'How it works'
+  end
+
+  def showcase
+    @page_title = 'Showcase'
   end
 
 end

@@ -9,6 +9,28 @@
 
 <body>
 
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+
+      <div class="container-fluid">
+
+        <%= render 'layouts/main_nav' %>
+
+      </div>
+
+    </nav>
+
+    <div class="container">
+
+      <%= yield %>
+
+    </div>
+
+    <footer class="footer">
+
+      <%= render 'layouts/footer' %>
+
+    </footer>
+
 </body>
 
 </html>

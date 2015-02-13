@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   root      'static#home'
 
   get   'static/home'
-  get   'about'  => 'static#about'
-  get   'signup' => 'users#new'
-  get   'signin' => 'sessions#new'
+  get   'how_it_works'  => 'static#how'
+  get   'showcase'      => 'static#showcase'
+  get   'signup'        => 'users#new'
+  get   'signin'        => 'sessions#new'
 
   resource  :session
   resources :users

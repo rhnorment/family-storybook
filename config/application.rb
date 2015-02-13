@@ -31,6 +31,7 @@ module Familyshare
       ActiveRecord::Base.connection
     end
 
+    config.autoload_paths << Rails.root.join('lib')
 
   end
 end

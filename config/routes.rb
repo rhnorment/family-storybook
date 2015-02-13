@@ -5,9 +5,10 @@ Rails.application.routes.draw do
 
   root      'static#home'
 
+  get   'static/home'
+  get   'about'  => 'static#about'
   get   'signup' => 'users#new'
   get   'signin' => 'sessions#new'
-  get   'static/home'
 
   resource  :session
   resources :users

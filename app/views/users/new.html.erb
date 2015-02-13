@@ -1,4 +1,49 @@
+<%= form_for @user, html: { class:'form-horizontal form-signup' } do |f| %>
 
+    <fieldset>
 
-  <%= render 'form' %>
+      <legend>Register with FamilyShare</legend>
+
+      <div class="form-group">
+        <%= f.label :name, class:'control-label col-lg-3' %>
+        <div class="col-lg-9">
+            <%= f.text_field :name, class:'form-control', autofocus:true %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :email, class:'control-label col-lg-3' %>
+        <div class="col-lg-9">
+          <%= f.email_field :email, class:'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :pasword, class:'control-label col-lg-3' %>
+        <div class="col-lg-9">
+          <%= f.password_field :password, class:'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation, 'Confirm password', class:'control-label col-lg-3' %>
+        <div class="col-lg-9">
+          <%= f.text_field :password_confirmation, class:'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-9 col-lg-offset-3">
+          <%= f.submit 'Register', class:'btn btn-primary' %> or
+          <%= link_to 'Cancel', root_path %>
+        </div>
+      </div>
+
+    </fieldset>
+
+    <p class="text-center">
+      Already a member?  <%= link_to 'Sign in here', signin_path %>
+    </p>
+
+<% end %>
 

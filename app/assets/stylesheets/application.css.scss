@@ -21,10 +21,13 @@
 @import 'bootstrap';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
-@import 'utilities';
 
 /* theme */
 @import 'bootswatch';
+
+/* libraries */
+@import 'layouts';
+@import 'utilities';
 
 
 

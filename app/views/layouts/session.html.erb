@@ -9,13 +9,15 @@
 
 <body class="session">
 
-<div class="container">
+    <div class="container">
 
-  <%= link_to 'FamilyShare', root_path, class:'h3 text-primary font-thin no-und' %>
+        <%= render 'layouts/flashes' %>
 
-  <%= yield %>
+        <%= link_to 'FamilyShare', root_path, class:'h3 text-primary font-thin' %>
 
-</div>
+        <%= yield %>
+
+    </div>
 
 
 </body>

@@ -1,0 +1,144 @@
+body.static {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  > .container {
+    padding-top: 60px;
+  }
+}
+
+body.session {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  &.toggled {
+    padding-left: 250px;
+  }
+}
+
+#sidebar-wrapper {
+  z-index: $zindex-navbar;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: $navbar-inverse-bg;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li {
+    text-indent: 20px;
+    font-size: 18px;
+    line-height: 50px;
+    a {
+      display: block;
+      text-decoration: none;
+      color: $navbar-inverse-link-color;
+      &:hover {
+        text-decoration: none;
+        color: $navbar-inverse-link-hover-color;
+        background: rgba(255, 255, 255, 0.2);
+      }
+      &:active, &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+  > .sidebar-brand {
+    height: 65px;
+    font-size: 28px;
+    line-height: 60px;
+    a {
+      color: $navbar-inverse-brand-color;
+      &:hover {
+        color: $navbar-inverse-link-hover-color;
+        background: $navbar-inverse-link-hover-bg;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  #wrapper {
+    padding-left: 250px;
+    &.toggled {
+      padding-left: 0;
+    }
+  }
+  #sidebar-wrapper {
+    width: 250px;
+  }
+  #wrapper.toggled #sidebar-wrapper {
+    width: 0;
+  }
+  #page-content-wrapper {
+    padding: 20px;
+    position: relative;
+  }
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  color: $gray;
+  background-color: $gray-lighter;
+  > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+.app-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+
+  > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}

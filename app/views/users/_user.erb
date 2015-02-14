@@ -1,0 +1,6 @@
+<li class="list-group-item">
+  <p class="pull-right">
+    Joined <%= content_tag :span, time_ago_in_words(user.created_at), class:'badge' %> ago
+  </p>
+  <%= content_tag :h5, link_to(user.name, user) %>
+</li>

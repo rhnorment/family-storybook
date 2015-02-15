@@ -6,10 +6,8 @@
 #  name            :string(255)
 #  email           :string(255)
 #  password_digest :string(255)
-#  admin           :boolean          default(FALSE)
 #  created_at      :datetime
 #  updated_at      :datetime
-#  remember_digest :string(255)
 #
 
 class User < ActiveRecord::Base

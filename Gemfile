@@ -25,6 +25,7 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 # helper gems:
 gem 'font-awesome-sass'
 gem 'bootstrap_form'
+gem 'data-confirm-modal', github: 'ifad/data-confirm-modal'
 gem 'kaminari'
 gem 'holder_rails'
 

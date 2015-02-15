@@ -15,7 +15,7 @@
         <ul class="sidebar-nav">
             <%= render 'layouts/main_nav' %>
         </ul>
-        <footer class="app-footer">
+        <footer class="app-side-footer">
             <%= render 'layouts/footer' %>
         </footer>
       </div>
@@ -34,13 +34,19 @@
               </nav>
 
               <div class="container-fluid">
+
+                <%= content_tag :h3, @page_title, class:'text-info font-thin m-b-lg' %>
+
                 <%= yield %>
+
               </div>
 
             </div>
+
           </div>
+
         </div>
-        <%= debug params %>
+
       </div>
 
     </div>

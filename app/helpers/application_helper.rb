@@ -7,12 +7,12 @@ module ApplicationHelper
 
   # return whether the controller is active or not:
   def is_controller?(controller)
-    current_page?(controller: controller) ? 'active' : nil
+    current_page?(controller: controller)
   end
 
   # define active path on top menu items:
   def is_action?(action)
-    current_page?(action: action) ? 'active' : nil
+    current_page?(action: action)
   end
 
   # render the sub navigation only if it exists

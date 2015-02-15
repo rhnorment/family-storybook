@@ -130,7 +130,20 @@ body.session {
   }
 }
 
-.app-footer {
+.app-side-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+
+  > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+.app-main-footer {
   position: absolute;
   bottom: 0;
   width: 100%;

@@ -5,10 +5,12 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @page_title = 'All users'
   end
 
   def show
     @user = User.find(params[:id])
+    @page_title = @user.name
   end
 
   def new
@@ -23,12 +25,12 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to @user, success: 'Thanks for signing up!'
     else
-      render :new
+      render :new, layout: 'session'
     end
   end
 
   def edit
-
+    @page_title = "Editing #{@user.name}"
   end
 
   def update

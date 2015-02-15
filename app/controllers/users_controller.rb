@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action     :require_correct_user,  only: [:edit, :update, :destroy]
 
   def index
-    @users = User.all
+    @users = User.page params[:page]
     @page_title = 'All users'
   end
 

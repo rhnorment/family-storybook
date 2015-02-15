@@ -1,29 +1,25 @@
-<div class="row">
+<%= bootstrap_form_for @user, html: { class:'form-user-edit' } do |f| %>
 
-  <div class="col-lg-6 col-md-6 col-sm-12">
+   <%= f.text_field :name, label_class:'text-warning', autofocus:true %>
 
-    <%= bootstrap_form_for @user, html: { class:'form-user-edit' } do |f| %>
+   <%= f.email_field :email, label_class:'text-warning' %>
 
-        <%= f.text_field :name, label_class:'text-warning', autofocus:true %>
+   <%= f.password_field :password %>
 
-        <%= f.email_field :email, label_class:'text-warning' %>
+   <%= f.password_field :password_confirmation %>
 
-        <%= f.password_field :password %>
-
-        <%= f.password_field :password_confirmation %>
-
-        <%= f.form_group do %>
+   <%= f.form_group do %>
           <%= f.primary 'Update' %> or
           <%= link_to 'Cancel', @user %>
-        <% end %>
+   <% end %>
 
-    <% end %>
+<% end %>
+
+<p>
+  <%= link_to 'Delete my account', @user, method: :delete, class:'text-danger', data: { confirm: 'You want to delete your account?' } %>
+</p>
 
 
-    <%= link_to 'Delete my account', @user, method: :delete, data: { confirm: 'you want to delete your account?' }, class:'pull-right' %>
 
 
-  </div>
-
-</div>
 

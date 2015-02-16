@@ -1,0 +1,20 @@
+<%= bootstrap_form_tag url: password_resets_path, html: { class:'form-password-reset'},
+                       layout: :horizontal, label_col:'col-lg-3', control_col:'col-lg-9' do |f| %>
+
+    <fieldset>
+
+      <legend>Request a new password</legend>
+
+      <%= f.email_field :email %>
+
+      <%= f.form_group do %>
+
+        <%= f.primary 'Send me instructions' %> or
+
+        <%= link_to 'Cancel', signin_path %>
+
+      <% end %>
+
+    </fieldset>
+
+<% end %>

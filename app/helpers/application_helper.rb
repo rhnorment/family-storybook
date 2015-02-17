@@ -5,14 +5,19 @@ module ApplicationHelper
     @page_title ? "FamilyBook | #{@page_title.capitalize}" : 'FamilyBook'
   end
 
-  # return whether the controller is active or not:
+  # return true if current controller
   def is_controller?(controller)
     current_page?(controller: controller)
   end
 
-  # define active path on top menu items:
+  # return true if current action:
   def is_action?(action)
     current_page?(action: action)
+  end
+
+  # returns the active class or nil:
+  def is_active?(controller)
+    current_page?(controller: controller) ? 'active' : nil
   end
 
   # render the sub navigation only if it exists

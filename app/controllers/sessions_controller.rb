@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
   layout 'session'
+  before_action     :walled_garden, only: [:new, :create]
 
   def new
   end

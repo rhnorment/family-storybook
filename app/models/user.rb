@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   validates         :email, uniqueness: { case_sensitive: false }
 
   # data relationships:
+  has_many          :storybooks
 
   # callbacks:
 

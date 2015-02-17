@@ -1,5 +1,5 @@
-<%= content_tag :li, link_to('FamilyBook', "#"), class:'sidebar-brand' %>
-<%= content_tag :li, link_to('Storybooks', "#") %>
+<%= content_tag :li, link_to('FamilyBook', current_user), class:'sidebar-brand' %>
+<%= content_tag :li, link_to('Storybooks', storybooks_path), class:"#{is_active?('storybooks')}" %>
 <%= content_tag :li, link_to('Stories', "#") %>
 <%= content_tag :li, link_to('Family', "#") %>
 <%= content_tag :li, link_to('Activity', "#") %>

@@ -72,12 +72,19 @@ body.session {
       &:hover {
         text-decoration: none;
         color: $navbar-inverse-link-hover-color;
-        background: rgba(255, 255, 255, 0.2);
+        background: $navbar-inverse-link-hover-bg;
       }
       &:active, &:focus {
         text-decoration: none;
+        color: $navbar-inverse-link-active-color;
+        background: $navbar-inverse-link-active-bg;
       }
     }
+  }
+  > .active {
+    text-decoration: none;
+    color: $navbar-inverse-link-active-color;
+    background: $navbar-inverse-link-active-bg;
   }
   > .sidebar-brand {
     height: 65px;

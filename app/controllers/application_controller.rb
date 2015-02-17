@@ -24,4 +24,13 @@ class ApplicationController < ActionController::Base
   end
   helper_method   :current_user?
 
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  def walled_garden
+    redirect_back_or(current_user) if current_user
+  end
+
 end

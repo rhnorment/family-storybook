@@ -1,2 +1,24 @@
-<h1>PasswordResets#edit</h1>
-<p>Find me in app/views/password_resets/edit.html.erb</p>
+<%= bootstrap_form_for @user, url: password_reset_path(params[:id]), html: { class:'form-password-reset'},
+                       layout: :horizontal, label_col:'col-lg-3', control_col:'col-lg-9' do |f| %>
+
+    <fieldset>
+
+      <legend>Reset your password</legend>
+
+      <%= hidden_field_tag :email, @user.email %>
+
+      <%= f.password_field :password %>
+
+      <%= f.password_field :password_confirmation, label: 'Confirm password' %>
+
+      <%= f.form_group do %>
+
+          <%= f.primary 'Change my password' %> or
+
+          <%= link_to 'Cancel', signin_path %>
+
+      <% end %>
+
+    </fieldset>
+
+<% end %>

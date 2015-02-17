@@ -6,10 +6,10 @@
 #  name            :string(255)
 #  email           :string(255)
 #  password_digest :string(255)
+#  reset_token     :string(255)
+#  reset_sent_at   :datetime
 #  created_at      :datetime
 #  updated_at      :datetime
-#  reset           :digest
-#  reset_sent_at   :datetime
 #
 
 class User < ActiveRecord::Base
@@ -34,9 +34,13 @@ class User < ActiveRecord::Base
     UserMailer.registration_confirmation(self).deliver
   end
 
+  def self.authenticate(email, password)
+    user = User.find_by(email: email)
+    user && user.authenticate(password)
+  end
+
   def create_reset_digest
-    self.reset_token = User.new_token
-    update_attribute(:reset_digest, User.digest(reset_token))
+    update_attribute(:reset_token, User.new_token )
     update_attribute(:reset_sent_at, Time.zone.now)
   end
 
@@ -44,14 +48,8 @@ class User < ActiveRecord::Base
     UserMailer.password_reset(self).deliver
   end
 
-  def self.authenticate(email, password)
-    user = User.find_by(email: email)
-    user && user.authenticate(password)
-  end
-
-  def User.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 
   def User.new_token

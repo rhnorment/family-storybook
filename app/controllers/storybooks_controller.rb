@@ -3,7 +3,6 @@ class StorybooksController < ApplicationController
   before_action     :require_signin
   before_action     :set_correct_user
   before_action     :set_storybook,         only:   [:show,   :edit, :update, :destroy]
-  before_action     :lock_down
 
   def index
     @page_title = 'My storybook'

@@ -1,0 +1,5 @@
+<% unless is_action?('index') %>
+
+    <%= content_tag :li, link_to(icon('angle-double-left', 'Return to my storybooks'), storybooks_path) %>
+
+<% end %>

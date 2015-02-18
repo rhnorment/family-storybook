@@ -1,0 +1,7 @@
+<%= link_to storybook, class:'list-group-item' do %>
+
+    <%= content_tag :h4, storybook.title, class:'list-group-item-heading' %>
+
+    <%= content_tag :p, storybook.description.truncate(140), class:'list-group-item-text' %>
+
+<% end %>

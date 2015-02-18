@@ -1,2 +1,12 @@
-<h1>Storybooks#new</h1>
-<p>Find me in app/views/storybooks/new.html.erb</p>
+<%= bootstrap_form_for @storybook, html: { class:'form-storybook' } do |f| %>
+
+    <%= f.text_field :title, hide_label:true, placeholder:'Enter your title here', autofocus:true %>
+
+    <%= f.text_area :description, hide_label: true, rows:4, placeholder:'Write a short description' %>
+
+    <%= f.form_group do %>
+        <%= f.primary 'Create my storybook' %> or
+        <%= link_to 'Cancel', storybooks_path %>
+    <% end %>
+
+<% end %>

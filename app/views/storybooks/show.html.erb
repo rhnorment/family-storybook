@@ -1,2 +1,13 @@
-<h1>Storybooks#show</h1>
-<p>Find me in app/views/storybooks/show.html.erb</p>
+<%= content_for :sub_nav_content do %>
+
+    <%= content_tag :li, link_to('Edit this storybook', edit_storybook_path(@storybook), class:'navbar-link')%>
+
+<% end %>
+
+<div class="well">
+
+    <%= content_tag :p, sanitize(@storybook.description), class:'lead' %>
+
+</div>
+
+

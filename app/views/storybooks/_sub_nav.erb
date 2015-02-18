@@ -1,5 +1,7 @@
-<% unless is_action?('index') %>
+<% unless current_page?(storybooks_path) %>
 
-    <%= content_tag :li, link_to(icon('angle-double-left', 'Return to my storybooks'), storybooks_path) %>
+    <%= content_tag :li, link_to(icon('angle-double-left', 'Return to my storybooks'), storybooks_path, class:'navbar-link') %>
 
 <% end %>
+
+<%= yield :sub_nav_content %>

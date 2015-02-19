@@ -6,7 +6,23 @@
 
 <div class="well">
 
-    <%= content_tag :p, sanitize(@storybook.description), class:'lead' %>
+    <div class="row">
+
+      <div class="col-lg-2">
+
+        <%= cl_image_tag image_for(@storybook), size: '156x206', class:'img-responsive' %>
+
+      </div>
+
+      <div class="col-lg-10">
+
+        <%= content_tag :h4, "by #{@storybook.user.name}", class:'font-thin' %>
+
+        <%= content_tag :p, sanitize(@storybook.description), class:'lead' %>
+
+      </div>
+
+    </div>
 
 </div>
 

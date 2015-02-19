@@ -36,7 +36,7 @@ class StorybooksController < ApplicationController
     if @storybook.update(storybook_params)
       redirect_to @storybook, success: 'Your storybook was updated.'
     else
-      flash.now[:error] = 'There was a problem updating your storybook.  Please try again.'
+      flash.now[:danger] = 'There was a problem updating your storybook.  Please try again.'
       render :edit
     end
   end

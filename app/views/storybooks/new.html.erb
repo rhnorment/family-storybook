@@ -1,7 +1,9 @@
 <%= bootstrap_form_for @storybook, html: { class:'form-storybook' } do |f| %>
 
+    <h5 class="text-primary">Title</h5>
     <%= f.text_field :title, hide_label:true, placeholder:'Enter your title here', autofocus:true %>
 
+    <h5 class="text-primary">Description</h5>
     <%= f.text_area :description, hide_label: true, rows:4, placeholder:'Write a short description' %>
 
     <%= f.form_group do %>

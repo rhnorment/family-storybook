@@ -1,2 +1,46 @@
-<h1>Storybooks#edit</h1>
-<p>Find me in app/views/storybooks/edit.html.erb</p>
+<%= content_for :sub_nav_content do %>
+
+    <%= content_tag :li, link_to('Publish this storybook', "#", class:'navbar-link')%>
+
+    <%= content_tag :li, link_to('Delete this storybook', @storybook, method: :delete,
+                                 data: { confirm: 'you want to delete this storybook?' },
+                                 class:'navbar-link')%>
+
+<% end %>
+
+<%= bootstrap_form_for @storybook, html: { class:'form-storybook' } do |f| %>
+
+    <h5 class="text-primary">Title</h5>
+
+    <%= f.text_field :title, hide_label:true, autofocus:true %>
+
+    <div class="row">
+
+      <div class="col-lg-2">
+
+        <%= cl_image_tag image_for(@storybook), size: '156x206', class:'img-responsive' %>
+
+      </div>
+
+      <div class="col-lg-10">
+
+        <h5 class="text-primary">Storybook cover</h5>
+
+        <%= f.hidden_field  :cover_cache %>
+
+        <%= f.file_field :cover, hide_label:true %>
+
+      </div>
+
+    </div>
+
+    <h5 class="text-primary">Description</h5>
+
+    <%= f.text_area :description, hide_label: true, rows:4 %>
+
+    <%= f.form_group do %>
+        <%= f.primary 'Update my storybook' %> or
+        <%= link_to 'Cancel', @storybook %>
+    <% end %>
+
+<% end %>

@@ -15,6 +15,8 @@
 
 class Storybook < ActiveRecord::Base
 
+  mount_uploader      :cover,       ImageUploader
+
   # validations:
   validates           :title,       presence: true
   validates           :cover,       format: { with: /\w+.(gif|jpg|png)\z/i, allow_blank: true }

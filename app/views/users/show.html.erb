@@ -2,15 +2,27 @@
 
 <ul class="nav nav-tabs">
 
-  <%= content_tag :li, link_to('Storybooks', "#storybooks", data: { toggle:'tab'}), class:'h5 active' %>
+  <%= content_tag :li, link_to('Storybooks', "#user-storybooks", data: { toggle:'tab'}), class:'h5 active' %>
 
-  <%= content_tag :li, link_to('Stories', "#stories", data: { toggle:'tab'}), class:'h5' %>
+  <%= content_tag :li, link_to('Stories', "#user-stories", data: { toggle:'tab'}), class:'h5' %>
 
-  <%= content_tag :li, link_to('Family', "#family", data: { toggle:'tab'}), class:'h5' %>
+  <%= content_tag :li, link_to('Family', "#user-relatives", data: { toggle:'tab'}), class:'h5' %>
 
-  <%= content_tag :li, link_to('Activity', "#activity", data: { toggle:'tab'}), class:'h5' %>
+  <%= content_tag :li, link_to('Activity', "#user-activity", data: { toggle:'tab'}), class:'h5' %>
 
 </ul>
+
+<div class="tab-content">
+
+  <%= render partial: 'user_storybooks' %>
+
+  <%= render partial: 'user_stories' %>
+
+  <%= render partial: 'user_relatives' %>
+
+  <%= render partial: 'user_activity' %>
+
+</div>
 
 <p class="m-t-xl">
 

@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
 
   # data relationships:
   has_many          :storybooks
+  has_many          :stories
 
   # callbacks:
 

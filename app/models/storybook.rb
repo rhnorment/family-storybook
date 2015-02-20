@@ -6,7 +6,7 @@
 #  title        :string(255)
 #  description  :text
 #  cover        :string(255)
-#  published    :boolean
+#  published    :boolean          default(FALSE)
 #  published_on :datetime
 #  user_id      :integer
 #  created_at   :datetime

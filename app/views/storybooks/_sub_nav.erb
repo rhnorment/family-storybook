@@ -4,4 +4,10 @@
 
 <% end %>
 
+<% if current_page?(storybooks_path) %>
+
+    <%= content_tag :li, link_to('Start a new storybook', new_storybook_path, class:'navbar-link') %>
+
+<% end %>
+
 <%= yield :sub_nav_content %>

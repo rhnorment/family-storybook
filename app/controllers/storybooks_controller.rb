@@ -56,6 +56,7 @@ class StorybooksController < ApplicationController
 
     def set_storybook
       @storybook = Storybook.find(params[:id])
+      redirect_to @user unless @storybook.user == current_user?(@user)
     end
 
     def storybook_params

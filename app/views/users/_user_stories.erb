@@ -1,8 +1,12 @@
-<div class="tab-pane fade" id="user-stories">
+<div class="tab-pane fade in" id="user-stories">
 
   <ul class="list-group">
 
-    <li class="list-group-item text-warning">Nothing to render</li>
+    <% @user.stories.each do |story| %>
+
+        <%= content_tag :li, link_to(story.title, story), class:'list-group-item' %>
+
+    <% end %>
 
   </ul>
 

@@ -2,7 +2,7 @@
 
   <% @stories.each do |story| %>
 
-      <%= render story %>
+      <%= content_tag :li, link_to(story.title, story), class:'list-group-item' %>
 
   <% end %>
 

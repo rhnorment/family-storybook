@@ -56,7 +56,7 @@ class StoriesController < ApplicationController
 
   def set_story
     @story = Story.find(params[:id])
-    redirect_to @user unless @story.user == current_user?(@user)
+    redirect_to @user unless @story.user == current_user
   end
 
   def story_params

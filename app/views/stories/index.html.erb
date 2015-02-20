@@ -1,0 +1,11 @@
+<div class="list-group m-t-lg">
+
+  <% @stories.each do |story| %>
+
+      <%= render story %>
+
+  <% end %>
+
+  <%= paginate @stories %>
+
+</div>

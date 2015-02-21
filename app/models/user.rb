@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
   validates         :email, uniqueness: { case_sensitive: false }
 
   # data relationships:
-  has_many          :storybooks
-  has_many          :stories
+  has_many          :storybooks,  dependent: :destroy
+  has_many          :stories,     dependent: :destroy
 
   # callbacks:
 

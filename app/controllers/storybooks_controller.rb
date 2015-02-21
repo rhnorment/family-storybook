@@ -14,7 +14,7 @@ class StorybooksController < ApplicationController
   end
 
   def new
-    @page_title = 'Create a storybook'
+    @page_title = 'Start a storybook'
     @storybook = @user.storybooks.new
   end
 

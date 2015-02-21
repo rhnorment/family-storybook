@@ -5,18 +5,14 @@ module ApplicationHelper
     @page_title ? "FamilyBook | #{@page_title.capitalize}" : 'FamilyBook'
   end
 
-  # return true if current controller
-  def is_controller?(controller)
-    current_page?(controller: controller)
-  end
 
   # return true if current action:
-  def is_action?(action)
-    current_page?(action: action)
+  def is_active_action?(action)
+    current_page?(action: action) ? 'active' : nil
   end
 
   # returns the active class or nil:
-  def is_active?(controller)
+  def is_active_controller?(controller)
     current_page?(controller: controller) ? 'active' : nil
   end
 

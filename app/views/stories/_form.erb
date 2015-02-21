@@ -1,0 +1,14 @@
+<%= bootstrap_form_for @story, html: { class:'form-story' } do |f| %>
+
+    <h5 class="text-primary">Title</h5>
+    <%= f.text_field :title, hide_label:true, placeholder:'Enter your title here', autofocus:true %>
+
+    <h5 class="text-primary">Content</h5>
+    <%= f.text_area :content, hide_label: true, rows:20, placeholder:'Write your story here.' %>
+
+    <%= f.form_group do %>
+        <%= f.primary 'Save my story' %> or
+        <%= link_to 'Cancel', stories_path %>
+    <% end %>
+
+<% end %>

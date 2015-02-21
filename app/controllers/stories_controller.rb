@@ -10,20 +10,20 @@ class StoriesController < ApplicationController
   end
 
   def show
-    @page_title = "Showing: #{@stort.title}"
+    @page_title = "Showing: #{@story.title}"
   end
 
   def new
     @page_title = 'Create a story'
-    @stort = @user.stories.new
+    @story = @user.stories.new
   end
 
   def create
     @story = @user.stories.new(story_params)
     if @story.save
-      redirect_to @story, success: 'Your story was successfully created!'
+      redirect_to @story, success: 'Your story was saved.'
     else
-      flash.now[:error] = 'There was a problem creating your story.  Please try again'
+      flash.now[:error] = 'There was a problem saving your story.  Please try again'
       render  :new
     end
   end
@@ -33,7 +33,7 @@ class StoriesController < ApplicationController
   end
 
   def update
-    if @story.update(stor_params)
+    if @story.update(story_params)
       redirect_to @story, success: 'Your story was updated.'
     else
       flash.now[:danger] = 'There was a problem updating your story.  Please try again.'
@@ -60,7 +60,7 @@ class StoriesController < ApplicationController
   end
 
   def story_params
-    params.require(:storybook).permit(:title, :content)
+    params.require(:story).permit(:title, :content)
   end
 
 end

@@ -1,0 +1,13 @@
+<%= content_for :sub_nav_content do %>
+
+    <%= content_tag :li, link_to('Edit this story', edit_story_path(@story), class:'navbar-link')%>
+
+<% end %>
+
+<div class="well">
+
+    <%= content_tag :h4, "by #{@story.user.name}", class:'font-thin' %>
+
+    <%= content_tag :p, sanitize(@story.content), class:'lead' %>
+
+</div>

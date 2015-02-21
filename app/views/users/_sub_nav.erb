@@ -1,6 +1,10 @@
 <% if current_page?(user_path(current_user)) %>
 
-    <%= content_tag :li, link_to('Edit my account', edit_user_path(current_user), class:'navbar-link') %>
+    <%= content_tag :li, link_to('Start a new storybook', new_storybook_path) %>
+
+    <%= content_tag :li, link_to('Write a new story', new_story_path) %>
+
+    <%= content_tag :li, link_to('Invite a new family member', "#") %>
 
 <% end %>
 

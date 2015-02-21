@@ -8,10 +8,17 @@
 </div>
 
 <div class="collapse navbar-collapse" id="navbar-collapse">
+
   <ul class="nav navbar-nav">
+
     <%= render "#{controller_name}/sub_nav" if is_present? %>
+
   </ul>
+
   <ul class="nav navbar-nav navbar-right">
+
     <%= content_tag :li, link_to(current_user.name, current_user) %>
+
   </ul>
+
 </div>

@@ -1,0 +1,7 @@
+<%= content_for :sub_nav_content do %>
+
+    <%= content_tag :li, link_to('Delete this story', @story, method: :delete, data: { confirm: 'you want to delete this story?' }) %>
+
+<% end %>
+
+<%= render 'form' %>

@@ -21,6 +21,7 @@ class StorybooksController < ApplicationController
   def create
     @storybook = @user.storybooks.new(storybook_params)
     if @storybook.save
+      @storybook.create_activity(:create, owner: @storybook.user, recipient: @storybook.user )
       redirect_to @storybook, success: 'Your storybook was successfully created!'
     else
       flash.now[:error] = 'There was a problem creating your storybook.  Please try again'

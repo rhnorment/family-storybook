@@ -16,20 +16,20 @@ class User < ActiveRecord::Base
 
   # inclusions:
   has_secure_password
+  include             PublicActivity::Common
 
   # data attributes:
-  attr_accessor     :reset_token
+  attr_accessor       :reset_token
 
   # validations:
-  validates         :name,  :email, presence: true
-  validates         :email, format: { with: /\A\S+@\S+\z/ }
-  validates         :email, uniqueness: { case_sensitive: false }
+  validates           :name,  :email, presence: true
+  validates           :email, format: { with: /\A\S+@\S+\z/ }
+  validates           :email, uniqueness: { case_sensitive: false }
 
   # data relationships:
-  has_many          :storybooks,  dependent: :destroy
-  has_many          :stories,     dependent: :destroy
-
-  # callbacks:
+  has_many            :storybooks,  dependent: :destroy
+  has_many            :stories,     dependent: :destroy
+  has_many            :activities,  as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
 
   # class methods:
   def send_activation_email

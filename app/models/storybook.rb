@@ -15,7 +15,9 @@
 
 class Storybook < ActiveRecord::Base
 
+  # configuration:
   mount_uploader      :cover,       ImageUploader
+  include             PublicActivity::Common
 
   # validations:
   validates           :title,       presence: true
@@ -23,5 +25,6 @@ class Storybook < ActiveRecord::Base
 
   # data relationships:
   belongs_to          :user
+  has_many            :activities,  as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
 
 end

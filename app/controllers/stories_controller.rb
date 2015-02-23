@@ -21,6 +21,7 @@ class StoriesController < ApplicationController
   def create
     @story = @user.stories.new(story_params)
     if @story.save
+      @story.create_activity(:create, owner: @story.user, recipient: @story.user )
       redirect_to @story, success: 'Your story was saved.'
     else
       flash.now[:error] = 'There was a problem saving your story.  Please try again'

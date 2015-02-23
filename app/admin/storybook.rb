@@ -6,9 +6,7 @@ ActiveAdmin.register Storybook do
 
     index do
       selectable_column
-      column  :title do |storybook|
-        link_to storybook.title, storybook
-      end
+      column  :title
       column  'User' do |storybook|
         storybook.user.name
       end

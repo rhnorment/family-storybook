@@ -7,9 +7,7 @@ ActiveAdmin.register Story do
 
   index do
     selectable_column
-    column  :title do |story|
-      link_to story.title, story
-    end
+    column  :title
     column  'User' do |story|
       story.user.name
     end

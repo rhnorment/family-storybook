@@ -1,3 +1,23 @@
 <!-- USER -->
 
-<%= activity.owner.name %>
+<li class="list-group-item row">
+
+  <div class="col-lg-1">
+
+    <%= icon 'user', nil, class:'text-success fa-2x' %>
+
+  </div>
+
+  <div class="col-lg-8">
+
+    <%= activity.owner.name %> became a member
+
+  </div>
+
+  <div class="col-lg-3">
+
+    <%= content_tag :small, "#{time_ago_in_words(activity.created_at)} ago", class:'text-muted' %>
+
+  </div>
+
+</li>

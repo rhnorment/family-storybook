@@ -5,7 +5,7 @@ class ActivitiesController < ApplicationController
 
   def index
     @page_title = 'My activities'
-    @activities = PublicActivity::Activity.where(recipient_id: @user.id).order(created_at: :desc)
+    @activities = PublicActivity::Activity.where(recipient_id: @user.id).order(created_at: :desc).page params[:page]
   end
 
   private

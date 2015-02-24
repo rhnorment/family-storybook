@@ -1,1 +1,7 @@
-<%= @activities.inspect %>
+<ul class="list-group">
+
+  <%= render_activity(@activities) %>
+
+</ul>
+
+<%= paginate @activities %>

@@ -1,18 +1,18 @@
-<!-- STORYBOOK -->
+<!-- STORY -->
 
 <li class="list-group-item row">
 
   <div class="col-lg-1">
 
-    <%= icon 'book', nil, class:'text-success fa-2x' %>
+    <%= icon 'pencil-square', nil, class:'text-success fa-2x' %>
 
   </div>
 
   <div class="col-lg-8">
 
-    <%= activity.owner.name %> created storybook
+    <%= activity.owner.name %> wrote story
 
-    <%= content_tag :span, link_to(activity.trackable.title, storybook_path(activity.trackable)) %>
+    <%= content_tag :span, link_to(activity.trackable.title, story_path(activity.trackable)) %>
 
   </div>
 

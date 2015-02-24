@@ -5,7 +5,6 @@ module ApplicationHelper
     @page_title ? "FamilyBook | #{@page_title.capitalize}" : 'FamilyBook'
   end
 
-
   # return true if current action:
   def is_active_action?(action)
     current_page?(action: action) ? 'active' : nil

@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @page_title = @user.name
+    @activities = PublicActivity::Activity.where(recipient_id: @user.id).order(created_at: :desc)
   end
 
   def new

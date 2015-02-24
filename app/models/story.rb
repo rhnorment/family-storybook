@@ -22,4 +22,14 @@ class Story < ActiveRecord::Base
   belongs_to          :user
   has_many            :activities,  as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
 
+  # callbacks:
+  after_create        :create_activity
+
+  # methods:
+  def create_activity
+    PublicActivity::Activity.create   key: 'story.create', trackable_id: self.id, trackable_type: 'Story',
+                                      recipient_id: self.user.id, recipient_type: 'User', owner_id: self.user.id,
+                                      owner_type: 'User', created_at: self.created_at, parameters: {}
+  end
+
 end

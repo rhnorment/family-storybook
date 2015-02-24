@@ -2,4 +2,4 @@
 <%= content_tag :li, link_to('Storybooks', storybooks_path), class:"#{is_active_controller?('storybooks')}" %>
 <%= content_tag :li, link_to('Stories', stories_path), class:"#{is_active_controller?('stories')}" %>
 <%= content_tag :li, link_to('Family', "#") %>
-<%= content_tag :li, link_to('Activity', "#") %>
+<%= content_tag :li, link_to('Activity', activities_path), class:"#{is_active_controller?('activities')}" %>

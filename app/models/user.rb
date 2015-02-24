@@ -31,6 +31,9 @@ class User < ActiveRecord::Base
   has_many            :stories,     dependent: :destroy
   has_many            :activities,  as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
 
+  # callbacks:
+  after_create        :create_activity
+
   # class methods:
   def send_activation_email
     UserMailer.registration_confirmation(self).deliver
@@ -60,6 +63,12 @@ class User < ActiveRecord::Base
 
   def gravatar_id
     Digest::MD5::hexdigest(email.downcase)
+  end
+
+  def create_activity
+    PublicActivity::Activity.create   key: 'user.create', trackable_id: self.id, trackable_type: 'User',
+                                      recipient_id: self.id, recipient_type: 'User', owner_id: self.id,
+                                      owner_type: 'User', created_at: self.created_at, parameters: {}
   end
 
 end

@@ -3,6 +3,7 @@
     sessions
     storybooks
     stories
+    activities
     devise
     active_admin
     password_resets).each do |controller|

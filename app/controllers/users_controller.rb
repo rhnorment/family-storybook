@@ -22,7 +22,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.create_activity(:create, owner: @user, recipient: @user)
       @user.send_activation_email
       session[:user_id] = @user.id
       redirect_to @user, success: 'Thanks for signing up!'

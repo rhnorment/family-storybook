@@ -1,0 +1,21 @@
+<div class="modal-dialog modal-lg">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <%= content_tag :button, 'x', class: 'close', data: { dismiss: 'modal' } %>
+      <%= content_tag :h4, @story.title, class: 'font-thin modal-title' %>
+      <%= content_tag :p, "by #{@story.user.name}", class:'font-thin' %>
+    </div>
+
+    <div class="modal-body">
+      <%= content_tag :p, sanitize(@story.content) %>
+    </div>
+
+    <div class="modal-footer">
+      <%= content_tag :button, 'Close', class: 'btn btn-primary', data: { dismiss: 'modal' } %>
+    </div>
+
+  </div>
+
+</div>

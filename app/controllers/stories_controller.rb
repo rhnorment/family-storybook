@@ -11,6 +11,10 @@ class StoriesController < ApplicationController
 
   def show
     @page_title = "Showing: #{@story.title}"
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new

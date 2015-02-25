@@ -26,4 +26,17 @@
 
 </div>
 
+<h4 class="text-primary font-thin">Stories in this storybook:</h4>
+
+<ul class="list-group">
+
+  <% @storybook.stories.each do |story| %>
+
+      <%= content_tag :li, link_to(story.title, story_path(story), remote:true), class:'list-group-item' %>
+
+  <% end %>
+
+</ul>
+
+
 

@@ -25,6 +25,8 @@ class Storybook < ActiveRecord::Base
 
   # data relationships:
   belongs_to          :user
+  has_many            :chapters,    dependent: :destroy
+  has_many            :stories,     through: :chapters
   has_many            :activities,  as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
 
   # callbacks:

@@ -5,6 +5,9 @@ describe 'edit a storybook' do
   before do
     @user = User.create!(user_attributes)
     sign_in(@user)
+    @story1 = @user.stories.create!(story_attributes(title: 'Story 1'))
+    @story2 = @user.stories.create!(story_attributes(title: 'Story 2'))
+    @story3 = @user.stories.create!(story_attributes(title: 'Story 3'))
   end
 
   it 'updates the storybooks and shows the updated attributes' do
@@ -25,12 +28,18 @@ describe 'edit a storybook' do
     fill_in 'Title', with: 'Updated Title'
     fill_in 'Description', with: 'Updated description'
     attach_file 'Cover', 'spec/support/uploads/redsherpalogo3.png'
+    check(@story1.title)
+    check(@story2.title)
+
     click_button 'Update my storybook'
 
     expect(current_path).to eq(storybook_path(storybook))
     expect(page).to have_text('Updated Title')
     expect(page).to have_text('Updated description')
     expect(page).to have_selector("img[src$='#{storybook.cover_url}']")
+    expect(page).to have_text(@story1.title)
+    expect(page).to have_text(@story2.title)
+    expect(page).not_to have_text(@story3.title)
   end
 
   it 'does not update a storybook with a blank title' do

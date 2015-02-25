@@ -60,7 +60,7 @@ class StorybooksController < ApplicationController
     end
 
     def storybook_params
-      params.require(:storybook).permit(:title, :description, :cover)
+      params.require(:storybook).permit(:title, :description, :cover, story_ids: [])
     end
 
 end

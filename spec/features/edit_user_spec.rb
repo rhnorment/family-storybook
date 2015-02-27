@@ -19,8 +19,6 @@ describe 'Editing a user' do
 
     click_button 'Update'
 
-    expect(current_path).to eq(user_path(user))
-
     expect(page).to have_text('Updated User Name')
     expect(page).to have_text('Account successfully updated!')
   end

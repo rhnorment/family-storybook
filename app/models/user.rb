@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   # inclusions:
   has_secure_password
+  to_param            :name
   include             PublicActivity::Common
 
   # data attributes:

@@ -12,13 +12,13 @@
 
 <ul class="nav nav-tabs">
 
-  <%= content_tag :li, link_to('Storybooks', "#user-storybooks", data: { toggle:'tab'}), class:'h5 active' %>
+  <%= content_tag :li, link_to('Storybooks', '#user-storybooks', data: { toggle:'tab'}), class:'h5 active' %>
 
-  <%= content_tag :li, link_to('Stories', "#user-stories", data: { toggle:'tab'}), class:'h5' %>
+  <%= content_tag :li, link_to('Stories', '#user-stories', data: { toggle:'tab'}), class:'h5' %>
 
-  <%= content_tag :li, link_to('Family', "#user-relatives", data: { toggle:'tab'}), class:'h5' %>
+  <%= content_tag :li, link_to('Family', '#user-relatives', data: { toggle:'tab'}), class:'h5' %>
 
-  <%= content_tag :li, link_to('Activity', "#user-activity", data: { toggle:'tab'}), class:'h5' %>
+  <%= content_tag :li, link_to('Activity', '#user-activity', data: { toggle:'tab'}), class:'h5' %>
 
 </ul>
 
@@ -33,4 +33,6 @@
   <%= render partial: 'user_activity' %>
 
 </div>
+
+<%= content_tag :div, nil, id: 'story-modal', class: 'modal fade', tabindex: -1, role: 'dialog' %>
 

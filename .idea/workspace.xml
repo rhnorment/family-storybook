@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="78eeda68-cd73-423f-ada5-489b36f3a640" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/friendships/index.html.erb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/friendships/new.html.erb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/_main_nav.erb" afterPath="$PROJECT_DIR$/app/views/layouts/_main_nav.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -69,7 +67,7 @@
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__create_storybook_spec___familyshare.coverage" NAME="Run spec 'create_storybook_spec': familyshare Coverage Results" MODIFIED="1424800399288" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
   </component>
   <component name="CreatePatchCommitExecutor">
-    <option name="PATCH_PATH" value="" />
+    <option name="PATCH_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
@@ -263,6 +261,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="familyshare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="familyshare" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -640,12 +656,6 @@
       <option name="number" value="Default" />
       <updated>1423343432252</updated>
     </task>
-    <task id="LOCAL-00004" summary="added SendGrid for email.">
-      <created>1423410243684</created>
-      <option name="number" value="00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1423410243684</updated>
-    </task>
     <task id="LOCAL-00005" summary="testing sendgrid in production.">
       <created>1423431879802</created>
       <option name="number" value="00005" />
@@ -934,7 +944,13 @@
       <option name="project" value="LOCAL" />
       <updated>1425148379220</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="building relationship model on own.">
+      <created>1425148564450</created>
+      <option name="number" value="00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1425148564450</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1378,7 +1394,7 @@
     <entry file="file://$PROJECT_DIR$/app/views/layouts/_main_nav.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.057581574" vertical-offset="0" max-vertical-offset="1042">
-          <caret line="4" column="46" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
+          <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
           <folding />
         </state>
       </provider>

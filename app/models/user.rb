@@ -14,10 +14,11 @@
 
 class User < ActiveRecord::Base
 
-  # inclusions:
+  # activations:
   has_secure_password
   to_param            :name
   include             PublicActivity::Common
+  include             Amistad::FriendModel
 
   # data attributes:
   attr_accessor       :reset_token

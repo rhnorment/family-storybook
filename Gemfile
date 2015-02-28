@@ -16,7 +16,6 @@ gem 'jquery-turbolinks'
 # application gems:
 gem 'carrierwave'
 gem 'cloudinary'
-gem 'amistad'
 gem 'prawn'
 gem 'public_activity'
 gem 'devise'

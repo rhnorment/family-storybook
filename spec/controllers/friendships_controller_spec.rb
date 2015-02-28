@@ -20,7 +20,7 @@ describe UsersController do
     end
 
     it 'cannot access show' do
-      get :show, id: @user
+      get :show, id: @friendship
 
       expect(response).to redirect_to(new_session_url)
     end

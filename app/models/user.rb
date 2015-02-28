@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
   has_secure_password
   to_param            :name
   include             PublicActivity::Common
-  include             Amistad::FriendModel
 
   # data attributes:
   attr_accessor       :reset_token
@@ -32,6 +31,9 @@ class User < ActiveRecord::Base
   has_many            :storybooks,  dependent: :destroy
   has_many            :stories,     dependent: :destroy
   has_many            :activities,  as: :trackable, class_name: 'PublicActivity::Activity', dependent: :destroy
+
+  # scoped queries:
+
 
   # callbacks:
   after_create        :create_activity

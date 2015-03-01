@@ -4,7 +4,7 @@
 
   <div class="col-lg-1">
 
-    <%= icon 'pencil-square', nil, class:'text-success fa-2x' %>
+    <%= icon 'pencil-square', nil, class:'text-primary fa-2x' %>
 
   </div>
 
@@ -12,7 +12,7 @@
 
     <%= activity.owner.name %> wrote story
 
-    <%= content_tag :span, link_to(activity.trackable.title, story_path(activity.trackable)) %>
+    <%= content_tag :span, link_to(activity.trackable.title, story_path(activity.trackable), remote:true) %>
 
   </div>
 

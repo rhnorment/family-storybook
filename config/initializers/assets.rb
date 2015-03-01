@@ -3,6 +3,7 @@
     sessions
     storybooks
     stories
+    relationships
     activities
     devise
     active_admin

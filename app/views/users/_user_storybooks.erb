@@ -4,7 +4,7 @@
 
     <% @user.storybooks.each do |storybook| %>
 
-        <%= content_tag :li, link_to(storybook.title, storybook), class:'list-group-item' %>
+        <%= content_tag :li, link_to(storybook.title, storybook_path(storybook)), class:'list-group-item' %>
 
     <% end %>
 

@@ -1,0 +1,19 @@
+<div class="tab-pane fade" id="user-relatives">
+
+  <ul class="list-group">
+
+    <% @user.relationships.each do |relationship| %>
+
+        <li class="list-group-item">
+
+          <%= relationship.relative.name %>
+
+          <%= content_tag :p, button_to('Remove relationship', relationship, method: :delete) %>
+
+        </li>
+
+    <% end %>
+
+  </ul>
+
+</div>

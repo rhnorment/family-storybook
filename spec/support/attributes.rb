@@ -21,3 +21,4 @@ def story_attributes(overrides = {})
       content: 'This is a story description',
   }.merge(overrides)
 end
+

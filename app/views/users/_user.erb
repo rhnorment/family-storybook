@@ -1,6 +1,7 @@
 <li class="list-group-item">
+  <%= content_tag :h5, link_to(user.name, user) %>
   <p class="pull-right">
     Joined <%= content_tag :span, time_ago_in_words(user.created_at), class:'badge' %> ago
+    <%= button_to 'Add as relative', relationships_path(relative_id: user) %>
   </p>
-  <%= content_tag :h5, link_to(user.name, user) %>
 </li>

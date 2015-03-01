@@ -2,7 +2,7 @@ class StoriesController < ApplicationController
 
   before_action     :require_signin
   before_action     :set_correct_user
-  before_action     :set_story,         only:   [:show,   :edit, :update, :destroy]
+  before_action     :set_correct_story,   only:   [:show, :edit, :update, :destroy]
 
   def index
     @page_title = 'My stories'
@@ -27,7 +27,7 @@ class StoriesController < ApplicationController
     if @story.save
       redirect_to @story, success: 'Your story was saved.'
     else
-      flash.now[:error] = 'There was a problem saving your story.  Please try again'
+      flash.now[:danger] = 'There was a problem saving your story.  Please try again'
       render  :new
     end
   end
@@ -58,7 +58,7 @@ class StoriesController < ApplicationController
     redirect_to :back unless current_user?(@user)
   end
 
-  def set_story
+  def set_correct_story
     @story = Story.find(params[:id])
     redirect_to @user unless @story.user == current_user
   end

@@ -13,9 +13,10 @@ Rails.application.routes.draw do
 
   resource  :session
   resources :users
-  resources :password_resets,   only:   [:new, :create, :edit, :update]
   resources :storybooks
   resources :stories
-  resources :activities,        only:   :index
+  resources :relationships
+  resources :activities,      only:   :index
+  resources :password_resets,   only:   [:new, :create, :edit, :update]
 
 end

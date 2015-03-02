@@ -41,4 +41,25 @@ describe 'Viewing a user profile page' do
     expect(page).to have_text('Story 2')
   end
 
+  it 'lists the user relationships in the family tab' do
+    user2 = User.create!(user_attributes(email: 'user2@example.com', name: 'User 2'))
+    user3 = User.create!(user_attributes(email: 'user3@example.com', name: 'User 3'))
+    @user.relatives << user2
+
+    visit user_url(@user)
+
+    expect(page).to have_text(user2.name)
+    expect(page).to_not have_text(user3.name)
+  end
+
+  it 'lists the user activities in the activity tab' do
+    storybook = @user.storybooks.create!(storybook_attributes)
+    story = @user.stories.create!(story_attributes)
+
+    visit user_url(@user)
+
+    expect(page).to have_text(storybook.title)
+    expect(page).to have_text(story.title)
+  end
+
 end

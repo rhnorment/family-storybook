@@ -22,3 +22,10 @@ def story_attributes(overrides = {})
   }.merge(overrides)
 end
 
+def relationship_attributes(overrides = {})
+  {
+      user_id: 1,
+      relative_id: 2
+  }.merge(overrides)
+end
+

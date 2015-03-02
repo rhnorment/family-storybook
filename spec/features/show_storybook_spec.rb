@@ -19,7 +19,7 @@ describe 'showing a storybook' do
     expect(page).to have_text(storybook.description)
     expect(page).to have_text(storybook.user.name)
     expect(page).to have_text(story1.title)
-    expect(page).to have_text(story1.title)
+    expect(page).to have_text(story2.title)
     expect(page).to have_selector("img[src$='#{storybook.cover_url}']")
     expect(page).to have_link('Edit this storybook')
     expect(page).to have_link('Return to my storybooks')

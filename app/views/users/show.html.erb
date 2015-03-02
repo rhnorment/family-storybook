@@ -10,15 +10,57 @@
 
 <%= profile_image_for(@user) %>
 
+<h4 class="font-thin m-t-xl">Recent items:</h4>
+
 <ul class="nav nav-tabs">
 
-  <%= content_tag :li, link_to('Storybooks', '#user-storybooks', data: { toggle:'tab'}), class:'h5 active' %>
+  <li class="h5 active font-thin">
 
-  <%= content_tag :li, link_to('Stories', '#user-stories', data: { toggle:'tab'}), class:'h5' %>
+    <%= link_to '#user-storybooks', data: { toggle:'tab' } do %>
 
-  <%= content_tag :li, link_to('Family', '#user-relatives', data: { toggle:'tab'}), class:'h5' %>
+        Storybooks
 
-  <%= content_tag :li, link_to('Activity', '#user-activity', data: { toggle:'tab'}), class:'h5' %>
+        <%= content_tag :span, "#{@storybooks.size}", class:'badge' %>
+
+    <% end %>
+
+  </li>
+
+  <li class="h5 font-thin">
+
+    <%= link_to '#user-stories', data: { toggle:'tab' } do %>
+
+        Stories
+
+        <%= content_tag :span, "#{@stories.size}", class:'badge' %>
+
+    <% end %>
+
+  </li>
+
+  <li class="h5 font-thin">
+
+    <%= link_to '#user-relatives', data: { toggle:'tab' } do %>
+
+        Family
+
+        <%= content_tag :span, "#{@relationships.size}", class:'badge' %>
+
+    <% end %>
+
+  </li>
+
+  <li class="h5 font-thin">
+
+    <%= link_to '#user-activities', data: { toggle:'tab' } do %>
+
+        Activity
+
+        <%= content_tag :span, "#{@activities.size}", class:'badge' %>
+
+    <% end %>
+
+  </li>
 
 </ul>
 
@@ -30,7 +72,7 @@
 
   <%= render partial: 'user_relationships' %>
 
-  <%= render partial: 'user_activity' %>
+  <%= render partial: 'user_activities' %>
 
 </div>
 

@@ -10,6 +10,8 @@
 
         <% end %>
 
+        <%= content_tag :p, (link_to 'Vew all stories', stories_path), class:'lead m-t-lg' %>
+
     <% else %>
 
         <%= render partial: 'shared/nothing_to_render', locals: { item: 'story' } %>

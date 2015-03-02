@@ -16,6 +16,8 @@
 
         <% end %>
 
+        <%= link_to 'Vew all relationships', relationships_path %>
+
     <% else %>
 
         <%= render partial: 'shared/nothing_to_render', locals: { item: 'relationship' } %>

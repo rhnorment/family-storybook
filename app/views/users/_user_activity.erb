@@ -2,7 +2,15 @@
 
   <ul class="list-group">
 
-   <%= render_activity(@activities) %>
+    <% if @activities.any? %>
+
+        <%= render_activity(@activities) %>
+
+    <% else %>
+
+        <%= render partial: 'shared/nothing_to_render', locals: { item: 'activity' } %>
+
+    <% end %>
 
   </ul>
 

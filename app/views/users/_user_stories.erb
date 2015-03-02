@@ -2,9 +2,17 @@
 
   <ul class="list-group">
 
-    <% @user.stories.each do |story| %>
+    <% if @stories.any? %>
 
-        <%= content_tag :li, link_to(story.title, story_path, remote:true), class:'list-group-item' %>
+        <% @stories.each do |story| %>
+
+            <%= content_tag :li, link_to(story.title, story, remote:true), class:'list-group-item' %>
+
+        <% end %>
+
+    <% else %>
+
+        <%= render partial: 'shared/nothing_to_render', locals: { item: 'story' } %>
 
     <% end %>
 

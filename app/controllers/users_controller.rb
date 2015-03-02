@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action     :walled_garden,         only: [:new, :create]
+  before_action     :walled_garden,         only:   [:new, :create]
   before_action     :require_signin,        except: [:new, :create]
   before_action     :require_correct_user,  except: [:index, :new, :create]
 
@@ -10,9 +10,11 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     @page_title = @user.name
-    @activities = PublicActivity::Activity.where(recipient_id: @user.id).order(created_at: :desc)
+    @storybooks = @user.storybooks.order(created_at: :desc).limit(10)
+    @stories = @user.stories.order(created_at: :desc).limit(10)
+    @relationships = @user.relationships.order(created_at: :desc).limit(10)
+    @activities = PublicActivity::Activity.where(recipient_id: @user.id).order(created_at: :desc).limit(10)
   end
 
   def new

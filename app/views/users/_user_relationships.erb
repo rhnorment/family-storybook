@@ -2,15 +2,23 @@
 
   <ul class="list-group">
 
-    <% @user.relationships.each do |relationship| %>
+    <% if @relationships.any? %>
 
-        <li class="list-group-item">
+        <% @relationships.each do |relationship| %>
 
-          <%= relationship.relative.name %>
+            <li class="list-group-item">
 
-          <%= content_tag :p, button_to('Remove relationship', relationship, method: :delete) %>
+                <%= relationship.relative.name %>
 
-        </li>
+                <%= content_tag :p, button_to('Remove relationship', relationship, method: :delete) %>
+
+            </li>
+
+        <% end %>
+
+    <% else %>
+
+        <%= render partial: 'shared/nothing_to_render', locals: { item: 'relationship' } %>
 
     <% end %>
 

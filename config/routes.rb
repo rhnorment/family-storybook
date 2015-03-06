@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :storybooks
   resources :stories
   resources :relationships
-  resources :activities,      only:   :index
+  resources :activities,        only:   :index
   resources :password_resets,   only:   [:new, :create, :edit, :update]
 
 end

@@ -15,8 +15,10 @@ require 'spec_helper'
 describe 'the relationship model' do
 
   before do
-    @user1 = User.create!(user_attributes) # Jane
-    @user2 = User.create!(user_attributes(email: 'user2@example.com')) # David
+    @user1 = User.create!(user_attributes)
+    @user2 = User.create!(user_attributes(email: 'user2@example.com'))
+    @user3 = User.create!(user_attributes(email: 'user3@example.com'))
+    @user4 = User.create!(user_attributes(email: 'user4@example.com'))
   end
 
   it 'should validate the presence of the user and relative ids' do
@@ -28,5 +30,54 @@ describe 'the relationship model' do
     expect(relationship.errors.size).to eq(2)
   end
 
+  context 'when creating a relationship' do
+
+    before do
+      @user1.invite(@user2)
+      @relationship = Relationship.first
+    end
+
+    it 'should be pending' do
+      expect(@relationship.pending?).to be_true
+    end
+
+    it 'should not be approved' do
+      expect(@relationship.approved?).to be_false
+    end
+
+  end
+
+  context 'when approving a relationship' do
+
+    before do
+      @user1.invite(@user2)
+      @user2.approve(@user1)
+      @relationship = Relationship.first
+    end
+
+    it 'should be approved' do
+      expect(@relationship.approved?).to be_true
+    end
+
+    it 'should not be pending' do
+      expect(@relationship.pending?).to be_false
+    end
+
+  end
+
+  context 'when removing a relationship' do
+
+    before do
+      @user1.invite(@user2)
+      @user2.approve(@user1)
+      @relationship = Relationship.first
+      @user1.remove_relationship(@user2)
+    end
+
+    it 'the relationship record should not exist' do
+      expect(Relationship.all.size).to eq(0)
+    end
+
+  end
 
 end

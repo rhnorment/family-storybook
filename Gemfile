@@ -20,6 +20,7 @@ gem 'prawn'
 gem 'public_activity'
 gem 'devise'
 gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'infusionsoft'
 
 # helper gems:
 gem 'font-awesome-sass'

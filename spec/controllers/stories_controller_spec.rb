@@ -53,7 +53,7 @@ describe StoriesController do
       session[:user_id] = @wrong_user
     end
 
-    it 'can view another user story' do
+    it 'cannot view another user story' do
       get :show, id: @story
 
       expect(response).to redirect_to(user_url(@wrong_user))
@@ -77,9 +77,6 @@ describe StoriesController do
       expect(response).to redirect_to(user_url(@wrong_user))
     end
 
-
   end
-
-
 
 end

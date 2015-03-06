@@ -1,0 +1,9 @@
+<li class="list-group-item">
+
+  <%= profile_image_for(relationship.relative, size:25) %>
+
+  <%= relationship.relative.name %>
+
+  <%= time_ago_in_words(relationship.relative.created_at) %>
+
+</li>

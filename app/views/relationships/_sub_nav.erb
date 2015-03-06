@@ -1,0 +1,11 @@
+<% unless current_page?(relationships_path) %>
+
+    <%= content_tag :li, link_to(icon('angle-double-left', 'Return to my family'), relationships_path, class:'navbar-link') %>
+
+<% end %>
+
+<% if current_page?(relationships_path) %>
+
+    <%= content_tag :li, link_to('Invite a new family member to join', new_relationship_path, class:'navbar-link') %>
+
+<% end %>

@@ -5,10 +5,10 @@ module Family
   included do
     has_many            :relationships,         dependent:  :destroy
     has_many            :inverse_relationships, class_name: 'Relationship', foreign_key: 'relative_id',   dependent: :destroy
-    has_many            :invited_relatives,     ->  { where('relationships.pending = ?', true) },   through: :relationships, source: :relative
-    has_many            :relatives,             ->  { where('relationships.pending = ?', false) },  through: :relationships, source: :relative
-    has_many            :invited_by_relatives,  ->  { where('relationships.pending = ?', true) },   through: :inverse_relationships, source: :user
-    has_many            :inverse_relatives,     ->  { where('relationships.pending =?', false) },   through: :inverse_relationships, source: :user
+    has_many            :pending_invited,     ->  { where('relationships.pending = ?', true) },   through: :relationships, source: :relative
+    has_many            :invited,             ->  { where('relationships.pending = ?', false) },  through: :relationships, source: :relative
+    has_many            :pending_invited_by,  ->  { where('relationships.pending = ?', true) },   through: :inverse_relationships, source: :user
+    has_many            :invited_by,          ->  { where('relationships.pending =?', false) },   through: :inverse_relationships, source: :user
   end
 
   # suggest a user to become a family member.  If the operation succeeds, the method returns true, else false:
@@ -29,6 +29,37 @@ module Family
     relationship = find_any_relationship_with(user)
     return false if relationship.nil?
     relationship.destroy
+    self.reload && user.reload if relationship.destroyed?
+    true
+  end
+
+  # returns the list of approved relatives:
+  def relatives
+    approved_relationship = Relationship.where(user_id: id, pending: false).select(:relative_id).to_sql
+    approved_inverse_relationship = Relationship.where(relative_id: id, pending: false).select(:user_id).to_sql
+    self.class.where("id in (#{approved_relationship}) OR id in (#{approved_inverse_relationship})")
+  end
+
+  # total number of invited and invited_by relatives without association loading
+  def total_relatives
+    self.invited(false).count + self.invited_by(false).count
+  end
+
+  # checks if a user is a relative:
+  def related_to?(user)
+    relatives.include?(user)
+  end
+
+  # checks if a current user is connected to the given user:
+  def connected_with?(user)
+    find_any_relationship_with(user).present?
+  end
+
+  # checks if a current user received an invitation from a given user:
+  def invited_by?(user)
+    relationship = find_any_relationship_with(user)
+    return false if relationship.nil?
+    relationship.user_id == user.id
   end
 
   # checks if a current user invited the given user:
@@ -36,6 +67,11 @@ module Family
     relationship = find_any_relationship_with(user)
     return false if relationship.nil?
     relationship.relative_id == user.id
+  end
+
+  # return the list of ones among its relatives which are also relatives of the given user:
+  def common_relatives_with(user)
+    self.relatives & user.relatives
   end
 
   # returns relationship with given user or nil

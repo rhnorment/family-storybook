@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
   # methods
   ##################################################################################
 
-
   #  sets user avatar using the gravitar web service:
   def gravatar_id
     Digest::MD5::hexdigest(email.downcase)

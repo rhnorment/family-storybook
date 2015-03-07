@@ -1,5 +1,6 @@
 ActiveAdmin.register Story do
 
+  config.sort_order = 'title_asc'
 
   menu            priority: 4
 
@@ -8,7 +9,7 @@ ActiveAdmin.register Story do
   index do
     selectable_column
     column  :title
-    column  'User' do |story|
+    column  'Author' do |story|
       story.user.name
     end
     actions

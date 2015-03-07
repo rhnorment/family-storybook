@@ -6,4 +6,12 @@ module UsersHelper
     image_tag url, alt: user.name
   end
 
+  def storybooks_for(user)
+    user.storybooks.pluck(:title).join(', ')
+  end
+
+  def stories_for(user)
+    user.stories.pluck(:title).join(', ')
+  end
+
 end

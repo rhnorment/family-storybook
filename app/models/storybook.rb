@@ -32,7 +32,6 @@ class Storybook < ActiveRecord::Base
   # callbacks:
   after_create        :create_activity
 
-  # methods:
   def create_activity
     PublicActivity::Activity.create   key: 'storybook.create', trackable_id: self.id, trackable_type: 'Storybook',
                                       recipient_id: self.user.id, recipient_type: 'User', owner_id: self.user.id,

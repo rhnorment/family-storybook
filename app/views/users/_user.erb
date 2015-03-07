@@ -1,7 +1,37 @@
-<li class="list-group-item">
-  <%= content_tag :h5, link_to(user.name, user) %>
-  <p class="pull-right">
-    Joined <%= content_tag :span, time_ago_in_words(user.created_at), class:'badge' %> ago
-    <%= button_to 'Add as relative', relationships_path(relative_id: user) %>
-  </p>
+<li class="list-group-item row">
+
+  <div class="col-lg-3">
+
+    <%= user.name %>
+
+  </div>
+
+  <div class="col-lg-3">
+
+    <%= link_to "#{user.storybooks.count} storybooks", "#", data: { title: 'Storybooks',
+                                                                    container:'body',
+                                                                    toggle: 'popover',
+                                                                    placement: 'right',
+                                                                    content: "#{storybooks_for(user)}"
+                                                     } %>
+
+  </div>
+
+  <div class="col-lg-3">
+
+    <%= link_to "#{user.stories.count} stories", "#",       data: { title: 'Stories',
+                                                                    container:'body',
+                                                                    toggle: 'popover',
+                                                                    placement: 'right',
+                                                                    content: "#{stories_for(user)}"
+                                                     } %>
+
+  </div>
+
+  <div class="col-lg-3">
+
+    <%= user.total_relatives %>
+
+  </div>
+
 </li>

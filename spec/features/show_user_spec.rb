@@ -44,7 +44,8 @@ describe 'Viewing a user profile page' do
   it 'lists the user relationships in the family tab' do
     user2 = User.create!(user_attributes(email: 'user2@example.com', name: 'User 2'))
     user3 = User.create!(user_attributes(email: 'user3@example.com', name: 'User 3'))
-    @user.relatives << user2
+    @user.invite(user2)
+    user2.approve(@user)
 
     visit user_url(@user)
 

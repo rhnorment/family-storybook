@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+
   protect_from_forgery with: :exception
 
   add_flash_types(:success, :info, :warning, :danger)
+
+  rescue_from     ActiveRecord::RecordNotFound,   with: :record_not_found
 
   private
 
@@ -27,6 +28,11 @@ class ApplicationController < ActionController::Base
   def redirect_back_or(default)
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)
+  end
+
+  def record_not_found
+    flash[:warning] = 'The item you are looking for is not available.'
+    redirect_back_or(current_user) if current_user
   end
 
   def walled_garden

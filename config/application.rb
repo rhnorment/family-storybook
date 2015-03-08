@@ -33,5 +33,7 @@ module Familyshare
 
     config.autoload_paths << Rails.root.join('lib')
 
+    config.exceptions_app =  self.routes
+
   end
 end

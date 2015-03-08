@@ -23,7 +23,7 @@ class StorybooksController < ApplicationController
     if @storybook.save
       redirect_to @storybook, success: 'Your storybook was successfully created!'
     else
-      flash.now[:error] = 'There was a problem creating your storybook.  Please try again'
+      flash.now[:danger] = 'There was a problem creating your storybook.  Please try again'
       render  :new
     end
   end

@@ -228,9 +228,85 @@ describe RelationshipsController do
 
   end
 
-  context 'when removing relationships'
+  context 'when removing relationships' do
+
+    before do
+      Relationship.delete_all
+      expect(@user1.invite(@user2)).to be_true
+      expect(@user2.approve(@user1)).to be_true
+      expect(@user2.invite(@user3)).to be_true
+      expect(@user3.approve(@user2)).to be_true
+      expect(@user3.invite(@user4)).to be_true
+      expect(@user4.approve(@user3)).to be_true
+      expect(@user3.invite(@user5)).to be_true
+      expect(@user5.approve(@user3)).to be_true
+      expect(@user4.invite(@user5)).to be_true
+    end
+
+    it 'should remove the relatives invited by the user' do
+      expect(@user3.relatives.size).to eq(3)
+      expect(@user3.relatives).to include(@user4)
+      expect(@user3.invited).to include(@user4)
+      expect(@user4.relatives.size).to eq(1)
+      expect(@user4.relatives).to include(@user3)
+      expect(@user4.invited_by).to include(@user3)
+
+      expect(@user3.remove_relationship(@user4)).to be_true
+      expect(@user3.relatives.size).to eq(2)
+      expect(@user3.relatives).to_not include(@user4)
+      expect(@user3.invited).to_not include(@user4)
+      expect(@user4.relatives.size).to eq(0)
+      expect(@user4.relatives).to_not include(@user3)
+      expect(@user4.invited_by).to_not include(@user3)
+    end
+
+    it 'should remove the relatives who invited the user' do
+      expect(@user3.relatives.size).to eq(3)
+      expect(@user3.relatives).to include(@user2)
+      expect(@user3.invited_by).to include(@user2)
+      expect(@user2.relatives.size).to eq(2)
+      expect(@user2.relatives).to include(@user3)
+      expect(@user2.invited).to include(@user3)
+
+      expect(@user3.remove_relationship(@user2)).to be_true
+      expect(@user3.relatives.size).to eq(2)
+      expect(@user3.relatives).to_not include(@user2)
+      expect(@user3.invited_by).to_not include(@user2)
+      expect(@user2.relatives.size).to eq(1)
+      expect(@user2.relatives).to_not include(@user3)
+      expect(@user2.invited).to_not include(@user3)
+    end
+
+    it 'should remove the pending relationships invited by the user' do
+      expect(@user4.pending_invited.size).to eq(1)
+      expect(@user4.pending_invited).to include(@user5)
+      expect(@user5.pending_invited_by.size).to eq(1)
+      expect(@user5.pending_invited_by).to include(@user4)
+
+      expect(@user4.remove_relationship(@user5)).to be_true
+      expect(@user4.pending_invited.size).to eq(0)
+      expect(@user4.pending_invited).to_not include(@user5)
+      expect(@user5.pending_invited_by.size).to eq(0)
+      expect(@user5.pending_invited_by).to_not include(@user4)
+    end
+
+    it 'should remove the pending relationships sent to the user' do
+      expect(@user5.pending_invited_by.size).to eq(1)
+      expect(@user5.pending_invited_by).to include(@user4)
+      expect(@user4.pending_invited.size).to eq(1)
+      expect(@user4.pending_invited).to include(@user5)
+
+      expect(@user5.remove_relationship(@user4)).to be_true
+      expect(@user5.pending_invited_by.size).to eq(0)
+      expect(@user5.pending_invited_by).to_not include(@user4)
+      expect(@user4.pending_invited.size).to eq(0)
+      expect(@user4.pending_invited).to_not include(@user5)
+    end
+
+  end
 
   context 'when counting relationships' do
+
     before do
       Relationship.delete_all
       expect(@user1.invite(@user2)).to be_true

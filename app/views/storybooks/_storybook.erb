@@ -1,7 +1,23 @@
-<%= link_to storybook, class:'list-group-item' do %>
+<%= link_to storybook, class:'list-group-item row' do %>
 
-    <%= content_tag :h4, storybook.title, class:'list-group-item-heading' %>
+    <div class="col-lg-6">
 
-    <%= content_tag :p, truncate(storybook.description, length: 125), class:'list-group-item-text' %>
+      <%= content_tag :h4, storybook.title, class:'list-group-item-heading' %>
+
+      <%= content_tag :p, truncate(storybook.description, length: 125), class:'list-group-item-text' %>
+
+    </div>
+
+    <div class="col-lg-3">
+
+      <%= render_published_status(storybook) %>
+
+    </div>
+
+    <div class="col-lg-3 text-muted">
+
+      Started <%= time_ago_in_words(storybook.created_at) %> ago
+
+    </div>
 
 <% end %>

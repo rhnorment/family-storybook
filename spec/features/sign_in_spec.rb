@@ -1,27 +1,27 @@
 require 'spec_helper'
 
-describe "Signing in" do
+describe 'Signing in' do
 
-  it "prompts for an email and password" do
+  it 'prompts for an email and password' do
     visit root_url
 
     click_link 'Sign in'
 
     expect(current_path).to eq(signin_path)
 
-    expect(page).to have_field("Email")
-    expect(page).to have_field("Password")
+    expect(page).to have_field('Email')
+    expect(page).to have_field('Password')
   end
 
-  it "signs in the user if the email/password combination is valid" do
+  it 'signs in the user if the email/password combination is valid' do
     user = User.create!(user_attributes)
 
     visit root_url
 
     click_link 'Sign in'
 
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
 
     click_button 'Sign in'
 
@@ -34,15 +34,15 @@ describe "Signing in" do
     expect(page).not_to have_link('Sign up')
   end
 
-  it "does not sign in the user if the email/password combination is invalid" do
+  it 'does not sign in the user if the email/password combination is invalid' do
     user = User.create!(user_attributes)
 
     visit root_url
 
     click_link 'Sign in'
 
-    fill_in "Email", with: user.email
-    fill_in "Password", with: "no match"
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: 'no match'
 
     click_button 'Sign in'
 
@@ -51,16 +51,16 @@ describe "Signing in" do
     expect(page).not_to have_link('Sign out')
   end
 
-  it "redirects to the intended page" do
+  it 'redirects to the intended page' do
     user = User.create!(user_attributes)
 
-    visit users_url
+    visit storybooks_url
 
     expect(current_path).to eq(new_session_path)
 
     sign_in(user)
 
-    expect(current_path).to eq(users_path)
+    expect(current_path).to eq(storybooks_path)
   end
 
   it 'does not allow access to certain pages based on an active session' do

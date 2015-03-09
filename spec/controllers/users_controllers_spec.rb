@@ -13,12 +13,6 @@ describe UsersController do
       session[:user_id] = nil
     end
 
-    it 'cannot access index' do
-      get :index
-
-      expect(response).to redirect_to(new_session_url)
-    end
-
     it 'cannot access show' do
       get :show, id: @user
 
@@ -50,12 +44,6 @@ describe UsersController do
     before do
       @wrong_user = User.create!(user_attributes(email: 'wrong@example.com'))
       session[:user_id] = @wrong_user
-    end
-
-    it 'can view the list of users' do
-      get :index
-
-      expect(response).to render_template('index')
     end
 
     it 'cannot view another user' do

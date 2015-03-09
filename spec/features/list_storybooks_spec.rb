@@ -17,6 +17,8 @@ describe 'list storybooks' do
     expect(page).to have_text(storybook1.title)
     expect(page).to have_text(storybook2.title)
     expect(page).to have_text(storybook3.title)
+    expect(page).to have_text('Not published')
+    expect(page).to have_text('Started')
   end
 
   it 'does not show storybooks not belonging to the correct user' do
@@ -34,6 +36,14 @@ describe 'list storybooks' do
     expect(page).to have_text(storybook3.title)
     expect(page).to_not have_text(storybook4.title)
   end
+
+  it 'should render the nothing_to_render_alert partial if there are no storybooks' do
+    visit storybooks_url
+
+    expect(page).to have_text('There are no storybooks to display.')
+  end
+
+
 
 
 end

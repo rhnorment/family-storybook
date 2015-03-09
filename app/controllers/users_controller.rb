@@ -2,12 +2,7 @@ class UsersController < ApplicationController
 
   before_action     :walled_garden,         only:   [:new, :create]
   before_action     :require_signin,        except: [:new, :create]
-  before_action     :require_correct_user,  except: [:index, :new, :create]
-
-  def index
-    @users = User.page params[:page]
-    @page_title = 'All users'
-  end
+  before_action     :require_correct_user,  except: [:new, :create]
 
   def show
     @page_title = @user.name

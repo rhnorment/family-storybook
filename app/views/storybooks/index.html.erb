@@ -1,12 +1,20 @@
-<div class="list-group m-t-lg">
+<% if @storybooks.empty? %>
 
-  <% @storybooks.each do |storybook| %>
+    <%= render partial: 'shared/nothing_to_render_alert', locals: { item: 'storybook' } %>
 
-    <%= render storybook %>
+<% else %>
 
-  <% end %>
+    <div class="list-group m-t-lg">
 
-  <%= paginate @storybooks %>
+        <% @storybooks.each do |storybook| %>
 
-</div>
+            <%= render storybook %>
+
+        <% end %>
+
+    <%= paginate @storybooks %>
+
+    </div>
+
+<% end %>
 

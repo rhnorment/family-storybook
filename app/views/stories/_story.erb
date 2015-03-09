@@ -1,0 +1,23 @@
+<li class="list-group-item row">
+
+  <div class="col-lg-6">
+
+    <%= link_to story.title, story %>
+
+  </div>
+
+  <div class="col-lg-3">
+
+    Inclusions <%= content_tag :span, story.storybooks.count, class:'badge' %>
+
+  </div>
+
+  <div class="col-lg-3 text-muted">
+
+    Written <%= time_ago_in_words(story.created_at) %> ago
+
+  </div>
+
+
+
+</li>

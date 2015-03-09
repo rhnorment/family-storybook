@@ -1,9 +1,17 @@
-<ul class="list-group">
+<% if @activities.empty? %>
 
-  <%= render_activity(@activities) %>
+    <%= render partial: 'shared/nothing_to_render_alert', locals: { item: 'activity' } %>
 
-</ul>
+<% else %>
 
-<%= paginate @activities %>
+    <ul class="list-group">
 
-<%= content_tag :div, nil, id: 'story-modal', class: 'modal fade', tabindex: -1, role: 'dialog' %>
+        <%= render_activity(@activities) %>
+
+    </ul>
+
+    <%= paginate @activities %>
+
+    <%= content_tag :div, nil, id: 'story-modal', class: 'modal fade', tabindex: -1, role: 'dialog' %>
+
+<% end %>

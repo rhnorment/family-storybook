@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get       '/500'          =>    'errors#server_error'
 
   resource  :session
-  resources :users
+  resources :users,             except: :index
   resources :storybooks
   resources :stories
   resources :relationships

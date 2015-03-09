@@ -7,6 +7,8 @@ describe 'Viewing a user profile page' do
     sign_in(@user)
   end
 
+  it 'appears as the root url'
+
   it 'shows the user details' do
     visit user_url(@user)
 

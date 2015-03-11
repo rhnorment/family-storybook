@@ -2,15 +2,15 @@
 
   <ul class="list-group">
 
-    <% if @relationships.any? %>
+    <% if @relatives.any? %>
 
-        <% @relationships.each do |relationship| %>
+        <% @relatives.each do |relative| %>
 
             <li class="list-group-item">
 
-                <%= relationship.relative.name %>
+                <%= relative.name %>
 
-                <%= content_tag :p, button_to('Remove relationship', relationship, method: :delete) %>
+                <%= content_tag :p, button_to('Remove relative', relationship_path(relative), method: :delete) %>
 
             </li>
 
@@ -20,7 +20,7 @@
 
     <% else %>
 
-        <%= render partial: 'shared/nothing_to_render', locals: { item: 'relationship' } %>
+        <%= render partial: 'shared/nothing_to_render', locals: { item: 'relative' } %>
 
     <% end %>
 

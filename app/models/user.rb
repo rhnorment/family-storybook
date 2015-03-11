@@ -15,6 +15,7 @@
 class User < ActiveRecord::Base
 
   # inclusions:
+  to_param            :name
   include             Authentication
   include             Family
   include             PublicActivity::Common
@@ -34,10 +35,6 @@ class User < ActiveRecord::Base
 
   # callbacks:
   after_create        :create_activity
-
-  ##################################################################################
-  # methods
-  ##################################################################################
 
   #  sets user avatar using the gravitar web service:
   def gravatar_id

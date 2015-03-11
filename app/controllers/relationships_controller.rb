@@ -6,7 +6,7 @@ class RelationshipsController < ApplicationController
 
   def index
     @page_title = 'My family members'
-    @relationships = @user.relationships.order(created_at: :desc).page params[:page]
+    @relatives = @user.relatives.order(created_at: :desc).page params[:page]
   end
 
   def show
@@ -16,12 +16,7 @@ class RelationshipsController < ApplicationController
   end
 
   def create
-    @relationship = @user.relationships.new(relative_id: params[:relative_id])
-    if @relationship.save
-      redirect_to @user, success: 'You successfully added your family member.'
-    else
-      redirect_to users_url, danger: 'There was a problem adding your family member.  Please try again.'
-    end
+
   end
 
   def edit
@@ -31,8 +26,12 @@ class RelationshipsController < ApplicationController
   end
 
   def destroy
-    @relationship.destroy
-    redirect_to @user, warning: 'You have removed your relative from your family members.'
+    user = User.find_by_id(params[:id])
+    if @user.remove_relationship(user)
+      redirect_to relationships_url, warning: 'Your family member was removed. '
+    else
+      redirect_to relationships_url, danger: 'There was a problem removing your family member.  Please try again.'
+    end
   end
 
   private

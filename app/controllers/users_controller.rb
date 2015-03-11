@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @page_title = @user.name
     @storybooks = @user.storybooks.order(created_at: :desc).limit(10)
     @stories = @user.stories.order(created_at: :desc).limit(10)
-    @relationships = @user.relationships.order(created_at: :desc).limit(10)
+    @relatives = @user.relatives.order(created_at: :desc).limit(10)
     @activities = PublicActivity::Activity.where(recipient_id: @user.id).order(created_at: :desc).limit(10)
   end
 

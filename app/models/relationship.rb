@@ -13,7 +13,7 @@
 class Relationship < ActiveRecord::Base
 
   # model validations:
-  validates             :user_id,     :relative_id,     presence: true
+  validates             :user_id,  :relative_id,     presence: true
   validates             :relative_id, uniqueness: { scope: :user_id, message: 'This user is already a family member.' }
 
   # data relationships:

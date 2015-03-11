@@ -8,7 +8,7 @@ module Family
     has_many            :pending_invited,     ->  { where('relationships.pending = ?', true) },   through: :relationships, source: :relative
     has_many            :invited,             ->  { where('relationships.pending = ?', false) },  through: :relationships, source: :relative
     has_many            :pending_invited_by,  ->  { where('relationships.pending = ?', true) },   through: :inverse_relationships, source: :user
-    has_many            :invited_by,          ->  { where('relationships.pending =?', false) },   through: :inverse_relationships, source: :user
+    has_many            :invited_by,          ->  { where('relationships.pending = ?', false) },  through: :inverse_relationships, source: :user
   end
 
   # suggest a user to become a family member.  If the operation succeeds, the method returns true, else false:

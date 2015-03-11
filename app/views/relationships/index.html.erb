@@ -1,22 +1,28 @@
-<% if @relationships.empty? %>
+<% if @relatives.empty? %>
 
-    <%= render partial: '/shared/nothing_to_render_alert', locals: { item: 'relative' } %>
+    <%= render partial: 'shared/nothing_to_render_alert', locals: { item: 'relative' } %>
 
 <% else %>
 
     <ul class="list-group">
 
-        <% @relationships.each do |relationship| %>
+      <% @relatives.each do |relative| %>
 
-          <%= render relationship %>
+          <%= render partial: 'relationship', locals: { item: relative }  %>
 
-        <% end %>
-
-    <%= paginate @relationships %>
+      <% end %>
 
     </ul>
 
+    <%= paginate @relatives %>
+
 <% end %>
+
+
+
+
+
+
 
 
 

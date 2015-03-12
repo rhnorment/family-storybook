@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'listing relationships' do
+describe 'listing relatives' do
 
   before do
     @user1 = User.create!(user_attributes)
@@ -24,6 +24,7 @@ describe 'listing relationships' do
 
     expect(page).to have_text(@user4.name)
     expect(page).to have_text(@user5.name)
+    expect(page).to have_text('Relative since')
     expect(page).to have_link('Remove relative')
   end
 

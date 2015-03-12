@@ -45,6 +45,11 @@ module Family
     self.invited(false).count + self.invited_by(false).count
   end
 
+  # returns the date the relationship was created:
+  def relative_since(user)
+    find_any_relationship_with(user).created_at
+  end
+
   # checks if a user is a relative:
   def related_to?(user)
     relatives.include?(user)

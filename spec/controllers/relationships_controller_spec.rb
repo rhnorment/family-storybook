@@ -49,39 +49,6 @@ describe RelationshipsController do
 
   end
 
-  context 'when signed is as a different user' do
-
-    before do
-      @wrong_user = User.create!(user_attributes(email: 'wrong@example.com'))
-      session[:user_id] = @wrong_user
-    end
-
-    it 'cannot view another user relationship' do
-      get :show, id: @relationship
-
-      expect(response).to redirect_to(user_url(@wrong_user))
-    end
-
-    it 'cannot edit another user relationship' do
-      get :edit, id: @relationship
-
-      expect(response).to redirect_to(user_url(@wrong_user))
-    end
-
-    it 'cannot update another user relationship' do
-      patch :update, id: @relationship
-
-      expect(response).to redirect_to(user_url(@wrong_user))
-    end
-
-    it 'cannot destroy another user relationship' do
-      delete :destroy, id: @relationship
-
-      expect(response).to redirect_to(user_url(@wrong_user))
-    end
-
-  end
-
   context 'when creating relationships' do
 
     before do

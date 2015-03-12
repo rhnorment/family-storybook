@@ -1,5 +1,5 @@
 <%= content_tag :li, link_to('FamilyBook', current_user), class:'sidebar-brand' %>
 <%= content_tag :li, link_to('Storybooks', storybooks_path), class:"#{is_active_controller?('storybooks')}" %>
 <%= content_tag :li, link_to('Stories', stories_path), class:"#{is_active_controller?('stories')}" %>
-<%= content_tag :li, link_to('Family', relationships_path) %>
+<%= content_tag :li, link_to('Family', relationships_path), class:"#{is_active_controller?('relationships')}" %>
 <%= content_tag :li, link_to('Activity', activities_path), class:"#{is_active_controller?('activities')}" %>

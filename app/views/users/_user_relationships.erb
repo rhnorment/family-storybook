@@ -6,13 +6,7 @@
 
         <% @relatives.each do |relative| %>
 
-            <li class="list-group-item">
-
-                <%= relative.name %>
-
-                <%= content_tag :p, button_to('Remove relative', relationship_path(relative), method: :delete) %>
-
-            </li>
+            <%= render partial: 'relationships/relationship', locals: { item: relative }  %>
 
         <% end %>
 

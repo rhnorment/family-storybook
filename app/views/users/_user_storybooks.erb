@@ -6,7 +6,7 @@
 
         <% @storybooks.each do |storybook| %>
 
-            <%= content_tag :li, link_to(storybook.title, storybook_path(storybook)), class:'list-group-item' %>
+            <%= render storybook %>
 
         <% end %>
 

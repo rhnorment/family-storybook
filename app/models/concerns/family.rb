@@ -60,6 +60,11 @@ module Family
     find_any_relationship_with(user).present?
   end
 
+  # returns the date of a given invitation:
+  def invited_on(user)
+
+  end
+
   # checks if a current user received an invitation from a given user:
   def invited_by?(user)
     relationship = find_any_relationship_with(user)

@@ -6,7 +6,7 @@
 
         <% @relatives.each do |relative| %>
 
-            <%= render partial: 'relationships/relationship', locals: { item: relative }  %>
+            <%= render partial: 'relationships/relative', locals: { relative: relative } %>
 
         <% end %>
 

@@ -1,3 +1,1 @@
-2.  Controller and view code for inviting family members to connect.
 
-3.  Implement Factory Girl for test fixtures.

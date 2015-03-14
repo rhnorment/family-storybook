@@ -23,12 +23,6 @@ describe RelationshipsController do
       expect(response).to redirect_to(new_session_url)
     end
 
-    it 'cannot access show' do
-      get :show, id: @relationship
-
-      expect(response).to redirect_to(new_session_url)
-    end
-
     it 'cannot access edit' do
       get :edit, id: @relationship
 

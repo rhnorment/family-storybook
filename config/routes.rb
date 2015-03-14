@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :users,             except: :index
   resources :storybooks
   resources :stories
-  resources :relationships
+  resources :relationships,     except: :show
   resources :activities,        only:   :index
   resources :password_resets,   only:   [:new, :create, :edit, :update]
 

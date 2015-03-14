@@ -8,10 +8,9 @@ class RelationshipsController < ApplicationController
     @relatives = @user.relatives.order(created_at: :desc).page params[:page]
   end
 
-  def show
-  end
-
   def new
+    @page_title = 'Add new family members'
+    @users = User.where.not(id: @user.id).order(created_at: :desc).page params[:page]
   end
 
   def create

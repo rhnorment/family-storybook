@@ -24,7 +24,7 @@ describe 'listing relatives' do
 
     expect(page).to have_text(@user4.name)
     expect(page).to have_text(@user5.name)
-    expect(page).to have_text('Relative since')
+    expect(page).to have_text('Added as a family member')
     expect(page).to have_link('Remove relative')
   end
 

@@ -8,7 +8,7 @@
 
       <% @relatives.each do |relative| %>
 
-          <%= render partial: 'relationship', locals: { item: relative }  %>
+        <%= render partial: 'relative', locals: { relative: relative } %>
 
       <% end %>
 

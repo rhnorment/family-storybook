@@ -35,9 +35,9 @@ module Family
 
   # returns the list of approved relatives:
   def relatives
-    approved_relationship = Relationship.where(user_id: id, pending: false).select(:relative_id).to_sql
-    approved_inverse_relationship = Relationship.where(relative_id: id, pending: false).select(:user_id).to_sql
-    self.class.where("id in (#{approved_relationship}) OR id in (#{approved_inverse_relationship})")
+    approved_relationships = Relationship.where(user_id: id, pending: false).select(:relative_id).to_sql
+    approved_inverse_relationships = Relationship.where(relative_id: id, pending: false).select(:user_id).to_sql
+    self.class.where("id in (#{approved_relationships}) OR id in (#{approved_inverse_relationships})")
   end
 
   # total number of invited and invited_by relatives without association loading
@@ -58,6 +58,13 @@ module Family
   # checks if a current user is connected to the given user:
   def connected_with?(user)
     find_any_relationship_with(user).present?
+  end
+
+  # returns users recommended to invite as family members:
+  def invitees
+    approved_relationships = Relationship.where(user_id: id, pending: false).select(:relative_id).to_sql
+    pending_invited_relationships = Relationship.where(user_id: id, pending: true).select(:relative_id).to_sql
+    self.class.where("id not in (#{approved_relationships}) AND id not in (#{pending_invited_relationships})")
   end
 
   # returns the date of a given invitation:

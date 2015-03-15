@@ -9,12 +9,17 @@ class RelationshipsController < ApplicationController
   end
 
   def new
-    @page_title = 'Add new family members'
-    @users = User.where.not(id: @user.id).order(created_at: :desc).page params[:page]
+    @page_title = 'Invite new family members'
+    @invitees = @user.invitees.where.not(id: @user.id).order(created_at: :desc).page params[:page]
   end
 
   def create
-
+    invitee = User.find(params[:user_id])
+    if @user.invite(invitee)
+      redirect_to new_relationship_url, success: 'Your invitation has been sent!'
+    else
+      redirect_to new_relationship_url, danger: 'Your invitation could not be sent.  Please try again.'
+    end
   end
 
   def edit

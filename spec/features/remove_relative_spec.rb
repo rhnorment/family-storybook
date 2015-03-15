@@ -21,11 +21,11 @@ describe 'removing relatives' do
     visit relationships_url
 
     expect(page).to have_text(@user4.name)
-    expect(page).to have_link('Remove relative')
+    expect(page).to have_link('Remove')
 
     expect(@user1.relatives.size).to eq(1)
 
-    click_link 'Remove relative'
+    click_link 'Remove'
 
     expect(@user1.relatives.size).to eq(0)
 

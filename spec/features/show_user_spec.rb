@@ -60,7 +60,7 @@ describe 'Viewing a user profile page' do
 
     expect(page).to have_text(user3.name)
     expect(page).to have_text('Added as a family member')
-    expect(page).to have_link('Remove relative')
+    expect(page).to have_link('Remove')
     expect(page).to_not have_text(user4.name)
   end
 

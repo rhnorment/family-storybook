@@ -6,9 +6,9 @@
 
     <ul id="relatives" class="list-group">
 
-      <% @relatives.each do |relative| %>
+      <% @relatives.each do |user| %>
 
-        <%= render partial: 'relative', locals: { relative: relative } %>
+        <%= render partial: 'relationship', locals: { item: user, type: 'relative' } %>
 
       <% end %>
 
@@ -17,11 +17,6 @@
     <%= paginate @relatives %>
 
 <% end %>
-
-
-
-
-
 
 
 

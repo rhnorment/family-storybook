@@ -4,9 +4,9 @@
 
     <% if @relatives.any? %>
 
-        <% @relatives.each do |relative| %>
+        <% @relatives.each do |user| %>
 
-            <%= render partial: 'relationships/relative', locals: { relative: relative } %>
+            <%= render partial: 'relationships/relationship', locals: { item: user, type: 'relative' } %>
 
         <% end %>
 

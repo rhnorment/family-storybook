@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   resources :users,             except: :index
   resources :storybooks
   resources :stories
-  resources :relationships,     except: :show
+  resources :relationships,     except: [:show, :edit] do
+    get 'pending', on: :collection
+  end
   resources :activities,        only:   :index
   resources :password_resets,   only:   [:new, :create, :edit, :update]
 

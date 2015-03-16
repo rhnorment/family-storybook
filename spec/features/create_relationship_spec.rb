@@ -18,7 +18,7 @@ describe 'invite a relative' do
     expect(page).to have_text(@user3.name)
     expect(page).to have_text(@user4.name)
     expect(page).to have_text(@user5.name)
-    expect(page).to have_text('Became a member')
+    expect(page).to have_text('Joined')
     expect(page).to have_link('Invite')
   end
 

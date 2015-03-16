@@ -2,33 +2,7 @@
 
   <% @invitees.each do |user| %>
 
-      <li class="list-group-item row">
-
-        <div class="col-lg-1">
-
-          <%= profile_image_for(user, size:25) %>
-
-        </div>
-
-        <div class="col-lg-3">
-
-          <%= user.name %>
-
-        </div>
-
-        <div class="col-lg-6">
-
-          Became a member <%= time_ago_in_words user.created_at %> ago
-
-        </div>
-
-        <div class="col-lg-2">
-
-          <%= link_to 'Invite', relationships_path(user_id: user.id), class:'text-success text-sm', method: :post %>
-
-        </div>
-
-      </li>
+      <%= render partial: 'relationship', locals: { item: user, type: 'invitee' } %>
 
   <% end %>
 

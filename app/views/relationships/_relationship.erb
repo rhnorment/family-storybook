@@ -1,0 +1,27 @@
+<li class="list-group-item row">
+
+  <div class="col-lg-1">
+
+    <%= profile_image_for(item, size:25) %>
+
+  </div>
+
+  <div class="col-lg-3">
+
+    <%= item.name %>
+
+  </div>
+
+  <div class="col-lg-6">
+
+    <%= date_for(item, type) %>
+
+  </div>
+
+  <div class="col-lg-2">
+
+    <%= relationship_action_for(item, type) %>
+
+  </div>
+
+</li>

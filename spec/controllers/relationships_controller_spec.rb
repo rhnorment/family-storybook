@@ -23,8 +23,8 @@ describe RelationshipsController do
       expect(response).to redirect_to(new_session_url)
     end
 
-    it 'cannot access edit' do
-      get :edit, id: @relationship
+    it 'cannot access pending' do
+      get :pending
 
       expect(response).to redirect_to(new_session_url)
     end

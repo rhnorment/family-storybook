@@ -22,7 +22,10 @@ class RelationshipsController < ApplicationController
     end
   end
 
-  def edit
+  def pending
+    @page_title = 'Pending relationships'
+    @pending_outgoing = @user.pending_invited
+    @pending_incoming = @user.pending_invited_by
   end
 
   def update

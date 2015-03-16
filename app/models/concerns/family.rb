@@ -45,9 +45,9 @@ module Family
     self.invited(false).count + self.invited_by(false).count
   end
 
-  # returns the date the relationship was created:
-  def relative_since(user)
-    find_any_relationship_with(user).created_at
+  # returns the date the relationship was approved via the update method in the controller:
+  def invitation_approved_on(user)
+    find_any_relationship_with(user).updated_at
   end
 
   # checks if a user is a relative:
@@ -68,8 +68,8 @@ module Family
   end
 
   # returns the date of a given invitation:
-  def invited_on(user)
-
+  def invitation_sent_on(user)
+    find_any_relationship_with(user).created_at
   end
 
   # checks if a current user received an invitation from a given user:

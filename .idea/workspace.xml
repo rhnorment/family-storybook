@@ -2,25 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="78eeda68-cd73-423f-ada5-489b36f3a640" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/relationships/_relationship.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/features/create_relationship_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/features/delete_relationship_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/features/edit_relationship_spec.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/relationships/pending.html.erb" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/relationships/_relative.erb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/relationships/edit.html.erb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/spec/features/invite_relative_spec.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/spec/features/remove_relative_spec.rb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/relationships/_sub_nav.erb" afterPath="$PROJECT_DIR$/app/views/relationships/_sub_nav.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/_user_relationships.erb" afterPath="$PROJECT_DIR$/app/views/users/_user_relationships.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/concerns/family.rb" afterPath="$PROJECT_DIR$/app/models/concerns/family.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/familyshare.iml" afterPath="$PROJECT_DIR$/.idea/familyshare.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/relationships/index.html.erb" afterPath="$PROJECT_DIR$/app/views/relationships/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/relationships/new.html.erb" afterPath="$PROJECT_DIR$/app/views/relationships/new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/features/edit_relationship_spec.rb" afterPath="$PROJECT_DIR$/spec/features/edit_relationship_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/infusionsoft.rb" afterPath="$PROJECT_DIR$/config/initializers/infusionsoft.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/relationships_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/relationships_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/controllers/relationships_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/controllers/relationships_controller_spec.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/relationships_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/relationships_helper.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="familyshare.iws" />
@@ -55,8 +40,8 @@
     <SUITE FILE_PATH="coverage/familyshare@Production__familyshare.coverage" NAME="Production: familyshare Coverage Results" MODIFIED="1424285915104" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__stories_controller_spec___familyshare.coverage" NAME="Run spec 'stories_controller_spec': familyshare Coverage Results" MODIFIED="1425592701436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__users_controllers_spec___familyshare.coverage" NAME="Run spec 'users_controllers_spec': familyshare Coverage Results" MODIFIED="1425936661059" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
-    <SUITE FILE_PATH="coverage/familyshare@Rails_console__familyshare.coverage" NAME="Rails console: familyshare Coverage Results" MODIFIED="1426546398868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__show_user_spec___familyshare.coverage" NAME="Run spec 'show_user_spec': familyshare Coverage Results" MODIFIED="1426546069306" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
+    <SUITE FILE_PATH="coverage/familyshare@Rails_console__familyshare.coverage" NAME="Rails console: familyshare Coverage Results" MODIFIED="1426699104698" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__storybook_spec___familyshare.coverage" NAME="Run spec 'storybook_spec': familyshare Coverage Results" MODIFIED="1424451439774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__sign_out_spec___familyshare.coverage" NAME="Run spec 'sign_out_spec': familyshare Coverage Results" MODIFIED="1424019104239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__edit_story_spec___familyshare.coverage" NAME="Run spec 'edit_story_spec': familyshare Coverage Results" MODIFIED="1424805466745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
@@ -83,7 +68,7 @@
     <SUITE FILE_PATH="coverage/familyshare@IRB_console__familyshare.coverage" NAME="IRB console: familyshare Coverage Results" MODIFIED="1425584036993" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__walled_garden_spec___familyshare.coverage" NAME="Run spec 'walled_garden_spec': familyshare Coverage Results" MODIFIED="1424199686887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__show_story_spec___familyshare.coverage" NAME="Run spec 'show_story_spec': familyshare Coverage Results" MODIFIED="1425251847234" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
-    <SUITE FILE_PATH="coverage/familyshare@Development__familyshare.coverage" NAME="Development: familyshare Coverage Results" MODIFIED="1426540929445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
+    <SUITE FILE_PATH="coverage/familyshare@Development__familyshare.coverage" NAME="Development: familyshare Coverage Results" MODIFIED="1426892341093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@list_relationships_spec.coverage" NAME="list_relationships.spec Coverage Results" MODIFIED="1425855564632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spec/features" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__show_storybook_spec___familyshare.coverage" NAME="Run spec 'show_storybook_spec': familyshare Coverage Results" MODIFIED="1425317895765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@db_test_load__familyshare.coverage" NAME="db:test:load: familyshare Coverage Results" MODIFIED="1424202678771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
@@ -96,7 +81,7 @@
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__create_user_spec___familyshare.coverage" NAME="Run spec 'create_user_spec': familyshare Coverage Results" MODIFIED="1424800308530" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__delete_storybook_spec___familyshare.coverage" NAME="Run spec 'delete_storybook_spec': familyshare Coverage Results" MODIFIED="1424805520933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__list_relatives_spec___familyshare.coverage" NAME="Run spec 'list_relatives_spec': familyshare Coverage Results" MODIFIED="1426546090743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
-    <SUITE FILE_PATH="coverage/familyshare@Run_spec__edit_relationship_spec___familyshare.coverage" NAME="Run spec 'edit_relationship_spec': familyshare Coverage Results" MODIFIED="1426546343894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
+    <SUITE FILE_PATH="coverage/familyshare@Run_spec__edit_relationship_spec___familyshare.coverage" NAME="Run spec 'edit_relationship_spec': familyshare Coverage Results" MODIFIED="1426893220981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@Run_spec__list_users_spec___familyshare.coverage" NAME="Run spec 'list_users_spec': familyshare Coverage Results" MODIFIED="1425834466162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
     <SUITE FILE_PATH="coverage/familyshare@the_relationship_model_should_validate_the_presence_of_the_relatable_and_friend_ids__familyshare.coverage" NAME="the relationship model should validate the presence of the relatable and friend ids: familyshare Coverage Results" MODIFIED="1425160819765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="familyshare" />
   </component>
@@ -111,18 +96,7 @@
     <favorites_list name="familyshare" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="edit_relationship_spec.rb" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/spec/features/edit_relationship_spec.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.81602377" vertical-offset="0" max-vertical-offset="1011">
-              <caret line="55" column="40" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -139,9 +113,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/spec/features/list_users_spec.rb" />
-        <option value="$PROJECT_DIR$/spec/features/list_relationships.spec.rb" />
-        <option value="$PROJECT_DIR$/app/views/shared/nothing_to_render_alert.erb" />
         <option value="$PROJECT_DIR$/app/views/storybooks/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/activities/index.html.erb" />
         <option value="$PROJECT_DIR$/spec/controllers/users_controllers_spec.rb" />
@@ -176,7 +147,6 @@
         <option value="$PROJECT_DIR$/spec/features/invite_relative_spec.rb" />
         <option value="$PROJECT_DIR$/spec/features/delete_relationship_spec.rb" />
         <option value="$PROJECT_DIR$/app/views/relationships/edit.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/relationships_controller.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/models/concerns/family.rb" />
         <option value="$PROJECT_DIR$/app/views/relationships/_sub_nav.erb" />
@@ -189,6 +159,10 @@
         <option value="$PROJECT_DIR$/app/views/relationships/_relationship.erb" />
         <option value="$PROJECT_DIR$/spec/features/create_relationship_spec.rb" />
         <option value="$PROJECT_DIR$/app/helpers/relationships_helper.rb" />
+        <option value="$PROJECT_DIR$/log/infusionsoft_api.log" />
+        <option value="$PROJECT_DIR$/config/initializers/infusionsoft.rb" />
+        <option value="$PROJECT_DIR$/Gemfile" />
+        <option value="$PROJECT_DIR$/app/controllers/relationships_controller.rb" />
         <option value="$PROJECT_DIR$/spec/features/edit_relationship_spec.rb" />
       </list>
     </option>
@@ -204,10 +178,10 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="964" />
+    <option name="x" value="245" />
     <option name="y" value="23" />
-    <option name="width" value="1301" />
-    <option name="height" value="1417" />
+    <option name="width" value="1195" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -279,6 +253,7 @@
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
     <property name="FullScreen" value="false" />
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../red_sherpa_template.rb" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -296,7 +271,7 @@
       <recent name="$PROJECT_DIR$/vendor/assets/javascripts" />
     </key>
   </component>
-  <component name="RunManager" selected="IRB console.Rails console: familyshare">
+  <component name="RunManager" selected="RSpec.Run spec 'edit_relationship_spec': familyshare">
     <configuration default="false" name="Run spec 'edit_relationship_spec': familyshare" type="RSpecRunConfigurationType" factoryName="RSpec" temporary="true">
       <predefined_log_file id="RUBY_RSPEC" enabled="true" />
       <module name="familyshare" />
@@ -644,8 +619,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="IRB console.Rails console: familyshare" />
-        <item index="1" class="java.lang.String" itemvalue="RSpec.Run spec 'edit_relationship_spec': familyshare" />
+        <item index="0" class="java.lang.String" itemvalue="RSpec.Run spec 'edit_relationship_spec': familyshare" />
+        <item index="1" class="java.lang.String" itemvalue="IRB console.Rails console: familyshare" />
         <item index="2" class="java.lang.String" itemvalue="RSpec.Run spec 'create_relationship_spec': familyshare" />
         <item index="3" class="java.lang.String" itemvalue="RSpec.Run spec 'list_relatives_spec': familyshare" />
         <item index="4" class="java.lang.String" itemvalue="RSpec.Run spec 'show_user_spec': familyshare" />
@@ -662,12 +637,6 @@
       <created>1423343432252</created>
       <option name="number" value="Default" />
       <updated>1423343432252</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Kaminari pagination working.">
-      <created>1424037159631</created>
-      <option name="number" value="00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1424037159631</updated>
     </task>
     <task id="LOCAL-00024" summary="all tests pass.">
       <created>1424042173396</created>
@@ -957,22 +926,28 @@
       <option name="project" value="LOCAL" />
       <updated>1426457547056</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="pending relationships views' specs pass.">
+      <created>1426546668876</created>
+      <option name="number" value="00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1426546668877</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="964" y="23" width="1301" height="1417" extended-state="0" />
+    <frame x="245" y="23" width="1195" height="877" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32938564" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20059216" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.199262" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962668" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24978317" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19062749" sideWeight="0.49956408" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2246314" sideWeight="0.49956408" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23094004" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27990136" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1858618" sideWeight="0.50043595" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32795155" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32896066" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1001,7 +976,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="all story specs pass!" />
     <MESSAGE value="add indeces to stories and storybooks." />
     <MESSAGE value="added admin instances for storybooks and stories." />
     <MESSAGE value="added public activity gem migrations, models, and controllers." />
@@ -1026,90 +1000,14 @@
     <MESSAGE value="added column breaks for small device responsiveness." />
     <MESSAGE value="listing relatives with remove feature specs pass." />
     <MESSAGE value="inviting relatives specs pass." />
-    <option name="LAST_COMMIT_MESSAGE" value="inviting relatives specs pass." />
+    <MESSAGE value="pending relationships views' specs pass." />
+    <option name="LAST_COMMIT_MESSAGE" value="pending relationships views' specs pass." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/spec/features/create_user_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="925">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/features/create_storybook_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.113513514" vertical-offset="0" max-vertical-offset="925">
-          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/features/handle_exceptions_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8864865" vertical-offset="200" max-vertical-offset="1125">
-          <caret line="68" column="2" selection-start-line="68" selection-start-column="2" selection-end-line="68" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/models/relationship_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32303372" vertical-offset="0" max-vertical-offset="1335">
-          <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/application_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="928">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/activities/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28207964" vertical-offset="0" max-vertical-offset="904">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/controllers/users_controllers_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74433655" vertical-offset="0" max-vertical-offset="1200">
-          <caret line="46" column="7" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/features/sign_in_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.53125" vertical-offset="392" max-vertical-offset="1320">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/stories/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31526548" vertical-offset="0" max-vertical-offset="904">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/features/list_stories_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2424569" vertical-offset="0" max-vertical-offset="928">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/stories/_story.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38163716" vertical-offset="0" max-vertical-offset="904">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spec/features/list_activities_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.30711207" vertical-offset="0" max-vertical-offset="928">
@@ -1170,7 +1068,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2897474" vertical-offset="0" max-vertical-offset="673">
           <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1178,7 +1075,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="675">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1263,7 +1159,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="855">
           <caret line="33" column="123" selection-start-line="33" selection-start-column="123" selection-end-line="33" selection-end-column="123" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1271,7 +1166,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40059346" vertical-offset="0" max-vertical-offset="1011">
           <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1279,7 +1173,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.015197569" vertical-offset="0" max-vertical-offset="987">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1287,7 +1180,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27355623" vertical-offset="0" max-vertical-offset="987">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1295,7 +1187,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3343465" vertical-offset="0" max-vertical-offset="987">
           <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1303,7 +1194,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22796352" vertical-offset="0" max-vertical-offset="987">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1311,7 +1201,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.044510387" vertical-offset="285" max-vertical-offset="1620">
           <caret line="22" column="55" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1319,7 +1208,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1011">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1327,15 +1215,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19756839" vertical-offset="0" max-vertical-offset="987">
           <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/relationships_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38575667" vertical-offset="0" max-vertical-offset="1011">
-          <caret line="26" column="37" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1343,7 +1222,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.38575667" vertical-offset="0" max-vertical-offset="4485">
           <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1351,62 +1229,149 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49610895" vertical-offset="0" max-vertical-offset="1028">
           <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log/infusionsoft_api.log">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5" vertical-offset="0" max-vertical-offset="315">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/infusionsoft-1.1.8/lib/infusionsoft/exception_handler.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="965">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/infusionsoft-1.1.8/lib/infusionsoft/exceptions.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="965">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/infusionsoft-1.1.8/lib/infusionsoft/request.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="965">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/infusionsoft-1.1.8/lib/infusionsoft/connection.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65284973" vertical-offset="0" max-vertical-offset="965">
+          <caret line="42" column="3" selection-start-line="42" selection-start-column="3" selection-end-line="42" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/infusionsoft-1.1.8/lib/infusionsoft/api.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="965">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/infusionsoft-1.1.8/lib/infusionsoft/client.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="965">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/infusionsoft-1.1.8/lib/infusionsoft.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="965">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rbenv/versions/2.1.1/lib/ruby/gems/2.1.0/gems/infusionsoft-1.1.8/lib/infusionsoft/configuration.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4041451" vertical-offset="0" max-vertical-offset="965">
+          <caret line="26" column="47" selection-start-line="26" selection-start-column="47" selection-end-line="26" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/infusionsoft.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08152174" vertical-offset="0" max-vertical-offset="736">
+          <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8566978" vertical-offset="0" max-vertical-offset="963">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/features/list_relatives_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7823741" vertical-offset="0" max-vertical-offset="1050">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/features/show_user_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9109792" vertical-offset="249" max-vertical-offset="1260">
+        <state vertical-scroll-proportion="2.1043165" vertical-offset="0" max-vertical-offset="1260">
           <caret line="78" column="3" selection-start-line="78" selection-start-column="3" selection-end-line="78" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/features/list_relatives_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4134981" vertical-offset="0" max-vertical-offset="1052">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/features/delete_relationship_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.513308" vertical-offset="0" max-vertical-offset="1052">
-          <caret line="36" column="3" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/features/create_relationship_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31750742" vertical-offset="39" max-vertical-offset="1050">
-          <caret line="24" column="45" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/relationships_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42775667" vertical-offset="0" max-vertical-offset="1052">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="494" max-vertical-offset="1050">
+          <caret line="60" column="53" selection-start-line="60" selection-start-column="53" selection-end-line="60" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/relationships/_relationship.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37937742" vertical-offset="0" max-vertical-offset="1028">
+        <state vertical-scroll-proportion="0.7330827" vertical-offset="0" max-vertical-offset="532">
           <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/relationships_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8093525" vertical-offset="0" max-vertical-offset="556">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/features/delete_relationship_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.971223" vertical-offset="0" max-vertical-offset="630">
+          <caret line="36" column="3" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/features/edit_relationship_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81602377" vertical-offset="0" max-vertical-offset="1011">
-          <caret line="55" column="40" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.64928055" vertical-offset="929" max-vertical-offset="1485">
+          <caret line="86" column="33" selection-start-line="86" selection-start-column="33" selection-end-line="86" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/relationships_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29856116" vertical-offset="329" max-vertical-offset="945">
+          <caret line="33" column="85" selection-start-line="33" selection-start-column="54" selection-end-line="33" selection-end-column="85" />
           <folding />
         </state>
       </provider>

@@ -29,6 +29,13 @@ class RelationshipsController < ApplicationController
   end
 
   def update
+    inviter = User.find(params[:id])
+    if @user.approve(inviter)
+      redirect_to pending_relationships_url, success: 'Your family member was added.'
+    else
+      redirect_to pending_relationships_url, danger: 'There was a problem adding your family member.  Please try again.'
+    end
+
   end
 
   def destroy

@@ -17,7 +17,7 @@
 
     Pending invitations
 
-    <!-- TODO: badge for number of invites -->
+    <%= content_tag :span, @user.pending_invited_by.size, class:'badge' %>
 
   <% end %>
 </li>

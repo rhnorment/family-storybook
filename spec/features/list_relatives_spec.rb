@@ -26,6 +26,7 @@ describe 'listing relatives' do
     expect(page).to have_text(@user5.name)
     expect(page).to have_text('Added as a family member')
     expect(page).to have_link('Remove')
+    expect(page).to have_text(@user1.pending_invited_by.size)
   end
 
   it 'should not list all the pending relationships invited by the user' do
@@ -57,9 +58,10 @@ describe 'listing relatives' do
   end
 
   it 'should render the nothing_to_render_alert partial if there are no relatives' do
+    Relationship.delete_all
     visit relationships_url
 
-    expect(page).to have_text('There are no relatives to display.')
+    expect(page).to have_text('No relatives to display.')
   end
 
 end

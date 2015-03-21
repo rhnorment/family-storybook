@@ -17,6 +17,7 @@ class RelationshipsController < ApplicationController
     invitee = User.find(params[:user_id])
     if @user.invite(invitee)
       redirect_to new_relationship_url, success: 'Your invitation has been sent!'
+
     else
       redirect_to new_relationship_url, danger: 'Your invitation could not be sent.  Please try again.'
     end

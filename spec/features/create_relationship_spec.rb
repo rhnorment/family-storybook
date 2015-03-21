@@ -62,4 +62,8 @@ describe 'invite a relative' do
     expect(page).to_not have_text(@user2.name)
   end
 
+  it 'should send an email to the invitee notifying him of the invitation'
+
+
+
 end

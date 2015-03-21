@@ -20,8 +20,6 @@ class Relationship < ActiveRecord::Base
   belongs_to            :user
   belongs_to            :relative,     class_name: 'User'
 
-  # methods
-
   # returns true if a relationship has been approved, else false:
   def approved?
     !self.pending

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'invite a relative' do
 
   before do
+    ActionMailer::Base.deliveries.clear
     @user1 = User.create!(user_attributes)
     @user2 = User.create!(user_attributes(email: 'user2@example.com', name: 'User2'))
     @user3 = User.create!(user_attributes(email: 'user3@example.com', name: 'User3'))
@@ -58,12 +59,8 @@ describe 'invite a relative' do
 
     click_link('Invite', { href: relationships_path(user_id: @user2.id) })
 
-    expect(current_path).to eq(new_relationship_path)
+    expect(current_url).to eq(new_relationship_url)
     expect(page).to_not have_text(@user2.name)
   end
-
-  it 'should send an email to the invitee notifying him of the invitation'
-
-
 
 end

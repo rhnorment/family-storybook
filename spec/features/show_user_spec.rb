@@ -50,20 +50,6 @@ describe 'Viewing a user profile page' do
     expect(page).to_not have_text('Story 3')
   end
 
-  it 'lists the user relationships in the family tab' do
-    user3 = User.create!(user_attributes(email: 'user3@example.com', name: 'User 3'))
-    user4 = User.create!(user_attributes(email: 'user4@example.com', name: 'User 4'))
-    @user.invite(user3)
-    user3.approve(@user)
-
-    visit user_url(@user)
-
-    expect(page).to have_text(user3.name)
-    expect(page).to have_text('Added as a family member')
-    expect(page).to have_link('Remove')
-    expect(page).to_not have_text(user4.name)
-  end
-
   it 'lists the user activities in the activity tab' do
     storybook = @user.storybooks.create!(storybook_attributes)
     story = @user.stories.create!(story_attributes)

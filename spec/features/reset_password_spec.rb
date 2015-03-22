@@ -9,7 +9,7 @@ describe 'resetting a user password' do
 
     expect(current_path).to eq(new_password_reset_path)
 
-    expect(page).to have_field("Email")
+    expect(page).to have_field('Email')
   end
 
   it 'finds the user by email address if the user is active and sends an email with a link' do
@@ -19,7 +19,7 @@ describe 'resetting a user password' do
 
     visit new_password_reset_url
 
-    fill_in "Email", with: "user@example.com"
+    fill_in 'Email', with: 'user@example.com'
 
     click_button 'Send me instructions'
 
@@ -33,7 +33,7 @@ describe 'resetting a user password' do
   it 'does not find the user by email address if the user is inactive' do
     visit new_password_reset_url
 
-    fill_in "Email", with: "dave@example.com"
+    fill_in 'Email', with: 'dave@example.com'
 
     click_button 'Send me instructions'
 

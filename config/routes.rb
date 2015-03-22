@@ -1,13 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'invitations/new'
-
-  get 'invitations/create'
-
-  get 'invitations/edit'
-
-  get 'invitations/update'
-
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -26,9 +18,6 @@ Rails.application.routes.draw do
   resources :users,             except: :index
   resources :storybooks
   resources :stories
-  resources :relationships,     except: [:show, :edit] do
-    get 'pending', on: :collection
-  end
   resources :activities,        only:   :index
   resources :password_resets,   only:   [:new, :create, :edit, :update]
 

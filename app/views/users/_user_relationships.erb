@@ -6,11 +6,11 @@
 
         <% @relatives.each do |user| %>
 
-            <%= render partial: 'relationships/relationship', locals: { item: user, type: 'relative' } %>
+
 
         <% end %>
 
-        <%= content_tag :p, (link_to 'Vew all family members', relationships_path), class:'lead m-t-lg' %>
+        <%= content_tag :p, (link_to 'Vew all family members', '#'), class:'lead m-t-lg' %>
 
     <% else %>
 

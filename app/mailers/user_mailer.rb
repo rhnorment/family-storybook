@@ -12,16 +12,4 @@ class UserMailer < ActionMailer::Base
     mail to: user.email, subject: 'Password reset'
   end
 
-  def invitation_to_connect(user, invitee)
-    @user = user
-    invitee = invitee
-    mail to: invitee.email, subject: 'Invitation to connect on FamilyBook'
-  end
-
-  def invitation_to_join(user, invitee)
-    @user = user
-    @invitee = invitee
-    mail to: invitee.email, subject: 'Invitation to join FamilyBook'
-  end
-
 end

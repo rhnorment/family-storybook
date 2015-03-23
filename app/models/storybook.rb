@@ -17,8 +17,7 @@ class Storybook < ActiveRecord::Base
 
   # configuration:
   mount_uploader      :cover,       ImageUploader
-  include             Elasticsearch::Model
-  include             Elasticsearch::Model::Callbacks
+
   include             PublicActivity::Common
 
   # validations:

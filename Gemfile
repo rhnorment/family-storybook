@@ -12,12 +12,12 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jquery-turbolinks'
+gem 'pg'
 
 # application gems:
 gem 'carrierwave'
 gem 'cloudinary'
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
+gem 'pg_search'
 gem 'prawn'
 gem 'public_activity'
 gem 'devise'
@@ -33,7 +33,6 @@ gem 'holder_rails'
 
 # development gems:
 group :development do
-  gem 'sqlite3'
   gem 'spring'
   gem 'faker'
   gem 'populator'
@@ -53,5 +52,4 @@ end
 # production gems:
 group :production do
   gem 'rails_12factor'
-  gem 'pg'
 end

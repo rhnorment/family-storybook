@@ -13,6 +13,8 @@
 class Story < ActiveRecord::Base
 
   # configuration:
+  include             PgSearch
+  multisearchable     against:      [:title, :content]
   include             PublicActivity::Common
 
   # validations:

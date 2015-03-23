@@ -5,11 +5,11 @@ Rails.application.routes.draw do
 
   root      'static#home'
 
-  get       'how_it_works'  => 'static#how'
-  get       'showcase'      => 'static#showcase'
-  get       'signup'        => 'users#new'
-  get       'signin'        => 'sessions#new'
-  get       'storybooks/search'
+  get       'how_it_works'  =>    'static#how'
+  get       'showcase'      =>    'static#showcase'
+  get       'signup'        =>    'users#new'
+  get       'signin'        =>    'sessions#new'
+  get       'search',       to:   'search#search'
 
   get       '/404'          =>    'errors#not_found'
   get       '/422'          =>    'errors#unprocessable'
@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :users,             except: :index
   resources :storybooks
   resources :stories
+  resources :search,            only:   :index
   resources :activities,        only:   :index
   resources :password_resets,   only:   [:new, :create, :edit, :update]
 

@@ -1,0 +1,24 @@
+<%= bootstrap_form_tag url: search_path, method: :get do |f| %>
+
+    <%= f.text_field :query, hide_label: true  %>
+
+    <%= f.form_group do %>
+        <%= f.primary 'Search' %> or
+        <%= link_to 'Cancel', :back %>
+    <% end %>
+
+<% end %>
+
+<ul class="list-group m-t-lg">
+
+  <% @results.each do |result| %>
+
+      <li class="list-group-item">
+
+        <%= link_to result.searchable.title, result.searchable %>
+
+      </li>
+
+  <% end %>
+
+</ul>

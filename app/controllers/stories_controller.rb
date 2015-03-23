@@ -53,18 +53,18 @@ class StoriesController < ApplicationController
 
   private
 
-  def set_correct_user
-    @user = current_user
-    redirect_to :back unless current_user?(@user)
-  end
+    def set_correct_user
+      @user = current_user
+      redirect_to :back unless current_user?(@user)
+    end
 
-  def set_correct_story
-    @story = Story.find(params[:id])
-    redirect_to @user unless @story.user == current_user
-  end
+    def set_correct_story
+      @story = Story.find(params[:id])
+      redirect_to @user unless @story.user == current_user
+    end
 
-  def story_params
-    params.require(:story).permit(:title, :content)
-  end
+    def story_params
+      params.require(:story).permit(:title, :content)
+    end
 
 end

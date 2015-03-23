@@ -17,7 +17,8 @@ class Storybook < ActiveRecord::Base
 
   # configuration:
   mount_uploader      :cover,       ImageUploader
-
+  include             PgSearch
+  multisearchable     against:      [:title, :description]
   include             PublicActivity::Common
 
   # validations:

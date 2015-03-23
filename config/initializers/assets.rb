@@ -5,6 +5,7 @@
     stories
     relationships
     activities
+    search
     devise
     active_admin
     errors

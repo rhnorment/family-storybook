@@ -47,6 +47,10 @@ class StorybooksController < ApplicationController
     redirect_to storybooks_url
   end
 
+  def search
+    @storybooks = Storybook.search(params[:query]).records
+  end
+
   private
 
     def set_correct_user

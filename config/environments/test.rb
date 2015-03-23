@@ -39,4 +39,8 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
+  searchbox_url = 'http://paas:f65eae1e727f3a85c1b3401670fd1056@fili-us-east-1.searchly.com'
+
+  Elasticsearch::Model.client = Elasticsearch::Client.new host: searchbox_url
+
 end

@@ -16,6 +16,8 @@ gem 'jquery-turbolinks'
 # application gems:
 gem 'carrierwave'
 gem 'cloudinary'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 gem 'prawn'
 gem 'public_activity'
 gem 'devise'

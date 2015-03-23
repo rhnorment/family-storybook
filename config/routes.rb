@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get       'showcase'      => 'static#showcase'
   get       'signup'        => 'users#new'
   get       'signin'        => 'sessions#new'
+  get       'storybooks/search'
 
   get       '/404'          =>    'errors#not_found'
   get       '/422'          =>    'errors#unprocessable'

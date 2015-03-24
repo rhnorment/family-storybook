@@ -8,7 +8,7 @@ class SearchController < ApplicationController
     if params[:query].blank?
       @results = []
     else
-      @results = PgSearch.multisearch(params[:query])
+      @results = PgSearch.multisearch(params[:query]).to_a
     end
   end
 

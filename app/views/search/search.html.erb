@@ -9,16 +9,24 @@
 
 <% end %>
 
-<ul class="list-group m-t-lg">
+<div id="search-results">
 
-  <% @results.each do |result| %>
+  <% if @results.empty? %>
 
-      <li class="list-group-item">
+      <%= render partial: 'shared/nothing_to_render', locals: { item: 'result' } %>
 
-        <%= link_to result.searchable.title, result.searchable %>
+  <% else %>
 
-      </li>
+      <ul class="list-group m-t-lg">
+
+        <% @results.each do |result| %>
+
+            <%= render partial: 'result', locals: { result: result } %>
+
+        <% end %>
+
+      </ul>
 
   <% end %>
 
-</ul>
+</div>

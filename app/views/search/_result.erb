@@ -1,7 +1,27 @@
-<li class="list-group-item">
+<li class="list-group-item row">
 
-  <%= link_to result.searchable.title, result.searchable %>
+  <div class="col-lg-3">
+
+    <%= link_to result.searchable.title, result.searchable %>
+
+  </div>
+
+  <div class="col-lg-3">
+
+    <%= link_to result.searchable_type, result.searchable_type.pluralize.downcase %>
+
+  </div>
+
+  <div class="col-lg-3">
+
+    author: <%= result.searchable.user.name %>
+
+  </div>
+
+  <div class="col-lg-3">
+
+    created <%= time_ago_in_words(result.searchable.created_at) %> ago
+
+  </div>
 
 </li>
-
-<!-- TODO:  ADD COLUMNS TO search results -->

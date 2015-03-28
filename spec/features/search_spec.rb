@@ -13,28 +13,26 @@ describe 'Search' do
     @story2 = @user.stories.create!(story_attributes(title: 'Second Story', content: 'Content of second story.'))
   end
 
-  it 'presents a search form to the user' do
-    visit search_url
-
-    expect(current_path).to eq('/search')
+  it 'presents a search form to the user on all application pages' do
+    visit storybooks_url
 
     expect(page).to have_field('query')
   end
 
   it 'returns an empty array with a message if an empty form is submitted' do
-    visit search_url
+    visit stories_url
 
     fill_in 'query', with: ' '
-    click_button 'Search'
+    click_button 'Submit'
 
     expect(page).to have_text('No results to display.')
   end
 
   it 'returns an empty array if the search results are nil' do
-    visit search_url
+    visit storybooks_url
 
     fill_in 'query', with: 'hunt'
-    click_button 'Search'
+    click_button 'Submit'
 
     expect(page).to have_text('No results to display.')
   end
@@ -42,10 +40,10 @@ describe 'Search' do
   context 'when returning an array consisting items' do
 
     it 'returns the correct array of results' do
-      visit search_url
+      visit stories_url
 
       fill_in 'query', with: 'storybook'
-      click_button 'Search'
+      click_button 'Submit'
 
       expect(page).to have_link(@storybook1.title)
       expect(page).to have_link(@storybook2.title)
@@ -55,10 +53,10 @@ describe 'Search' do
     end
 
     it 'does not return an incorrect array of results' do
-      visit search_url
+      visit storybooks_url
 
       fill_in 'query', with: 'story'
-      click_button 'Search'
+      click_button 'Submit'
 
       expect(page).to_not have_link(@storybook1.title)
       expect(page).to_not have_link(@storybook2.title)

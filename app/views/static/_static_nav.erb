@@ -14,8 +14,8 @@
 
   <ul class="nav navbar-nav">
 
-    <%= content_tag :li, link_to('How it works', how_it_works_path), class:"#{is_active_action?('how')}" %>
-    <%= content_tag :li, link_to('Showcase', showcase_path), class:"#{is_active_action?('showcase')}" %>
+    <%= nav_link_to 'How it works', how_it_works_path, {}, { wrapper: 'li' } %>
+    <%= nav_link_to 'Showcase', showcase_path, {}, { wrapper: 'li' } %>
 
   </ul>
 

@@ -27,6 +27,7 @@ describe 'Signing in' do
 
     expect(current_path).to eq(storybooks_path)
 
+    expect(page).to have_field('query')
     expect(page).to have_link('Sign out')
     expect(page).not_to have_link('Sign in')
     expect(page).not_to have_link('Sign up')

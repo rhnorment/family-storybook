@@ -1,13 +1,1 @@
-<% unless current_page?(stories_path) %>
-
-    <%= content_tag :li, link_to(icon('angle-double-left', 'Return to my stories'), stories_path, class:'navbar-link') %>
-
-<% end %>
-
-<% if current_page?(stories_path) %>
-
-    <%= content_tag :li, link_to('Write a new story', new_story_path, class:'navbar-link') %>
-
-<% end %>
-
-<%= yield :sub_nav_content %>
+<%= content_tag :li, link_to('Write a new story', new_story_path, class:'navbar-link') %>

@@ -39,7 +39,7 @@ describe 'listing a users activities' do
 
     visit activities_url
 
-    expect(page).to have_text('There are no activities to display.')
+    expect(page).to have_text('No activities to display.')
   end
 
 end

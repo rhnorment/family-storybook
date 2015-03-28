@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if user = User.authenticate(params[:email], params[:password])
       session[:user_id] = user.id
       flash[:success] = "Welcome back, #{user.name}!"
-      redirect_to session[:intended_url] || user
+      redirect_to session[:intended_url] || storybooks_url
       session[:intended_url] = nil
     else
       flash.now[:danger] = 'Invalid email/password combination'

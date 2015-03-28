@@ -40,7 +40,7 @@ describe 'listing a users storys' do
   it 'should render the nothing_to_render_alert partial if there are no stories' do
     visit stories_url
 
-    expect(page).to have_text('There are no stories to display.')
+    expect(page).to have_text('No stories to display.')
   end
 
 

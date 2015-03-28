@@ -40,7 +40,7 @@ describe 'list storybooks' do
   it 'should render the nothing_to_render_alert partial if there are no storybooks' do
     visit storybooks_url
 
-    expect(page).to have_text('There are no storybooks to display.')
+    expect(page).to have_text('No storybooks to display.')
   end
 
 

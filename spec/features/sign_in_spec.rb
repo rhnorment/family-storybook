@@ -25,10 +25,8 @@ describe 'Signing in' do
 
     click_button 'Sign in'
 
-    expect(current_path).to eq(user_path(user))
+    expect(current_path).to eq(storybooks_path)
 
-    expect(page).to have_text("Welcome back, #{user.name}!")
-    expect(page).to have_link(user.name)
     expect(page).to have_link('Sign out')
     expect(page).not_to have_link('Sign in')
     expect(page).not_to have_link('Sign up')
@@ -54,13 +52,13 @@ describe 'Signing in' do
   it 'redirects to the intended page' do
     user = User.create!(user_attributes)
 
-    visit storybooks_url
+    visit stories_url
 
     expect(current_path).to eq(new_session_path)
 
     sign_in(user)
 
-    expect(current_path).to eq(storybooks_path)
+    expect(current_path).to eq(stories_path)
   end
 
   it 'does not allow access to certain pages based on an active session' do

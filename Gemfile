@@ -26,6 +26,7 @@ gem 'infusionsoft'
 
 # helper gems:
 gem 'font-awesome-sass'
+gem 'nav_lynx'
 gem 'bootstrap_form'
 gem 'data-confirm-modal', github: 'ifad/data-confirm-modal'
 gem 'kaminari'
@@ -33,7 +34,6 @@ gem 'holder_rails'
 
 # development gems:
 group :development do
-  gem 'spring'
   gem 'faker'
   gem 'populator'
 end

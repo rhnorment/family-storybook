@@ -18,7 +18,7 @@ class Relationship < ActiveRecord::Base
 
   # data relationships:
   belongs_to            :user
-  belongs_to            :relative,     class_name: 'User'
+  belongs_to            :relative,  class_name: 'User'
 
   # returns true if a relationship has been approved, else false:
   def approved?

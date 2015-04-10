@@ -1,0 +1,20 @@
+<h4 class="font-thin">Invite by email:</h4>
+
+
+
+<%= tag :br %>
+
+<h4 class="font-thin">Suggested family members to add:</h4>
+
+<ul id="invitees" class="list-group">
+
+  <% @invitees.each do |invitee| %>
+
+      <%= render partial: 'relationship', locals: { item: invitee, type: 'invitee' } %>
+
+  <% end %>
+
+</ul>
+
+
+

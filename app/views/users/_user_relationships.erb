@@ -4,13 +4,13 @@
 
     <% if @relatives.any? %>
 
-        <% @relatives.each do |user| %>
+        <% @relatives.each do |relative| %>
 
-
+            <%= render partial: 'relationships/relationship', locals: { item: relative, type: 'relative' } %>
 
         <% end %>
 
-        <%= content_tag :p, (link_to 'Vew all family members', '#'), class:'lead m-t-lg' %>
+        <%= content_tag :p, (link_to 'Vew all family members', relationships_path), class:'lead m-t-lg' %>
 
     <% else %>
 

@@ -1,14 +1,14 @@
-module Family
+module Relatable
 
-  extend    ActiveSupport::Concern
+  extend           ActiveSupport::Concern
 
   included do
-    has_many            :relationships,         dependent:  :destroy
-    has_many            :inverse_relationships, class_name: 'Relationship', foreign_key: 'relative_id',   dependent: :destroy
-    has_many            :pending_invited,     ->  { where('relationships.pending = ?', true) },   through: :relationships, source: :relative
-    has_many            :invited,             ->  { where('relationships.pending = ?', false) },  through: :relationships, source: :relative
-    has_many            :pending_invited_by,  ->  { where('relationships.pending = ?', true) },   through: :inverse_relationships, source: :user
-    has_many            :invited_by,          ->  { where('relationships.pending = ?', false) },  through: :inverse_relationships, source: :user
+    has_many       :relationships,         dependent:  :destroy
+    has_many       :inverse_relationships, class_name: 'Relationship', foreign_key: 'relative_id',   dependent: :destroy
+    has_many       :pending_invited,     ->  { where('relationships.pending = ?', true) },   through: :relationships, source: :relative
+    has_many       :invited,             ->  { where('relationships.pending = ?', false) },  through: :relationships, source: :relative
+    has_many       :pending_invited_by,  ->  { where('relationships.pending = ?', true) },   through: :inverse_relationships, source: :user
+    has_many       :invited_by,          ->  { where('relationships.pending = ?', false) },  through: :inverse_relationships, source: :user
   end
 
   # suggest a user to become a family member.  If the operation succeeds, the method returns true, else false:

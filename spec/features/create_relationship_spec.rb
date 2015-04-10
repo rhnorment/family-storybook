@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'invite a relative' do
 
   before do
-    ActionMailer::Base.deliveries.clear
     @user1 = User.create!(user_attributes)
     @user2 = User.create!(user_attributes(email: 'user2@example.com', name: 'User2'))
     @user3 = User.create!(user_attributes(email: 'user3@example.com', name: 'User3'))
@@ -12,8 +11,11 @@ describe 'invite a relative' do
     sign_in(@user1)
   end
 
-  it 'should display a list of recommended users to invite, each with a link to invite' do
+  it 'should display a list of recommended users to invite, each with a link to invite and an email address form' do
     visit new_relationship_url
+
+    expect(page).to have_field('email')
+    expect(page).to have_button('Find')
 
     expect(page).to have_text(@user2.name)
     expect(page).to have_text(@user3.name)
@@ -54,13 +56,30 @@ describe 'invite a relative' do
     end
   end
 
-  it 'should invite other users to be family members' do
-    visit new_relationship_url
+  context 'when inviting a recommended family member to connect' do
 
-    click_link('Invite', { href: relationships_path(user_id: @user2.id) })
+    before do
+      Relationship.delete_all
+    end
 
-    expect(current_url).to eq(new_relationship_url)
-    expect(page).to_not have_text(@user2.name)
+    it 'should invite other users to be family members' do
+      visit new_relationship_url
+
+      expect(page).to have_text(@user2.name)
+
+      click_link('Invite', { href: relationships_path(user_id: @user2) })
+
+      expect(current_url).to eq(new_relationship_url)
+      expect(page).to_not have_text(@user2.name)
+    end
+
+  end
+
+  context 'when inviting a family member to connect via an email address' do
+
+
+
+
   end
 
 end

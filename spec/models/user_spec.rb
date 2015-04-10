@@ -2,14 +2,15 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  password_digest :string(255)
-#  reset_token     :string(255)
-#  reset_sent_at   :datetime
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id               :integer          not null, primary key
+#  name             :string(255)
+#  email            :string(255)
+#  password_digest  :string(255)
+#  reset_token      :string(255)
+#  reset_sent_at    :datetime
+#  created_at       :datetime
+#  updated_at       :datetime
+#  invitation_token :string(255)
 #
 
 require 'spec_helper'

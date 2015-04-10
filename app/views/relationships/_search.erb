@@ -1,0 +1,31 @@
+<%= bootstrap_form_tag url: new_relationship_path, html: { class:'navbar-form' }, method: :get do |f| %>
+
+    <%= f.email_field :query, hide_label: true, placeholder:'Enter an email address'  %>
+
+    <%= f.submit 'Find', class:'btn btn-default btn-sm' %>
+
+<% end %>
+
+<%= tag :br %>
+
+<% if @results.empty? %>
+
+    <%= render template: 'invitations/new' %>
+
+<% else %>
+
+    <p class="lead">We found the following members:</p>
+
+    <ul class="search-results" class="list-group">
+
+      <% @results.each do |result| %>
+
+        <%= render partial: 'relationship', locals: { item: result, type: 'invitee' } %>
+
+      <% end %>
+
+    </ul>
+
+<% end %>
+
+<%= tag :br %>

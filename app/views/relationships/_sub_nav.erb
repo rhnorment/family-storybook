@@ -1,0 +1,24 @@
+<% unless current_page?(relationships_path) %>
+
+    <%= content_tag :li, link_to(icon('angle-double-left', 'Return to my family members'), relationships_path, class:'navbar-link') %>
+
+<% end %>
+
+<% if current_page?(relationships_path) %>
+
+    <%= content_tag :li, link_to('Add family members', new_relationship_path, class:'navbar-link') %>
+
+<% end %>
+
+<li>
+
+  <%= link_to pending_relationships_path, class:'navbar-link' do %>
+
+    Pending invitations <%= content_tag :span, @user.pending_invited_by.size, class:'badge' %>
+
+  <% end %>
+
+
+</li>
+
+<%= yield :sub_nav_content %>

@@ -1,0 +1,43 @@
+<h4 class="font-thin">Invitations waiting on your approval</h4>
+
+<% if @pending_invited_by.empty? %>
+
+    <%= render partial: 'shared/nothing_to_render', locals: { item: 'invitation' } %>
+
+<% else %>
+
+    <ul id="incoming-invitations" class="list-group">
+
+      <% @pending_invited_by.each do |invited_by| %>
+
+          <%= render partial: 'relationship', locals: { item: invited_by, type: 'invited_by' } %>
+
+      <% end %>
+
+    </ul>
+
+<% end %>
+
+
+<%= tag :br %>
+
+
+<h4 class="font-thin">Invitations you have sent</h4>
+
+<% if @pending_invited.empty? %>
+
+    <%= render partial: 'shared/nothing_to_render', locals: { item: 'invitation' } %>
+
+<% else %>
+
+    <ul id="outgoing-invitations" class="list-group">
+
+        <% @pending_invited.each do |invited| %>
+
+            <%= render partial: 'relationship', locals: { item: invited, type: 'invited' } %>
+
+        <% end %>
+
+    </ul>
+
+<% end %>

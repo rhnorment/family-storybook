@@ -1,0 +1,19 @@
+<% if @relatives.empty? %>
+
+    <%= render partial: 'shared/nothing_to_render', locals: { item: 'relative' } %>
+
+<% else %>
+
+    <ul id="relatives" class="list-group">
+
+      <% @relatives.each do |relative| %>
+
+        <%= render partial: 'relationship', locals: { item: relative, type: 'relative' } %>
+
+      <% end %>
+
+    </ul>
+
+    <%= paginate @relatives %>
+
+<% end %>

@@ -14,11 +14,6 @@ module Authentication
     end
   end
 
-  # generates a new URL token for a variety of functions:
-  def User.new_token
-    SecureRandom.urlsafe_base64
-  end
-
   # sends an email to a newly registered user:
   def send_activation_email
     UserMailer.registration_confirmation(self).deliver

@@ -12,4 +12,6 @@ class UserMailer < ActionMailer::Base
     mail to: user.email, subject: 'Password reset'
   end
 
+
+
 end

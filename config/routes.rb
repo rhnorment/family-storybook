@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
   resource  :session
   resources :users,             except: :index
+  resources :relationships do
+    get 'pending', on: :collection
+  end
+  resources :invitations,       except: :index
   resources :storybooks
   resources :stories
   resources :search,            only:   :index

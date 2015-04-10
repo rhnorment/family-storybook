@@ -1,7 +1,7 @@
 <%= bootstrap_form_tag url: invitations_path, html: { class:'navbar-form' }, method: :post do |f| %>
 
-    <%= f.email_field :email, hide_label: true, placeholder:'Enter an email address'  %>
+    <%= f.email_field :recipient_email, hide_label:true, placeholder:'Enter an email address'  %>
 
-    <%= f.primary 'Submit', class:'btn btn-default btn-sm' %>
+    <%= f.primary 'Invite', class:'btn btn-default btn-sm' %>
 
 <% end %>

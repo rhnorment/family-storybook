@@ -10,7 +10,6 @@ class RelationshipsController < ApplicationController
 
   def new
     @page_title = 'Add family members'
-    @results = User.search_by_email(params[:query]).to_a
     @invitees = @user.invitees.where.not(id: @user.id).order(created_at: :desc).limit(5)
   end
 

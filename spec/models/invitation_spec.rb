@@ -25,9 +25,9 @@ describe 'the invitation model' do
     invitation = Invitation.new
 
     expect(invitation.valid?).to be_false
-    expect(invitation.errors).to include(:email)
+    expect(invitation.errors).to include(:recipient_email)
     expect(invitation.errors).to include(:user_id)
-    expect(invitation.errors).to include(:recipient_id)
+    expect(invitation.errors).to include(:token)
     expect(invitation.errors.size).to eq(4)
   end
 

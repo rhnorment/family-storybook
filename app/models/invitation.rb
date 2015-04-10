@@ -13,8 +13,8 @@
 class Invitation < ActiveRecord::Base
 
   # model validations:
-  validates       :email, :user_id,  :token, presence: true
-  validates       :email, format: { with: /\A\S+@\S+\z/ }
+  validates       :recipient_email, :user_id,  :token, presence: true
+  validates       :recipient_email, format: { with: /\A\S+@\S+\z/ }
 
   # data associations:
   belongs_to      :user

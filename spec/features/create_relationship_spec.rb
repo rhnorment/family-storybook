@@ -15,7 +15,7 @@ describe 'invite a relative' do
     visit new_relationship_url
 
     expect(page).to have_field('email')
-    expect(page).to have_button('Find')
+    expect(page).to have_button('Invite')
 
     expect(page).to have_text(@user2.name)
     expect(page).to have_text(@user3.name)

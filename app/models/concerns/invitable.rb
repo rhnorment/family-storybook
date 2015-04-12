@@ -3,7 +3,7 @@ module Invitable
   extend ActiveSupport::Concern
 
   included do
-    has_many    :sent_invitations,  class_name: 'Invitation', foreign_key: 'sender_id'
+    has_many    :invitations
     belongs_to  :invitation
   end
 

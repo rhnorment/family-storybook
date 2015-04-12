@@ -48,4 +48,30 @@ describe UserMailer do
 
   end
 
+  context 'when inviting a non-user to join the site' do
+
+    before do
+      user = User.new(user_attributes)
+      @invitation = user.invitations.new(invitation_attributes)
+      @invitation.token = User.new_token
+    end
+
+    describe 'invitation email' do
+      let(:mail) { UserMailer.invitation(@invitation) }
+
+      it 'renders the headers' do
+        mail.subject.should eq('Invitation to join FamilyBook!')
+        mail.to.should eq([@invitation.recipient_email])
+        mail.from.should eq(['no-reply@familybook.com'])
+      end
+
+      it 'renders the body' do
+        mail.body.encoded.should match(@invitation.user.name)
+        mail.body.encoded.should match(@invitation.token)
+      end
+
+    end
+
+  end
+
 end

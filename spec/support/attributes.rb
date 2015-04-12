@@ -31,8 +31,7 @@ end
 
 def invitation_attributes(overrides = {})
   {
-      recipient_email: 'user@example.com',
-      token: 'invitation_token'
+      recipient_email: 'tester@example.com',
   }.merge(overrides)
 end
 

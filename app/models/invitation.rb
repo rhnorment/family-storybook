@@ -3,7 +3,7 @@
 # Table name: invitations
 #
 #  id              :integer          not null, primary key
-#  sender_id       :integer
+#  user_id         :integer
 #  recipient_email :string(255)
 #  token           :string(255)
 #  sent_at         :datetime
@@ -15,11 +15,11 @@
 class Invitation < ActiveRecord::Base
 
   # model validations:
-  validates       :recipient_email, presence: true
+  validates       :recipient_email, :user_id, presence: true
   validates       :recipient_email, format: { with: /\A\S+@\S+\z/ }
 
   # data associations:
-  belongs_to      :sender,    class_name: 'User'
+  belongs_to      :user
   has_one         :recipient, class_name: 'User'
 
   # callbacks
@@ -33,7 +33,7 @@ class Invitation < ActiveRecord::Base
 
   # check to see if the recipient is the sender:
   def recipient_not_self?
-    self.recipient_email != self.sender.email
+    self.recipient_email != self.user.email
   end
 
   # check to see if the recipient is already a member:

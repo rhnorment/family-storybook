@@ -3,7 +3,7 @@
 # Table name: invitations
 #
 #  id              :integer          not null, primary key
-#  sender_id       :integer
+#  user_id         :integer
 #  recipient_email :string(255)
 #  token           :string(255)
 #  sent_at         :datetime
@@ -41,8 +41,19 @@ describe 'the invitation model' do
   end
 
   it 'is valid with example attributes' do
-    invitation = Invitation.new(invitation_attributes)
+    user = User.create!(user_attributes)
+
+    invitation = user.invitations.new(invitation_attributes)
+
     expect(invitation.valid?).to be_true
+  end
+
+  it 'belongs to a user' do
+    user = User.create!(user_attributes)
+
+    invitation = user.invitations.new(invitation_attributes)
+
+    expect(invitation.user).to eq(user)
   end
 
 end

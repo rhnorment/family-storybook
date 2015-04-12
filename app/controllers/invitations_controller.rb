@@ -7,8 +7,7 @@ class InvitationsController < ApplicationController
   end
 
   def create
-    invitation = Invitation.new(invitation_params)
-    invitation.sender = @user
+    invitation = @user.invitations.new(invitation_params)
     if invitation.recipient_not_self? && invitation.recipient_not_member?
       if invitation.save
         redirect_to new_relationship_path, success: 'Your invitation was sent.'

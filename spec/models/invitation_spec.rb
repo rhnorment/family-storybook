@@ -3,9 +3,11 @@
 # Table name: invitations
 #
 #  id              :integer          not null, primary key
-#  user_id         :integer
+#  sender_id       :integer
 #  recipient_email :string(255)
 #  token           :string(255)
+#  sent_at         :datetime
+#  accepted_at     :datetime
 #  created_at      :datetime
 #  updated_at      :datetime
 #
@@ -14,43 +16,33 @@ require 'spec_helper'
 
 describe 'the invitation model' do
 
-  before do
-    @user1 = User.create!(user_attributes)
-    @user2 = User.create!(user_attributes(email: 'user2@example.com'))
-    @user3 = User.create!(user_attributes(email: 'user3@example.com'))
-    @user4 = User.create!(user_attributes(email: 'user4@example.com'))
+  it 'requires an email address' do
+    invitation = Invitation.new(recipient_email: '')
+    invitation.valid?
+    expect(invitation.errors[:recipient_email].any?).to be_true
   end
 
-  it 'should validate the presence of the user and relative ids' do
-    invitation = Invitation.new
-
-    expect(invitation.valid?).to be_false
-    expect(invitation.errors).to include(:recipient_email)
-    expect(invitation.errors).to include(:user_id)
-    expect(invitation.errors).to include(:token)
-    expect(invitation.errors.size).to eq(4)
+  it 'accepts a properly formatted email' do
+    emails = %w[user@example.com first.last@example.com]
+    emails.each do |email|
+      invitation = Invitation.new(recipient_email: email)
+      invitation.valid?
+      expect(invitation.errors[:recipient_email].any?).to be_false
+    end
   end
 
-  context 'when sending an invitation' do
-
-    it 'should be pending'
-
-    it 'should not be approved'
-
+  it 'rejects an improperly formatted email' do
+    emails = %w[@ user@ @example.com]
+    emails.each do |email|
+      invitation = Invitation.new(recipient_email: email)
+      invitation.valid?
+      expect(invitation.errors[:recipient_email].any?).to be_true
+    end
   end
 
-  context 'when accepting an invitation' do
-
-    it 'should not be pending'
-
-    it 'should be approved'
-
-  end
-
-  context 'when removing an invitation' do
-
-    it 'the invitation record should not exist'
-
+  it 'is valid with example attributes' do
+    invitation = Invitation.new(invitation_attributes)
+    expect(invitation.valid?).to be_true
   end
 
 end

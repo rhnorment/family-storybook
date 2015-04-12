@@ -2,15 +2,14 @@
 #
 # Table name: users
 #
-#  id               :integer          not null, primary key
-#  name             :string(255)
-#  email            :string(255)
-#  password_digest  :string(255)
-#  reset_token      :string(255)
-#  reset_sent_at    :datetime
-#  created_at       :datetime
-#  updated_at       :datetime
-#  invitation_token :string(255)
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  email           :string(255)
+#  password_digest :string(255)
+#  reset_token     :string(255)
+#  reset_sent_at   :datetime
+#  created_at      :datetime
+#  updated_at      :datetime
 #
 
 class User < ActiveRecord::Base
@@ -36,16 +35,11 @@ class User < ActiveRecord::Base
   has_many            :activities,            as: :trackable, class_name: 'PublicActivity::Activity',   dependent: :destroy
 
   # callbacks:
-  after_create        :create_invitation_digest, :create_activity
+  after_create        :create_activity
 
   #  sets user avatar using the gravitar web service:
   def gravatar_id
     Digest::MD5::hexdigest(email.downcase)
-  end
-
-  # generates an invitation token for the user to invite new members to the site:
-  def create_invitation_digest
-    update_attribute(:invitation_token, User.new_token)
   end
 
   #  creates a record in the activities table when a user joins the site:

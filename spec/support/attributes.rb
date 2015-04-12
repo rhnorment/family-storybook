@@ -29,3 +29,10 @@ def relationship_attributes(overrides = {})
   }.merge(overrides)
 end
 
+def invitation_attributes(overrides = {})
+  {
+      recipient_email: 'user@example.com',
+      token: 'invitation_token'
+  }.merge(overrides)
+end
+

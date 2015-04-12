@@ -1,0 +1,9 @@
+<h1>Invitation to Connect</h1>
+
+<p> <%= @invitation.sender.name %> has invited you to become a family member on FamilyBook. </p>
+
+<p> <%= link_to 'Click here to register and get started!', signup_url(@invitation.token) %> </p>
+
+<p>
+  Thanks,  FamilyBook
+</p>

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :relationships do
     get 'pending', on: :collection
   end
-  resources :invitations,       except: :index
+  resources :invitations,       only:   [:new, :create]
   resources :storybooks
   resources :stories
   resources :search,            only:   :index

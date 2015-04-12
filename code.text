@@ -1,0 +1,11 @@
+if recipient_not_self? && recipient_not_member?
+      @invitation.sender = @user
+      if @invitation.save
+        @invitation.send_invitation_email
+        redirect_to new_relationship_path, success: 'Your invitation was sent.'
+      else
+        redirect_to new_relationship_path, danger: 'There was a problem sending your invitation.  Please try again'
+      end
+    else
+      redirect_to new_relationship_path, info: "#{@invitation.email} is already a member!"
+    end

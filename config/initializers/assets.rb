@@ -4,6 +4,7 @@
     storybooks
     stories
     relationships
+    invitations
     activities
     search
     devise

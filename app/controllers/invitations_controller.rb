@@ -8,15 +8,22 @@ class InvitationsController < ApplicationController
 
   def create
     invitation = @user.invitations.new(invitation_params)
-    if invitation.recipient_not_self? && invitation.recipient_not_member?
+
+    if invitation.find_member.nil?
       if invitation.save
-        redirect_to new_relationship_path, success: 'Your invitation was sent.'
+        redirect_to new_relationship_url, success: 'Your invitation was sent.'
       else
-        redirect_to new_relationship_path, danger: 'There was a problem sending your invitation.  Please try again.'
+        redirect_to new_relationship_url, danger: 'You entered an invalid email address.  Please try again.'
       end
+    elsif invitation.find_member == @user
+      redirect_to new_relationship_url, warning: 'You cannot invite yourself.  Please try again.'
+    elsif @user.relatives.include?(invitation.find_member)
+      redirect_to relationships_url, info: "You are already relatives with #{invitation.find_member.name}."
     else
-      redirect_to new_relationship_path, info: 'This user is already a member.'
+      session[:recipient_email] = invitation.recipient_email
+      redirect_to new_relationship_url, info: "#{invitation.recipient_email} is already a member."
     end
+
   end
 
   private

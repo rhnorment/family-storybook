@@ -31,14 +31,9 @@ class Invitation < ActiveRecord::Base
     self.token = User.new_token
   end
 
-  # check to see if the recipient is the sender:
-  def recipient_not_self?
-    self.recipient_email != self.user.email
-  end
-
   # check to see if the recipient is already a member:
-  def recipient_not_member?
-    User.find_by_email(recipient_email).nil?
+  def find_member
+    User.find_by_email(recipient_email)
   end
 
   # send the invitation email:

@@ -1,6 +1,20 @@
 <h4 class="font-thin">Invite by email:</h4>
 
-<%= render template: 'invitations/new' %>
+<%= render template:'invitations/new' %>
+
+<%= tag :br %>
+
+<% if @recipient %>
+
+    <h4 class="font-thin text-info">The person you want to invite is already a member!</h4>
+
+    <ul id="recipients" class="list-group">
+
+      <%= render partial: 'relationship', locals: { item: @recipient, type: 'invitee' } %>
+
+    </ul>
+
+<% end %>
 
 <%= tag :br %>
 

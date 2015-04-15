@@ -10,7 +10,9 @@ class RelationshipsController < ApplicationController
 
   def new
     @page_title = 'Add family members'
+    @recipient = User.find_by_email(session[:recipient_email])
     @invitees = @user.invitees.where.not(id: @user.id).order(created_at: :desc).limit(5)
+    session[:recipient_email] = nil
   end
 
   def create

@@ -79,7 +79,15 @@ describe 'create an invitation to join the site' do
       click_button 'Invite'
     end
 
-    it 'should notify the user that the recipient has already been invited by email and to contact that person directly'
+    it 'should notify the user that the recipient has already been invited by email and to contact that person directly' do
+      visit new_relationship_url
+
+      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
+      click_button 'Invite'
+
+      expect(current_path).to eq(new_relationship_path)
+      expect(page).to have_text('You have already invited user2@example.com.  Please contact this person directly.')
+    end
 
   end
 

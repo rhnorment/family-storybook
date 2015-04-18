@@ -8,5 +8,6 @@ class CreateInvitations < ActiveRecord::Migration
       t.datetime :accepted_at
       t.timestamps
     end
+    add_index   :invitations, [:user_id, :recipient_email], unique: true
   end
 end

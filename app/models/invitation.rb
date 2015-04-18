@@ -36,6 +36,11 @@ class Invitation < ActiveRecord::Base
     User.find_by_email(recipient_email)
   end
 
+  # check to see if an invitation has already been sent to the recipient email address by the user:
+  def already_invited?
+    Invitation.find_by_user_id_and_recipient_email(user, recipient_email).present?
+  end
+
   # send the invitation email:
   def send_invitation_email
     UserMailer.invitation(self).deliver

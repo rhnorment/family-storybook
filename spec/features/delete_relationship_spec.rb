@@ -16,7 +16,7 @@ describe 'delete a relationship' do
       @user2.approve(@user1)
     end
 
-    it 'should display a list of current relatives with links to renove each relationship' do
+    it 'should display a list of current relatives with links to remove each relationship' do
       visit relationships_url
 
       expect(page).to have_text(@user2.name)
@@ -32,13 +32,66 @@ describe 'delete a relationship' do
       expect(current_path).to eq(relationships_path)
       expect(page).to have_text('Your family member was removed.')
       expect(page).to_not have_text(@user2.name)
-
     end
 
   end
 
-  context 'when cancelling a relationship request that has not been approved'
+  context 'when cancelling a relationship request that has not been approved' do
 
-  context 'when denying an inbound relationship request'
+    before do
+      @user1.invite(@user2)
+    end
+
+    it 'should allow the user to cancel the invitation request' do
+      visit pending_relationships_url
+
+      within('#outgoing-invitations') do
+        click_link('Cancel')
+      end
+
+      expect(current_path).to eq(relationships_path)
+      expect(page).to have_text('Your family member was removed.')
+      expect(page).to_not have_text(@user2.name)
+    end
+
+  end
+
+  context 'when denying an inbound relationship request' do
+
+    before do
+      @user2.invite(@user1)
+    end
+
+    it 'should allow a user to reject an incoming relationship request' do
+      visit pending_relationships_url
+
+      within('#incoming-invitations') do
+        click_link('Reject')
+      end
+
+      expect(current_path).to eq(relationships_path)
+      expect(page).to have_text('Your family member was removed.')
+      expect(page).to_not have_text(@user2.name)
+    end
+
+  end
+
+  context 'when cancelling an invitation opportunity if the recipient email is found' do
+
+    it 'should present the user with the option to send an invitation or cancel altogether' do
+      visit new_relationship_url
+
+      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
+
+      within('#recipients') do
+        expect(page).to have_link('Invite')
+        expect(page).to have_link('Cancel')
+      end
+
+
+    end
+
+
+  end
 
 end

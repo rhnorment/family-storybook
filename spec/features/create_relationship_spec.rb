@@ -56,7 +56,7 @@ describe 'invite a relative' do
     end
   end
 
-  context 'when inviting a recommended family member to connect' do
+  context 'when inviting a recommended family member to connect via the recommended relative list' do
 
     before do
       Relationship.delete_all
@@ -75,10 +75,22 @@ describe 'invite a relative' do
 
   end
 
-  context 'when inviting a family member to connect via an email address' do
+  context 'when confirming a relationship request from within the system' do
 
+    before do
+      @user2.invite(@user1)
+    end
 
+    it 'should allow the user to confirm the relationship' do
+      visit pending_relationships_url
 
+      expect(page).to have_text(@user2.name)
+
+      click_link('Confirm')
+
+      expect(current_path).to eq(pending_relationships_path)
+      expect(page).to have_text('User2 is now a relative')
+    end
 
   end
 

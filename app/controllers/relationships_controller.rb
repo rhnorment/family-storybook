@@ -17,10 +17,11 @@ class RelationshipsController < ApplicationController
 
   def create
     invitee = User.find(params[:user_id])
-    if @user.invite invitee
-      redirect_to new_relationship_path, success: 'Your invitation was sent.'
+
+    if @user.invite(invitee)
+      redirect_to new_relationship_url, success: 'Your invitation was sent.'
     else
-      redirect_to new_relationship_path, danger: 'There was a problem sending your invitation.  Please try again.'
+      redirect_to new_relationship_url, danger: 'There was a problem sending your invitation.  Please try again.'
     end
   end
 
@@ -33,12 +34,18 @@ class RelationshipsController < ApplicationController
   def update
     inviter = User.find(params[:id])
 
-    # TODO:   implement
+    if @user.approve(inviter)
+      redirect_to pending_relationships_url, success: "#{inviter.name} is now a relative!"
+    else
+      redirect_to pending_relationships_url, danger: 'There was a problem confirming your relationship.  Please try again.'
+    end
+
   end
 
   def destroy
     user = User.find(params[:id])
-    if @user.remove_relationship user
+
+    if @user.remove_relationship(user)
       redirect_to relationships_url, warning: 'Your family member was removed.'
     else
       redirect_to relationships_url, danger: 'There was a problem removing your family member.  Please try again.'

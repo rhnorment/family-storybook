@@ -21,7 +21,7 @@ module RelationshipsHelper
         link_to 'Cancel', relationship_path(item), method: :delete, class: 'text-muted pull-right',
                 data: { confirm: 'you sure you want to cancel this invitation?' }
       when 'invited_by'
-        link_to 'Approve', relationship_path(item), method: :patch, class: 'pull-right'
+        link_to 'Confirm', relationship_path(item), method: :patch, class: 'pull-right'
       else
         link_to 'Remove', relationship_path(item), method: :delete, class: 'text-muted pull-right',
                 data: { confirm: 'you sure you want to remove this family member?' }

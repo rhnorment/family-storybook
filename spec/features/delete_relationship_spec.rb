@@ -83,14 +83,27 @@ describe 'delete a relationship' do
 
       fill_in 'invitation[recipient_email]', with: 'user2@example.com'
 
+      click_button('Invite by email')
+
       within('#recipients') do
         expect(page).to have_link('Invite')
         expect(page).to have_link('Cancel')
       end
-
-
     end
 
+    it 'should allow the user to cancel the invitation request option' do
+      visit new_relationship_url
+
+      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
+
+      click_button('Invite by email')
+
+      within('#recipients') do
+        click_link('Cancel')
+      end
+
+      expect(current_path).to eq(new_relationship_path)
+    end
 
   end
 

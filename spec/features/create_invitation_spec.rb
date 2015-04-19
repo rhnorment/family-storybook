@@ -12,7 +12,7 @@ describe 'create an invitation to join the site' do
     it 'should present an error message and reload the page' do
       visit new_relationship_url
 
-      click_button 'Invite'
+      click_button 'Invite by email'
 
       expect(current_path).to eq(new_relationship_path)
       expect(page).to have_text('You entered an invalid email address.  Please try again.')
@@ -27,7 +27,7 @@ describe 'create an invitation to join the site' do
 
       fill_in 'invitation[recipient_email]', with: '@org'
 
-      click_button 'Invite'
+      click_button 'Invite by email'
 
       expect(current_path).to eq(new_relationship_path)
       expect(page).to have_text('You entered an invalid email address.  Please try again.')
@@ -42,7 +42,7 @@ describe 'create an invitation to join the site' do
 
       fill_in 'invitation[recipient_email]', with: 'user@example.com'
 
-      click_button 'Invite'
+      click_button 'Invite by email'
 
       expect(current_path).to eq(new_relationship_path)
       expect(page).to have_text('You cannot invite yourself.  Please try again')
@@ -63,7 +63,7 @@ describe 'create an invitation to join the site' do
 
       fill_in 'invitation[recipient_email]', with: 'user2@example.com'
 
-      click_button 'Invite'
+      click_button 'Invite by email'
 
       expect(current_path).to eq(relationships_path)
       expect(page).to have_text('You are already relatives with User2 Example.')
@@ -83,7 +83,7 @@ describe 'create an invitation to join the site' do
       visit new_relationship_url
 
       fill_in 'invitation[recipient_email]', with: 'user2@example.com'
-      click_button 'Invite'
+      click_button 'Invite by email'
 
       expect(current_path).to eq(new_relationship_path)
       expect(page).to have_text('You have already invited user2@example.com.  Please contact this person directly.')
@@ -102,7 +102,7 @@ describe 'create an invitation to join the site' do
 
       fill_in 'invitation[recipient_email]', with: 'user2@example.com'
 
-      click_button 'Invite'
+      click_button 'Invite by email'
 
       expect(current_path).to eq(new_relationship_path)
       expect(page).to have_text('user2@example.com is already a member.')
@@ -113,7 +113,7 @@ describe 'create an invitation to join the site' do
 
       fill_in 'invitation[recipient_email]', with: 'user2@example.com'
 
-      click_button 'Invite'
+      click_button 'Invite by email'
 
       within('#recipients') do
         expect(page).to have_link('Invite')
@@ -129,7 +129,7 @@ describe 'create an invitation to join the site' do
 
       fill_in 'invitation[recipient_email]', with: 'user2@example.com'
 
-      click_button 'Invite'
+      click_button 'Invite by email'
 
       expect(current_path).to eq(new_relationship_path)
       expect(page).to have_text('Your invitation was sent.')
@@ -142,7 +142,7 @@ describe 'create an invitation to join the site' do
 
       fill_in 'invitation[recipient_email]', with: 'user2@example.com'
 
-      click_button 'Invite'
+      click_button 'Invite by email'
 
       expect(ActionMailer::Base.deliveries.size).to eq(1)
     end

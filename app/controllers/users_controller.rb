@@ -13,15 +13,19 @@ class UsersController < ApplicationController
   end
 
   def new
+    @token = params[:invitation_token]
     @user = User.new
     render layout: 'session'
   end
 
   def create
     @user = User.new(user_params)
+    @token = params[:invitation_token]
+
     if @user.save
       @user.send_activation_email
       session[:user_id] = @user.id
+      @user.create_relationship_from_invitation(@token) if @token
       redirect_to @user, success: 'Thanks for signing up!'
     else
       render :new, layout: 'session'

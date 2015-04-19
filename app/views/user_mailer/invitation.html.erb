@@ -2,7 +2,7 @@
 
 <p> <%= @invitation.user.name %> has invited you to become a family member on FamilyBook. </p>
 
-<p> <%= link_to 'Click here to register and get started!', signup_url(@invitation.token) %> </p>
+<p> <%= link_to 'Click here to register and get started!', signup_url(invitation_token: @invitation.token) %> </p>
 
 <p>
   Thanks,  FamilyBook

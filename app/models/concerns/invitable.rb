@@ -7,14 +7,11 @@ module Invitable
     belongs_to  :invitation
   end
 
-  # getter method for the invitation token
-  def invitation_token
-    invitation.token if invitation
+  def create_relationship_from_invitation(token)
+    inviter = Invitation.find_by_token(token).user
+    inviter.invite(self)
+    self.approve(inviter)
   end
 
-  # setter method for the invitation token:
-  def invitation_token=(token)
-    self.invitation = Invitation.find_by_token(token)
-  end
 
 end

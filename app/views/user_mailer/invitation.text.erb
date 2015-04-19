@@ -2,7 +2,7 @@ Invitation to Connect!
 
 <%= @invitation.user.name %>  has invited you to become a family member on FamilyBook.
 
-<%= link_to 'Click here to view your connection requests', signup_url(@invitation.token) %>
+<%= link_to 'Click here to view your connection requests', signup_url(invitation_token: @invitation.token) %>
 
 Thanks,
 

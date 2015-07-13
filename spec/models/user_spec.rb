@@ -17,25 +17,51 @@ describe User, type: :model do
 
   context 'when creating and editing a user' do
 
-    it 'has a valid factory'
+    it 'has a valid factory' do
+      expect(build(:user)).to be_valid
+    end
 
-    it 'is invalid without a name'
+    it 'is invalid without a name' do
+      expect(build(:user, name: nil)).to_not be_valid
+    end
 
-    it 'is invalid without an email'
+    it 'is invalid without an email' do
+      expect(build(:user, email: nil)).to_not be_valid
+    end
 
-    it 'is invalid without a valid email address'
+    it 'is invalid without a valid email address' do
+      expect(build(:user, email: 'example.com')).to_not be_valid
+    end
 
-    it 'is invalid without a unique, case sensitive email address'
+    it 'is invalid without a unique, case sensitive email address' do
+      user1 = create(:user, email: 'test@example.com')
+      user2 = build(:user, email: user1.email)
+      expect(user2).to_not be_valid
+      expect(user2.errors[:email].first).to eql('has already been taken')
+    end
 
-    it 'is invalid without a password'
+    it 'is invalid without a password' do
+      expect(build(:user, password: nil)).to_not be_valid
+    end
 
-    it 'requires a password confirmation when the password is present'
+    it 'requires a password confirmation when the password is present' do
+      expect(build(:user, password: 'secret', password_confirmation: '')).to_not be_valid
+    end
 
-    it 'is invalid if the password and password confirmation do not match'
+    it 'is invalid if the password and password confirmation do not match' do
+      expect(build(:user, password: 'secret', password_confirmation: 'nomatch')).to_not be_valid
+    end
 
-    it 'does not require a password when updating'
+    it 'does not require a password when updating' do
+      user = create(:user)
+      user.password = ''
+      expect(user).to be_valid
+    end
 
-    it 'automatically encrypts the password into the password_digest attribute'
+    it 'automatically encrypts the password into the password_digest attribute' do
+      user = build(:user)
+      expect(user.password_digest.present?).to eql(true)
+    end
 
   end
 

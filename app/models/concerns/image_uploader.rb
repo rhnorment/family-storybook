@@ -1,4 +1,4 @@
-class ImageUploader < Carrierwave::Uploader::Base
+class ImageUploader < CarrierWave::Uploader::Base
 
   include Cloudinary::CarrierWave
 

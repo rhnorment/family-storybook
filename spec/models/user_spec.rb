@@ -67,11 +67,21 @@ describe User, type: :model do
 
   context 'when authenticating a user' do
 
-    it 'returns false if the email is not found'
+    before do
+      @user = create(:user, name: 'Example User', email: 'user@example.com', password: 'secret', password_confirmation: 'secret')
+    end
 
-    it 'returns false if the password does not match'
+    it 'returns not true if the email does not match' do
+      expect(User.authenticate('norment@gmail.com', @user.email)).to_not eql(true)
+    end
 
-    it 'returns the user if the email and password match'
+    it 'returns not true if the password does not match' do
+      expect(User.authenticate('nomatch', @user.password)).to_not eql(true)
+    end
+
+    it 'returns the user if the email and password match' do
+      expect(User.authenticate(@user.email, @user.password)).to eql(@user)
+    end
 
   end
 

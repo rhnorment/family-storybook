@@ -113,6 +113,24 @@ describe User, type: :model do
     end
   end
 
+  context 'when dealing with associated invitations' do
+    before do
+      @user = User.create!(user_attributes)
+    end
+
+    it 'has many invitations' do
+      invitation = @user.invitations.new(invitation_attributes)
+
+      expect(@user.invitations).to include(invitation)
+    end
+
+    it 'deletes the associated invitations when deleted' do
+      @user.invitations.create!(invitation_attributes)
+
+      expect { @user.destroy }.to change(Invitation, :count).by(-1)
+    end
+  end
+
   context 'when associating with tracking an activity' do
     it 'creates an associated activity when created'
 

@@ -3,7 +3,7 @@ module Invitable
   extend ActiveSupport::Concern
 
   included do
-    has_many    :invitations
+    has_many    :invitations,   dependent: :destroy
     belongs_to  :invitation
   end
 
@@ -16,3 +16,5 @@ module Invitable
   end
 
 end
+
+# TODO:  implement create relationship from invitation methods.

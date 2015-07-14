@@ -43,7 +43,7 @@ class Invitation < ActiveRecord::Base
 
   # send the invitation email:
   def send_invitation_email
-    UserMailer.invitation(self).deliver
+    UserMailer.invitation(self).deliver_now
     update_attribute(:sent_at, Time.zone.now)
   end
 

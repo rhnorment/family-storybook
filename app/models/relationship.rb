@@ -31,3 +31,5 @@ class Relationship < ActiveRecord::Base
   end
 
 end
+
+# TODO:  add activity tracking for new relationships.

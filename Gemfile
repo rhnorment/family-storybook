@@ -35,7 +35,7 @@ gem 'holder_rails'
 
 # test & development gems:
 group :test, :development do
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.1'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'faker'

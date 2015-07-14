@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   def new
     @token = params[:invitation_token]
     @user = User.new
+
     render layout: 'session'
   end
 
@@ -24,8 +25,11 @@ class UsersController < ApplicationController
 
     if @user.save
       @user.send_activation_email
+
       session[:user_id] = @user.id
+
       @user.create_relationship_from_invitation(@token) if @token
+
       redirect_to @user, success: 'Thanks for signing up!'
     else
       render :new, layout: 'session'
@@ -46,7 +50,9 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
+
     session[:user_id] = nil
+
     redirect_to root_url
   end
 
@@ -54,6 +60,7 @@ class UsersController < ApplicationController
 
   def require_correct_user
     @user = User.find(params[:id])
+
     redirect_to user_url(current_user) unless current_user?(@user)
   end
 

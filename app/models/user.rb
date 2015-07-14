@@ -55,3 +55,5 @@ class User < ActiveRecord::Base
   end
 
 end
+
+# TODO:  move activity tracking to concern.

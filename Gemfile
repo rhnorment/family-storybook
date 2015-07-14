@@ -36,7 +36,6 @@ gem 'holder_rails'
 # test & development gems:
 group :test, :development do
   gem 'rspec-rails', '~> 3.0.0'
-  gem 'factory_girl_rails'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'faker'

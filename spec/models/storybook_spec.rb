@@ -27,12 +27,17 @@ describe Storybook, type: :model do
     end
   end
 
-  context 'when associating with a user object' do
+  context 'when associating with a user' do
     it 'belongs to a user' do
       user = create(:user)
       storybook = user.storybooks.build(title: 'Example Storybook', user_id: user.id)
       expect(storybook.user).to eql(user)
     end
+  end
+
+  context 'when associating with tracking an activity' do
+    it 'creates an associated activity when created'
+    it 'deletes the associated activity when deleted'
   end
 
 end

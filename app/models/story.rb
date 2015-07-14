@@ -37,3 +37,5 @@ class Story < ActiveRecord::Base
   end
 
 end
+
+# TODO:  move activity tracking to concern.

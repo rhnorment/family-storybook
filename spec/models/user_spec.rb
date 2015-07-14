@@ -16,7 +16,6 @@ require 'rails_helper'
 describe User, type: :model do
 
   context 'when creating and editing a user' do
-
     it 'has a valid factory' do
       expect(build(:user)).to be_valid
     end
@@ -62,11 +61,9 @@ describe User, type: :model do
       user = build(:user)
       expect(user.password_digest.present?).to eql(true)
     end
-
   end
 
   context 'when authenticating a user' do
-
     before do
       @user = create(:user, name: 'Example User', email: 'user@example.com', password: 'secret', password_confirmation: 'secret')
     end
@@ -82,23 +79,32 @@ describe User, type: :model do
     it 'returns the user if the email and password match' do
       expect(User.authenticate(@user.email, @user.password)).to eql(@user)
     end
-
   end
 
   context 'when dealing with associated storybooks' do
+    before do
+      @user = create(:user)
+      @storybook1 = @user.storybooks.create(:storybook)
+    end
 
-    it 'has many storybooks'
+    it 'has many storybooks' do
+      expect(@user.storybooks).to include(@storybook1)
+    end
 
     it 'deletes all associated storybooks when it is deleted'
 
   end
 
   context 'when dealing with associated stories' do
-
     it 'has many stories'
 
     it 'deletes all associated stories when it is deleted'
+  end
 
+  context 'when associating with tracking an activity' do
+    it 'creates an associated activity when created'
+
+    it 'deletes the associated activity when deleted'
   end
 
 end

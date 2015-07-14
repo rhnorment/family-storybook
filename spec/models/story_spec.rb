@@ -14,21 +14,31 @@ require 'rails_helper'
 
 describe Story, type: :model do
 
+  before do
+    @user = User.create!(user_attributes)
+  end
+
   context 'when creating and editing a story' do
-    it 'has a valid factory' do
-      expect(build(:story)).to be_valid
+    it 'is valid with example attributes' do
+      expect(@user.stories.new(story_attributes)).to be_valid
     end
 
     it 'is invalid without a title' do
-      expect(build(:story, title: nil)).to_not be_valid
+      expect(@user.stories.new(story_attributes(title: nil))).to_not be_valid
     end
   end
 
   context 'when associating with a user' do
+    before do
+      @story = @user.stories.create!(story_attributes)
+    end
+
     it 'belongs to a user' do
-      user = create(:user)
-      story = user.stories.build(title: 'Example Story', user_id: user.id)
-      expect(story.user).to eql(user)
+      expect(@user.stories).to include(@story)
+    end
+
+    it 'is destroyed when the user is destroyed' do
+      expect { @user.destroy }.to change(Story, :count). by(-1)
     end
   end
 

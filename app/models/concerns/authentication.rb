@@ -16,7 +16,7 @@ module Authentication
 
   # sends an email to a newly registered user:
   def send_activation_email
-    UserMailer.registration_confirmation(self).deliver
+    UserMailer.registration_confirmation(self).deliver_now
   end
 
   #  creates a digest for resetting a forgotten password:

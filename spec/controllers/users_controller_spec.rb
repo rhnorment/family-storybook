@@ -13,8 +13,7 @@ describe UsersController, type: :controller do
     end
 
     it 'can be access new' do
-      get :new
-      expect(response).to render_template(:new)
+      expect(get :new).to render_template(:new)
     end
 
     it  'creates a new user' do

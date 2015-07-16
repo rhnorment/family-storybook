@@ -49,5 +49,5 @@ describe SessionsController, type: :controller do
       expect(User.authenticate('bad-user@example.com', 'password')).to eq(nil)
      end
   end
-  
+
 end

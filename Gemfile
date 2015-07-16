@@ -38,7 +38,6 @@ group :test, :development do
   gem 'rspec-rails', '~> 3.1'
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'faker'
 end
 
 # production gems:

@@ -39,7 +39,6 @@ describe StorybooksController, type: :controller do
 
   context 'when signed in as the current user' do
     before do
-      session[:user_id] = @user.id
       @new_storybook = { title: 'Test Book', description: nil, cover: nil }
     end
 

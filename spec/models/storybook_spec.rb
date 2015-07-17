@@ -45,9 +45,21 @@ describe Storybook, type: :model do
     end
   end
 
-  context 'when associating with tracking an activity' do
-    it 'creates an associated activity when created'
-    it 'deletes the associated activity when deleted'
+  context 'when associating with stories' do
+    it 'has many stories' do
+      storybook = @user.storybooks.create!(storybook_attributes)
+      story1 = @user.stories.create!(story_attributes)
+      story2 = @user.stories.create!(story_attributes)
+      storybook.stories << [story1, story2]
+      expect(storybook.stories).to include(story1, story2)
+    end
   end
+
+  context 'when associating with tracking an activity' do
+    it 'creates an associated activity when created' do
+      expect { @user.storybooks.create!(storybook_attributes) }.to change(PublicActivity::Activity, :count).by(+1)
+    end
+  end
+
 
 end

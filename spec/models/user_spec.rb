@@ -132,9 +132,9 @@ describe User, type: :model do
   end
 
   context 'when associating with tracking an activity' do
-    it 'creates an associated activity when created'
-
-    it 'deletes the associated activity when deleted'
+    it 'creates an associated activity when created' do
+      expect { User.create!(user_attributes) }.to change(PublicActivity::Activity, :count).by(+1)
+    end
   end
 
 end

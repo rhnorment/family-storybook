@@ -20,6 +20,7 @@ class StorybooksController < ApplicationController
 
   def create
     @storybook = @user.storybooks.new(storybook_params)
+
     if @storybook.save
       redirect_to @storybook, success: 'Your storybook was successfully created!'
     else
@@ -43,7 +44,9 @@ class StorybooksController < ApplicationController
 
   def destroy
     @storybook.destroy
+
     flash[:warning] = 'Your storybook was successfully removed.'
+
     redirect_to storybooks_url
   end
 
@@ -55,11 +58,13 @@ class StorybooksController < ApplicationController
 
     def set_correct_user
       @user = current_user
+
       redirect_to :back unless current_user?(@user)
     end
 
     def set_storybook
       @storybook = Storybook.find(params[:id])
+
       redirect_to @user unless @storybook.user == current_user
     end
 

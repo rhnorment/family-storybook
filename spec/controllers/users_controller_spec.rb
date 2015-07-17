@@ -12,83 +12,66 @@ describe UsersController, type: :controller do
       session[:user_id] = nil
     end
 
-    it 'can be access new' do
+    it 'cannot access show' do
+      expect(get :show, id: @user.id).to redirect_to(new_session_url)
+    end
+
+    it 'can access new' do
       expect(get :new).to render_template(:new)
     end
 
-    it  'creates a new user' do
+    it 'can access create and creates a new user' do
       expect { post :create, user: @new_user }.to change(User, :count).by(+1)
-    end
-
-    it 'cannot access show' do
-      get :show, id: @user.id
-
-      expect(response).to redirect_to(new_session_url)
+      expect(response).to redirect_to user_url(User.last)
     end
 
     it 'cannot access edit' do
-      get :edit, id: @user.id
-
-      expect(response).to redirect_to(new_session_url)
+      expect(get :show, id: @user.id).to redirect_to(new_session_url)
     end
 
     it 'cannot access update' do
-      patch :update, id: @user.id
-
-      expect(response).to redirect_to(new_session_url)
+      expect(patch :update, id: @user.id).to redirect_to(new_session_url)
     end
 
     it 'cannot access destroy' do
-      delete :destroy, id: @user.id
-
-      expect(response).to redirect_to(new_session_url)
+      expect(delete :destroy, id: @user.id).to redirect_to(new_session_url)
     end
   end
 
   context 'when signed in as the wrong user' do
     before do
       @wrong_user = User.create!(user_attributes(email: 'wrong@example.com'))
-      session[:user_id] = @wrong_user
+      session[:user_id] = @wrong_user.id
     end
 
     it 'cannot view another user' do
-      get :show, id: @user
-
-      expect(response).to redirect_to(user_url(@wrong_user))
+      expect(get :show, id: @user.id).to redirect_to(user_url(@wrong_user))
     end
 
     it 'cannot edit another user' do
-      get :edit, id: @user
-
-      expect(response).to redirect_to(user_url(@wrong_user))
+      expect(get :edit, id: @user.id).to redirect_to(user_url(@wrong_user))
     end
 
     it 'cannot update another user' do
-      patch :update, id: @user
-
-      expect(response).to redirect_to(user_url(@wrong_user))
+      expect(patch :update, id: @user.id).to redirect_to(user_url(@wrong_user))
     end
 
     it 'cannot destroy another user' do
-      delete :destroy, id: @user
-
-      expect(response).to redirect_to(user_url(@wrong_user))
+      expect(delete :destroy, id: @user).to redirect_to(user_url(@wrong_user))
     end
   end
 
-  context 'when properly signed in' do
+  context 'when signed in as the current user' do
     before do
-      session[:user_id] = @user
+      session[:user_id] = @user.id
     end
 
     it 'can access its dashboard' do
-      get :show, id: @user.id
-      expect(response).to render_template :show
+      expect(get :show, id: @user.id).to render_template :show
     end
 
     it 'can can access its edit page' do
-      get :edit, id: @user.id
-      expect(response).to render_template :edit
+      expect(get :edit, id: @user.id).to render_template :edit
     end
 
     it 'can update its information and redirect to the edit view' do

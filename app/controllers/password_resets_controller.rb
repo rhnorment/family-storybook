@@ -12,10 +12,13 @@ class PasswordResetsController < ApplicationController
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
+
       flash.now[:info] = 'An email has been sent with password reset instructions.  You may close this window.'
+
       render :new
     else
       flash.now[:danger] = 'Email address not found.  Please try again.'
+
       render :new
     end
   end
@@ -26,12 +29,15 @@ class PasswordResetsController < ApplicationController
   def update
     if password_blank?
       flash.now[:danger] = "Password can't be blank."
+
       render :edit
     elsif @user.update_attributes(user_params)
       session[:user_id] = @user.id
+
       redirect_to @user, success: 'Your password has been reset.'
     else
       flash.now[:warning] = 'We were unable to reset your password.  Please contact customer support.'
+
       render :edit
     end
   end

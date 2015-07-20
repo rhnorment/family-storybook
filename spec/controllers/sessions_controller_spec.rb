@@ -10,6 +10,7 @@ describe SessionsController, type: :controller do
     it 'presents a new session view' do
       get :new
 
+      expect(response).to render_template('layouts/session')
       expect(response).to render_template :new
     end
   end

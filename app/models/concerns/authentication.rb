@@ -27,7 +27,7 @@ module Authentication
 
   #  sends an email with password reset instructions:
   def send_password_reset_email
-    UserMailer.password_reset(self).deliver
+    UserMailer.password_reset(self).deliver_now
   end
 
   #  returns true if the password reset request was sent more than 2 hours ago, else false:

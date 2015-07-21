@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'edit a story' do
+describe 'edit a story', type: :feature do
 
   before do
     @user = User.create!(user_attributes)

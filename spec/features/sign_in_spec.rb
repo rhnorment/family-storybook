@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Signing in' do
+describe 'Signing in', type: :feature do
 
   it 'prompts for an email and password' do
     visit root_url

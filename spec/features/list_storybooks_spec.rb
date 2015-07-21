@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'list storybooks' do
+describe 'list storybooks', type: :feature do
 
   before do
     @user = User.create!(user_attributes)
@@ -42,8 +42,5 @@ describe 'list storybooks' do
 
     expect(page).to have_text('No storybooks to display.')
   end
-
-
-
 
 end

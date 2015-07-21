@@ -29,7 +29,6 @@ class InvitationsController < ApplicationController
         redirect_to new_relationship_url, danger: 'You entered an invalid email address.  Please try again.'
       end
     end
-
   end
 
   private

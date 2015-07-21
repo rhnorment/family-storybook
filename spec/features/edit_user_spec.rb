@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Editing a user' do
+describe 'Editing a user', type: :feature do
 
   it 'updates the user and shows the user updated details' do
     user = User.create!(user_attributes)

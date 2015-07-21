@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'showing a storybook' do
+describe 'showing a storybook', type: :feature do
 
   before do
     @user = User.create!(user_attributes)

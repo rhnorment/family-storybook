@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'listing a users storys' do
+describe 'listing a users stories', type: :feature do
 
   before do
     @user = User.create!(user_attributes)
@@ -42,6 +42,5 @@ describe 'listing a users storys' do
 
     expect(page).to have_text('No stories to display.')
   end
-
 
 end

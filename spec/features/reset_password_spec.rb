@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'resetting a user password' do
+describe 'resetting a user password', type: :feature do
 
   it 'redirects the user to a page that allows the user to enter their email address' do
     visit signin_url

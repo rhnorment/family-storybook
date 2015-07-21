@@ -1,3 +1,0 @@
-module Trackable
-
-end

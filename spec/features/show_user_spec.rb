@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Viewing a user profile page' do
+describe 'Viewing a user profile page', type: :feature do
 
   before do
     @user = User.create!(user_attributes)
@@ -23,9 +23,9 @@ describe 'Viewing a user profile page' do
   end
 
   it 'lists ONLY the user storybooks in the storybooks tab' do
-    storybook1 = @user.storybooks.create!(storybook_attributes(title: 'Storybook 1'))
-    storybook2 = @user.storybooks.create!(storybook_attributes(title: 'Storybook 2'))
-    storybook3 = @user2.storybooks.create!(storybook_attributes(title: 'Storybook 3'))
+    @user.storybooks.create!(storybook_attributes(title: 'Storybook 1'))
+    @user.storybooks.create!(storybook_attributes(title: 'Storybook 2'))
+    @user2.storybooks.create!(storybook_attributes(title: 'Storybook 3'))
 
     visit user_url(@user)
 
@@ -37,9 +37,9 @@ describe 'Viewing a user profile page' do
   end
 
   it 'lists the user stories in the stories tab' do
-    story1 = @user.stories.create!(story_attributes(title: 'Story 1'))
-    story2 = @user.stories.create!(story_attributes(title: 'Story 2'))
-    story3 = @user2.stories.create!(story_attributes(title: 'Story 3'))
+    @user.stories.create!(story_attributes(title: 'Story 1'))
+    @user.stories.create!(story_attributes(title: 'Story 2'))
+    @user2.stories.create!(story_attributes(title: 'Story 3'))
 
     visit user_url(@user)
 

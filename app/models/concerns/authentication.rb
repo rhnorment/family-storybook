@@ -4,7 +4,8 @@ module Authentication
 
   included do
     has_secure_password
-  end
+    attr_accessor       :reset_token
+    end
 
   module ClassMethods
     #  authenticates the user using BCrypt has_secure_password:

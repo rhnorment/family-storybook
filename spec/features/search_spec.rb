@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Search' do
+describe 'Search', type: :feature do
 
   before do
     @user = User.create!(user_attributes)
@@ -38,7 +38,6 @@ describe 'Search' do
   end
 
   context 'when returning an array consisting items' do
-
     it 'returns the correct array of results' do
       visit stories_url
 
@@ -61,8 +60,6 @@ describe 'Search' do
       expect(page).to_not have_link(@storybook1.title)
       expect(page).to_not have_link(@storybook2.title)
     end
-
   end
-
 
 end

@@ -132,8 +132,22 @@ describe User, type: :model do
   end
 
   context 'when associating with tracking an activity' do
+    before do
+      @user = User.create!(user_attributes)
+      @storybook = @user.storybooks.create!(storybook_attributes)
+      @story = @user.stories.create(story_attributes)
+    end
+
     it 'creates an associated activity when created' do
-      expect { User.create!(user_attributes) }.to change(PublicActivity::Activity, :count).by(+1)
+      expect { User.create!(user_attributes(email: 'activity@example.com')) }.to change(PublicActivity::Activity, :count).by(+1)
+    end
+
+    it 'can query all associated activities' do
+      expect(PublicActivity::Activity.where(owner_id: @user.id).size).to eql(3)
+    end
+
+    it 'destroys all associated activities before it is destroyed' do
+      expect { @user.destroy }.to change(PublicActivity::Activity, :count).by(-3)
     end
   end
 

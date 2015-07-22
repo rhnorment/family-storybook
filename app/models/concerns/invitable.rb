@@ -9,12 +9,9 @@ module Invitable
 
   def create_relationship_from_invitation(token)
     invitation = Invitation.find_by_token(token)
-    inviter = invitation.user
-    inviter.invite(self)
-    self.approve(inviter)
+    Relationship.create(user_id: self.id, relative_id: invitation.user.id, pending: false)
     invitation.delete
   end
 
 end
-
 # TODO:  implement create relationship from invitation methods.

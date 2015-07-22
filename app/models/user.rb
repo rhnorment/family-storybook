@@ -17,9 +17,9 @@ class User < ActiveRecord::Base
   # inclusions:
   to_param            :name
   include             Authentication
+  include             PublicActivity::Common
   include             Relatable
   include             Invitable
-  include             Eventable
 
   # validations:
   validates           :name,  :email, presence: true
@@ -32,7 +32,8 @@ class User < ActiveRecord::Base
   has_many            :activities,    as: :trackable, class_name: 'PublicActivity::Activity',   dependent: :destroy
 
   # callbacks:
-  after_create        :create_activity  # method in Trackable module.
+  after_create        :create_activity
+  before_destroy      :remove_activities
 
   #  sets user avatar using the gravitar web service:
   def gravatar_id
@@ -42,6 +43,16 @@ class User < ActiveRecord::Base
   # generates a new URL token for a variety of functions:
   def User.new_token
     SecureRandom.urlsafe_base64
+  end
+
+  def create_activity
+    PublicActivity::Activity.create   key: 'user.create', trackable_id: self.id, trackable_type: 'User',
+                                      recipient_id: self.id, recipient_type: 'User', owner_id: self.id, owner_type: 'User',
+                                      created_at: self.created_at, parameters: {}
+  end
+
+  def remove_activities
+    PublicActivity::Activity.where(owner_id: self.id).delete_all
   end
 
 end

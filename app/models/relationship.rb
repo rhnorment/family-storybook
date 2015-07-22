@@ -13,7 +13,7 @@
 class Relationship < ActiveRecord::Base
 
   # configuration
-  include       Eventable
+  include       PublicActivity::Common
 
   # model validations:
   validates     :user_id,  :relative_id,     presence: true

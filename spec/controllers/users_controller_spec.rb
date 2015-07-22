@@ -88,5 +88,13 @@ describe UsersController, type: :controller do
     end
   end
 
+  context 'when creating a new user from an invitation token' do
+
+    it 'can access new with an invitation token present' do
+
+    end
+
+  end
+
 
 end

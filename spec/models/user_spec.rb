@@ -16,57 +16,43 @@ require 'rails_helper'
 describe User, type: :model do
 
   context 'when creating and editing a user' do
-    it 'is valid with example attributes' do
-      expect(User.new(user_attributes)).to be_valid
+    it 'it has a valid factory' do
+      expect(build(:user)).to be_valid
     end
 
-    it 'is invalid without a name' do
-      expect(User.new(name: nil)).to_not be_valid
-    end
+    it { should validate_presence_of(:name) }
 
-    it 'is invalid without an email' do
-      expect(User.new(email: nil)).to_not be_valid
-    end
+    it { should validate_presence_of(:email) }
 
     it 'is invalid without a valid email address' do
-      expect(User.new(email: 'example.com')).to_not be_valid
+      expect(build(:user, email: 'example.com')).to_not be_valid
     end
 
-    it 'is invalid without a unique, case sensitive email address' do
-      user1 = User.create!(user_attributes)
-      user2 = User.new(email: user1.email.downcase)
-      expect(user2).to_not be_valid
-      expect(user2.errors[:email].first).to eql('has already been taken')
-    end
+    it { should validate_uniqueness_of(:email) }
 
-    it 'is invalid without a password' do
-      expect(User.new(password: nil)).to_not be_valid
-    end
+    it { should validate_presence_of(:password) }
 
     it 'requires a password confirmation when the password is present' do
       expect(User.new(password: 'secret', password_confirmation: '')).to_not be_valid
     end
 
     it 'is invalid if the password and password confirmation do not match' do
-      expect(User.new(password: 'secret', password_confirmation: 'nomatch')).to_not be_valid
+      should have_secure_password
     end
 
     it 'does not require a password when updating' do
-      user = User.new(user_attributes)
+      user = build(:user)
       user.password = ''
       expect(user).to be_valid
     end
 
     it 'automatically encrypts the password into the password_digest attribute' do
-      user = User.new(user_attributes)
-      expect(user.password_digest.present?).to eql(true)
+      should have_secure_password
     end
   end
 
   context 'when authenticating a user' do
-    before do
-      @user = User.create!(name: 'Example User', email: 'user@example.com', password: 'secret', password_confirmation: 'secret')
-    end
+    before { @user = create(:user) }
 
     it 'returns not true if the email does not match' do
       expect(User.authenticate('norment@gmail.com', @user.email)).to_not eql(true)
@@ -81,74 +67,18 @@ describe User, type: :model do
     end
   end
 
-  context 'when dealing with associated storybooks' do
-    before do
-      @user = User.create!(user_attributes)
-      @storybook1 = @user.storybooks.create!(storybook_attributes)
-      @storybook2 = @user.storybooks.create!(storybook_attributes)
-    end
+  context 'when dealing with database associations' do
+    it { should have_many(:storybooks).dependent(:destroy) }
 
-    it 'has many storybooks' do
-      expect(@user.storybooks).to include(@storybook1, @storybook2)
-    end
+    it { should have_many(:stories).dependent(:destroy) }
 
-    it 'deletes all associated storybooks when it is deleted' do
-      expect { @user.destroy }.to change(Storybook, :count).by(-2)
-    end
-  end
+    it { should have_many(:activities).dependent(:destroy) }
 
-  context 'when dealing with associated stories' do
-    before do
-      @user = User.create!(user_attributes)
-      @story1 = @user.stories.create!(story_attributes)
-      @story2 = @user.stories.create!(story_attributes)
-    end
+    it { should have_many(:invitations).dependent(:destroy) }
 
-    it 'has many stories' do
-      expect(@user.stories).to include(@story1, @story2)
-    end
+    it { should have_many(:relationships).dependent(:destroy) }
 
-    it 'deletes all associated stories when it is deleted' do
-      expect { @user.destroy }.to change(Story, :count).by(-2)
-    end
-  end
-
-  context 'when dealing with associated invitations' do
-    before do
-      @user = User.create!(user_attributes)
-    end
-
-    it 'has many invitations' do
-      invitation = @user.invitations.new(invitation_attributes)
-
-      expect(@user.invitations).to include(invitation)
-    end
-
-    it 'deletes the associated invitations when deleted' do
-      @user.invitations.create!(invitation_attributes)
-
-      expect { @user.destroy }.to change(Invitation, :count).by(-1)
-    end
-  end
-
-  context 'when associating with tracking an activity' do
-    before do
-      @user = User.create!(user_attributes)
-      @storybook = @user.storybooks.create!(storybook_attributes)
-      @story = @user.stories.create(story_attributes)
-    end
-
-    it 'creates an associated activity when created' do
-      expect { User.create!(user_attributes(email: 'activity@example.com')) }.to change(PublicActivity::Activity, :count).by(+1)
-    end
-
-    it 'can query all associated activities' do
-      expect(PublicActivity::Activity.where(owner_id: @user.id).size).to eql(3)
-    end
-
-    it 'destroys all associated activities before it is destroyed' do
-      expect { @user.destroy }.to change(PublicActivity::Activity, :count).by(-3)
-    end
+    it { should have_many(:inverse_relationships).dependent(:destroy) }
   end
 
 end

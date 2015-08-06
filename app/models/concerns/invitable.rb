@@ -4,7 +4,6 @@ module Invitable
 
   included do
     has_many    :invitations,   dependent: :destroy
-    belongs_to  :invitation
   end
 
   def create_relationship_from_invitation(token)

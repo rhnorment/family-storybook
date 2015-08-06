@@ -19,6 +19,26 @@ FactoryGirl.define do
     email                   'user@example.com'
     password                'secret'
     password_confirmation   'secret'
+
+    factory :user_with_storybooks do
+      transient do
+        storybooks_count 5
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:storybook, evaluator.storybooks_count, user: user)
+      end
+    end
+
+    factory :user_with_stories do
+      transient do
+        stories_count 5
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:story, evaluator.stories_count, user: user)
+      end
+    end
   end
 
 end

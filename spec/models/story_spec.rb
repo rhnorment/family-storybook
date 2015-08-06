@@ -14,48 +14,22 @@ require 'rails_helper'
 
 describe Story, type: :model do
 
-  before do
-    @user = User.create!(user_attributes)
-  end
-
   context 'when creating and editing a story' do
-    it 'is valid with example attributes' do
-      expect(@user.stories.new(story_attributes)).to be_valid
+    it 'has a valid factory' do
+      expect(build(:user_with_stories)).to be_valid
     end
 
-    it 'is invalid without a title' do
-      expect(@user.stories.new(story_attributes(title: nil))).to_not be_valid
-    end
+    it { should validate_presence_of(:title) }
   end
 
-  context 'when associating with a user' do
-    before do
-      @story = @user.stories.create!(story_attributes)
-    end
+  context 'when associating with other objects' do
+    it { should belong_to(:user) }
 
-    it 'belongs to a user' do
-      expect(@user.stories).to include(@story)
-    end
+    it { should have_many(:activities).dependent(:destroy) }
 
-    it 'is destroyed when the user is destroyed' do
-      expect { @user.destroy }.to change(Story, :count). by(-1)
-    end
-  end
+    it { should have_many(:chapters).dependent(:destroy) }
 
-  context 'when associating wth storybooks' do
-    it 'has many storybooks' do
-      story = @user.stories.create!(story_attributes)
-      storybook1 = @user.storybooks.create!(storybook_attributes)
-      storybook2 = @user.storybooks.create!(storybook_attributes)
-      story.storybooks << [storybook1, storybook2]
-      expect(story.storybooks).to include(storybook1, storybook2)
-    end
-  end
-
-  context 'when associating with tracking an activity' do
-    it 'creates an associated activity when created' do
-      expect { @user.stories.create!(story_attributes) }.to change(PublicActivity::Activity, :count).by(+1)
-    end
+    it { should have_many(:storybooks).through(:chapters) }
   end
 
 end

@@ -17,22 +17,65 @@ require 'rails_helper'
 
 describe Storybook, type: :model do
 
-  context 'when creating and editing a storybook' do
-    it 'is has a valid factory' do
-      expect(build(:user_with_storybooks)).to be_valid
-    end
-
-    it { should validate_presence_of(:title) }
+  it 'has a valid factory' do
+    expect(build(:storybook)).to be_valid
   end
 
-  context 'when associating with other objects' do
+  describe 'ActiveModel validations' do
+    # basic validations:
+    it { should validate_presence_of(:title) }
+
+    # format validations:
+    it { should allow_value('cover.jpg', 'cover.png', 'cover.gif').for(:cover) }
+  end
+
+  describe 'ActiveRecord associations' do
+    # database columns / indexes:
+    it { should have_db_column(:title).of_type(:string) }
+    it { should have_db_column(:description).of_type(:text) }
+    it { should have_db_column(:cover).of_type(:string) }
+    it { should have_db_column(:published).of_type(:boolean).with_options(default: false) }
+    it { should have_db_column(:published_on).of_type(:datetime) }
+    it { should have_db_column(:user_id).of_type(:integer) }
+
+    it { should have_db_index(:user_id) }
+
+    # associations:
     it { should belong_to(:user) }
-
-    it { should have_many(:activities).dependent(:destroy) }
-
-    it { should have_many(:chapters).dependent(:destroy) }
-
+    it { should have_many(:chapters) }
     it { should have_many(:stories).through(:chapters) }
+    it { should have_many(:activities) }
+  end
+
+  describe 'callbacks' do
+    it { should callback(:create_activity).after(:create) }
+  end
+
+  describe 'public instance methods' do
+    let(:user) { create(:user) }
+    let(:storybook) { create(:storybook, user: user) }
+
+    context 'responds to its methods' do
+      it { should respond_to(:create_activity) }
+    end
+
+    context 'executes its methods corrects' do
+      it 'should create an activity when created' do
+        expect(user.activities.last).to eql(PublicActivity::Activity.last)
+      end
+    end
+  end
+
+  describe 'public class methods' do
+    context 'responds to its methods' do
+      it { should respond_to(:id) }
+      it { should respond_to(:title) }
+      it { should respond_to(:description) }
+      it { should respond_to(:cover) }
+      it { should respond_to(:published) }
+      it { should respond_to(:published_on) }
+      it { should respond_to(:user_id) }
+    end
   end
 
 end

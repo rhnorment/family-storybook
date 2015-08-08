@@ -97,8 +97,8 @@ describe User, type: :model do
         end
 
         context '#gravatar_id' do
-          it 'should set the user avatar using the Gravitar web service' do
-
+          it 'returns a digest to be used by the Gravatar web service' do
+            expect(Digest::MD5.hexdigest(user.email.downcase)).to eql('b58996c504c5638798eb6b511e6f49af')
           end
         end
       end
@@ -113,6 +113,5 @@ describe User, type: :model do
       it { should respond_to(:reset_sent_at) }
     end
   end
-
 
 end

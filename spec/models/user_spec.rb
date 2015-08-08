@@ -15,29 +15,24 @@ require 'rails_helper'
 
 describe User, type: :model do
 
-  context 'when creating and editing a user' do
-    it 'it has a valid factory' do
-      expect(build(:user)).to be_valid
-    end
+  it 'it has a valid factory' do
+    expect(build(:user)).to be_valid
+  end
 
+  describe 'ActiveModel validations' do
+    # basic validations:
     it { should validate_presence_of(:name) }
-
     it { should validate_presence_of(:email) }
-
-    it { should allow_value('user@example.com').for(:email) }
-
-    it { should_not allow_value('example.com', 'example.').for(:email) }
-
     it { should validate_uniqueness_of(:email) }
-
     it { should validate_presence_of(:password) }
+    it { should have_secure_password }
 
     it 'requires a password confirmation when the password is present' do
       expect(User.new(password: 'secret', password_confirmation: '')).to_not be_valid
     end
 
     it 'is invalid if the password and password confirmation do not match' do
-      should have_secure_password
+      expect(User.new(password: 'secret', password_confirmation: 'wrong')).to_not be_valid
     end
 
     it 'does not require a password when updating' do
@@ -46,39 +41,78 @@ describe User, type: :model do
       expect(user).to be_valid
     end
 
-    it 'automatically encrypts the password into the password_digest attribute' do
-      should have_secure_password
-    end
+    # format validations:
+    it { should allow_value('user@example.com').for(:email) }
+    it { should_not allow_value('example.com', 'example.').for(:email) }
   end
 
-  context 'when authenticating a user' do
-    before { @user = create(:user) }
+  describe 'ActiveRecord associations' do
+    # database columns / indexes
+    it { should have_db_column(:name).of_type(:string) }
+    it { should have_db_column(:email).of_type(:string) }
+    it { should have_db_column(:password_digest).of_type(:string) }
+    it { should have_db_column(:reset_token).of_type(:string) }
+    it { should have_db_column(:reset_sent_at).of_type(:datetime) }
 
-    it 'returns not true if the email does not match' do
-      expect(User.authenticate('norment@gmail.com', @user.email)).to_not eql(true)
-    end
+    it { should have_db_index(:email) }
 
-    it 'returns not true if the password does not match' do
-      expect(User.authenticate('nomatch', @user.password)).to_not eql(true)
-    end
-
-    it 'returns the user if the email and password match' do
-      expect(User.authenticate(@user.email, @user.password)).to eql(@user)
-    end
-  end
-
-  context 'when dealing with database associations' do
+    # associations:
     it { should have_many(:storybooks).dependent(:destroy) }
-
     it { should have_many(:stories).dependent(:destroy) }
-
     it { should have_many(:activities).dependent(:destroy) }
-
     it { should have_many(:invitations).dependent(:destroy) }
-
     it { should have_many(:relationships).dependent(:destroy) }
-
     it { should have_many(:inverse_relationships).dependent(:destroy) }
   end
+
+  describe 'callbacks' do
+    it { should callback(:create_activity).after(:create) }
+    it { should callback(:remove_activities).before(:destroy) }
+  end
+
+  describe 'public instance methods' do
+    context 'responds to its methods' do
+      it { should respond_to(:create_activity) }
+      it { should respond_to(:remove_activities) }
+      it { should respond_to(:gravatar_id) }
+    end
+
+    context 'executes methods correctly' do
+      let(:user) { create(:user) }
+
+      context '#create_activity' do
+        it 'should create an activity when it is created' do
+          expect(user.activities.last).to eql(PublicActivity::Activity.last)
+        end
+
+        context '#remove_activities' do
+          it 'should remove all activities associated with the user' do
+            create(:storybook, user: user)
+            create(:story, user: user)
+
+            user.destroy
+
+            expect(PublicActivity::Activity.count).to eql(0)
+          end
+        end
+
+        context '#gravatar_id' do
+          it 'should set the user avatar using the Gravitar web service' do
+
+          end
+        end
+      end
+    end
+  end
+
+  describe 'public class methods' do
+    context 'responds to its methods' do
+      it { should respond_to(:name) }
+      it { should respond_to(:email) }
+      it { should respond_to(:reset_token) }
+      it { should respond_to(:reset_sent_at) }
+    end
+  end
+
 
 end

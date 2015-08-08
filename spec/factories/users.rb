@@ -39,6 +39,16 @@ FactoryGirl.define do
         create_list(:story, evaluator.stories_count, user: user)
       end
     end
+
+    factory :user_with_invitations do
+      transient do
+        invitations_count 1
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:invitation, evaluator.invitations_count, user: user)
+      end
+    end
   end
 
 end

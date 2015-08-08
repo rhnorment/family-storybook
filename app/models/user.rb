@@ -57,3 +57,5 @@ class User < ActiveRecord::Base
 
 end
 
+# TODO:  refactor email confirmation and invitation registrations into callbacks
+

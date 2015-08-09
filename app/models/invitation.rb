@@ -31,9 +31,10 @@ class Invitation < ActiveRecord::Base
     self.token = User.new_token
   end
 
-  # check to see if the recipient is already a member:
-  def find_member
-    User.find_by_email(recipient_email)
+  # send the invitation email:
+  def send_invitation_email
+    UserMailer.invitation(self).deliver_now
+    update_attribute(:sent_at, Time.zone.now)
   end
 
   # check to see if an invitation has already been sent to the recipient email address by the user:
@@ -41,10 +42,24 @@ class Invitation < ActiveRecord::Base
     Invitation.find_by_user_id_and_recipient_email(user, recipient_email).present?
   end
 
-  # send the invitation email:
-  def send_invitation_email
-    UserMailer.invitation(self).deliver_now
-    update_attribute(:sent_at, Time.zone.now)
+  # check to see if the user invited himself:
+  def invited_self?
+    self.recipient_email == user.email
+  end
+
+  # check to see if the user is already relatives with the invitee:
+  def already_relatives_with?
+    user.relatives.include?(find_recipient)
+  end
+
+  # check to see if the user is already a member:
+  def is_member?
+    find_recipient != nil
+  end
+
+  # find the recipient in the user table:
+  def find_recipient
+    User.find_by_email(recipient_email)
   end
 
 end

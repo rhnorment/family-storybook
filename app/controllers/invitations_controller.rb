@@ -12,13 +12,13 @@ class InvitationsController < ApplicationController
     if invitation.already_invited?
       redirect_to new_relationship_url, warning: "You have already invited #{invitation.recipient_email}.  Please contact this person directly."
 
-    elsif invitation.find_member == @user
+    elsif invitation.invited_self?
       redirect_to new_relationship_url, warning: 'You cannot invite yourself.  Please try again.'
 
-    elsif @user.relatives.include?(invitation.find_member)
+    elsif already_relatives_with?
       redirect_to relationships_url, info: "You are already relatives with #{invitation.find_member.name}."
 
-    elsif invitation.find_member.present?
+    elsif invitation.is_member?
       session[:recipient_email] = invitation.recipient_email
       redirect_to new_relationship_url, info: "#{invitation.recipient_email} is already a member."
 

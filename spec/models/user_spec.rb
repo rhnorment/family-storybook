@@ -65,7 +65,7 @@ describe User, type: :model do
     it { should have_many(:inverse_relationships).dependent(:destroy) }
   end
 
-  describe 'callbacks' do
+  context 'callbacks' do
     it { should callback(:create_activity).after(:create) }
     it { should callback(:remove_activities).before(:destroy) }
   end

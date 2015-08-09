@@ -47,7 +47,7 @@ describe Storybook, type: :model do
     it { should have_many(:activities) }
   end
 
-  describe 'callbacks' do
+  context 'callbacks' do
     it { should callback(:create_activity).after(:create) }
   end
 

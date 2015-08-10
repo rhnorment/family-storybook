@@ -17,6 +17,22 @@ FactoryGirl.define do
   factory :invitation do
     recipient_email   'recipient@example.com'
     user
+
+    factory :valid_invitation do
+      recipient_email 'valid_invitation@example.com'
+    end
+
+    factory :invitation_to_self do
+      recipient_email 'self@example.com'
+    end
+
+    factory :invitation_already_sent do
+      recipient_email 'invited@example.com'
+    end
+
+    factory :invitation_to_member do
+      recipient_email 'member@example.com'
+    end
   end
 
 end

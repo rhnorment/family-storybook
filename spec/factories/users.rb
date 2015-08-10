@@ -20,6 +20,24 @@ FactoryGirl.define do
     password                'secret'
     password_confirmation   'secret'
 
+    # factories for invitations
+    factory :user_as_self do
+      name                  'Self User'
+      email                 'self@example.com'
+    end
+
+    factory :user_as_member do
+      name                  'Member User'
+      email                 'member@example.com'
+    end
+
+    # factories for relationships:
+    factory :user_already_relative do
+      name                  'Relative User'
+      email                 'relative@example.com'
+    end
+
+    # factory for storybooks:
     factory :user_with_storybooks do
       transient do
         storybooks_count 5
@@ -30,6 +48,7 @@ FactoryGirl.define do
       end
     end
 
+    # factory for stories
     factory :user_with_stories do
       transient do
         stories_count 5
@@ -37,16 +56,6 @@ FactoryGirl.define do
 
       after(:create) do |user, evaluator|
         create_list(:story, evaluator.stories_count, user: user)
-      end
-    end
-
-    factory :user_with_invitations do
-      transient do
-        invitations_count 1
-      end
-
-      after(:create) do |user, evaluator|
-        create_list(:invitation, evaluator.invitations_count, user: user)
       end
     end
   end

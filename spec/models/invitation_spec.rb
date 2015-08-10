@@ -70,7 +70,8 @@ describe Invitation, type: :model do
       it { should respond_to(:already_invited?) }
       it { should respond_to(:invited_self?) }
       it { should respond_to(:already_relatives_with?) }
-      it { should respond_to(:is_member?) }
+      it { should respond_to(:recipient_is_member?) }
+      it { should respond_to(:find_by_recipient_email) }
     end
 
     context 'executes methods correctly' do
@@ -93,15 +94,30 @@ describe Invitation, type: :model do
       end
 
       context '#already_invited?' do
-        it 'returns true if the recipient email is found'
+        let(:invitation_already_sent) { create(:invitation_already_sent) }
+        let(:valid_invitation) { build(:valid_invitation) }
 
-        it 'returns false if the recipient email is not found'
+        it 'returns true if the recipient email is found' do
+          expect(invitation_already_sent.already_invited?).to eql(true)
+        end
+
+        it 'returns false if the recipient email is not found' do
+          expect(valid_invitation.already_invited?).to eql(false)
+        end
       end
 
-      context '#invited_self' do
-        it 'returns true if the user is inviting himself'
+      context '#invited_self?' do
+        let(:user_as_self) { create(:user_as_self) }
+        let(:invitation_to_self) { build(:invitation_to_self, user: user_as_self) }
+        let(:valid_invitation) { build(:valid_invitation) }
 
-        it 'returns false if the user is not inviting himself'
+        it 'returns true if the user is inviting himself' do
+          expect(invitation_to_self.invited_self?).to eql(true)
+        end
+
+        it 'returns false if the user is not inviting himself' do
+          expect(valid_invitation.invited_self?).to eql(false)
+        end
       end
 
       context '#already_relatives_with?' do
@@ -111,19 +127,24 @@ describe Invitation, type: :model do
       end
 
       context '#is_member?' do
-        it 'returns true if the recipient is already a member'
+        let(:user_as_member) { create(:user_as_member) }
+        let(:invitation_to_member) { build(:invitation_to_member) }
+
+        it 'returns true if the recipient is already a member' do
+
+        end
 
         it 'returns false if the recipient is not a member'
       end
 
-      context 'find_member' do
-        it 'finds a member if the recipient email belongs to a member' do
-          member = create(:user, email: 'member@example.com')
-          expect(User.find_by_email('member@example.com')).to eql(member)
+      context '#find_by_recipient_email' do
+        let(:user_as_member) { create(:user_as_member) }
+        let(:invitation_to_member) { build(:invitation_to_member) }
+
+        it 'should find the member' do
+          expect(invitation_to_member.find_by_recipient_email).to_not eql(user_as_member)
         end
       end
-
-
     end
   end
 

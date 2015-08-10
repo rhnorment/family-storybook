@@ -297,7 +297,7 @@ DEPENDENCIES
   data-confirm-modal!
   database_cleaner
   devise
-  factory_girl_rails
+  factory_girl_rails (~> 4.0)
   font-awesome-sass
   holder_rails
   jbuilder (~> 2.0)

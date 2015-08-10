@@ -44,21 +44,21 @@ class Invitation < ActiveRecord::Base
 
   # check to see if the user invited himself:
   def invited_self?
-    self.recipient_email == user.email
+    recipient_email == user.email
   end
 
   # check to see if the user is already relatives with the invitee:
   def already_relatives_with?
-    user.relatives.include?(find_recipient)
+    user.relatives.include?(find_by_recipient_email)
   end
 
   # check to see if the user is already a member:
-  def is_member?
-    find_recipient != nil
+  def recipient_is_member?
+    find_by_recipient_email != nil
   end
 
-  # find the recipient in the user table:
-  def find_recipient
+  # check to see if the recipient is already a member:
+  def find_by_recipient_email
     User.find_by_email(recipient_email)
   end
 

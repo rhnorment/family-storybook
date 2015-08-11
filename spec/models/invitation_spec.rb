@@ -121,28 +121,35 @@ describe Invitation, type: :model do
       end
 
       context '#already_relatives_with?' do
+        let(:user) { create(:user) }
+        let(:relative) { create(:user_already_relative) }
+        # Relationship.create!(user: user, relative: relative, pending: false)
+
         it 'returns true if the user is already relatives with the recipient'
 
         it 'returns false if the user it not relatives with the recipient'
       end
 
       context '#is_member?' do
-        let(:user_as_member) { create(:user_as_member) }
+        let(:user_is_member) { create(:user_as_member) }
         let(:invitation_to_member) { build(:invitation_to_member) }
+        let(:valid_invitation) { build(:valid_invitation) }
 
         it 'returns true if the recipient is already a member' do
-
+          expect(invitation_to_member.recipient_is_member?).to be(true)
         end
 
-        it 'returns false if the recipient is not a member'
+        it 'returns false if the recipient is not a member' do
+          expect(valid_invitation.recipient_is_member?).to eql(false)
+        end
       end
 
       context '#find_by_recipient_email' do
-        let(:user_as_member) { create(:user_as_member) }
-        let(:invitation_to_member) { build(:invitation_to_member) }
+        let(:user_to_find) { create(:user_to_find) }
+        let(:invitation) { build(:invitation, recipient_email: 'find_me@example.com') }
 
         it 'should find the member' do
-          expect(invitation_to_member.find_by_recipient_email).to_not eql(user_as_member)
+          expect(invitation.find_by_recipient_email).to eql(user_to_find)
         end
       end
     end

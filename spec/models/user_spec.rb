@@ -66,12 +66,14 @@ describe User, type: :model do
   end
 
   context 'callbacks' do
+    it { should callback(:send_activation_email).after(:create) }
     it { should callback(:create_activity).after(:create) }
     it { should callback(:remove_activities).before(:destroy) }
   end
 
   describe 'public instance methods' do
     context 'responds to its methods' do
+      it { should respond_to(:send_activation_email) }
       it { should respond_to(:create_activity) }
       it { should respond_to(:remove_activities) }
       it { should respond_to(:gravatar_id) }
@@ -80,26 +82,32 @@ describe User, type: :model do
     context 'executes methods correctly' do
       let(:user) { create(:user) }
 
+      context '#send_activation_email' do
+        it 'sends the email' do
+          expect { user.send_activation_email }.to change { ActionMailer::Base.deliveries.count }.by(2)
+        end
+      end
+
       context '#create_activity' do
         it 'should create an activity when it is created' do
           expect(user.activities.last).to eql(PublicActivity::Activity.last)
         end
+      end
 
-        context '#remove_activities' do
-          it 'should remove all activities associated with the user' do
-            create(:storybook, user: user)
-            create(:story, user: user)
+      context '#remove_activities' do
+        it 'should remove all activities associated with the user' do
+          create(:storybook, user: user)
+          create(:story, user: user)
 
-            user.destroy
+          user.destroy
 
-            expect(PublicActivity::Activity.count).to eql(0)
-          end
+          expect(PublicActivity::Activity.count).to eql(0)
         end
+      end
 
-        context '#gravatar_id' do
-          it 'returns a digest to be used by the Gravatar web service' do
-            expect(Digest::MD5.hexdigest(user.email.downcase)).to eql('b58996c504c5638798eb6b511e6f49af')
-          end
+      context '#gravatar_id' do
+        it 'returns a digest to be used by the Gravatar web service' do
+          expect(Digest::MD5.hexdigest(user.email.downcase)).to eql('b58996c504c5638798eb6b511e6f49af')
         end
       end
     end

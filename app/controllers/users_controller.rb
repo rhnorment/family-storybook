@@ -24,8 +24,6 @@ class UsersController < ApplicationController
     @token = params[:invitation_token]
 
     if @user.save
-      @user.send_activation_email
-
       session[:user_id] = @user.id
 
       @user.create_relationship_from_invitation(@token) if @token

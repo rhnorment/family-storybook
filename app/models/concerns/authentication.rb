@@ -15,11 +15,6 @@ module Authentication
     end
   end
 
-  # sends an email to a newly registered user:
-  def send_activation_email
-    UserMailer.registration_confirmation(self).deliver_now
-  end
-
   #  creates a digest for resetting a forgotten password:
   def create_reset_digest
     update_attribute(:reset_token, User.new_token)

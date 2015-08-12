@@ -14,8 +14,10 @@ require 'rails_helper'
 
 describe Story, type: :model do
 
-  it 'has a valid factory' do
-    expect(build(:story)).to be_valid
+  let(:user) { User.create!(user_attributes) }
+
+  it 'is valid with example attributes' do
+    expect(user.stories.new(story_attributes)).to be_valid
   end
 
   describe 'ActiveModel validations' do
@@ -43,9 +45,6 @@ describe Story, type: :model do
   end
 
   describe 'public instance methods' do
-    let(:user) { create(:user) }
-    let(:story) { create(:story, user: user) }
-
     context 'responds to its methods' do
       it { should respond_to(:create_activity) }
     end

@@ -16,8 +16,12 @@ require 'rails_helper'
 
 describe Invitation, type: :model do
 
-  it 'has a valid factory' do
-    expect(build(:invitation)).to be_valid
+  before do
+    @user = User.create!(user_attributes)
+  end
+
+  it 'is valid with example attributes' do
+    expect(@user.invitations.new(invitation_attributes)).to be_valid
   end
 
   context 'ActiveModel validations' do
@@ -60,7 +64,6 @@ describe Invitation, type: :model do
       it { should respond_to(:sent_at) }
       it { should respond_to(:accepted_at) }
     end
-
   end
 
   describe 'public instance methods' do
@@ -75,81 +78,84 @@ describe Invitation, type: :model do
     end
 
     context 'executes methods correctly' do
-      let(:invitation) { create(:invitation) }
+      before do
+        @member = User.create!(user_attributes(email: 'member@example.com'))
+        @member_invitation = @user.invitations.new(invitation_attributes(recipient_email: 'member@example.com'))
+        @saved_invitation = @user.invitations.create!(invitation_attributes(recipient_email: 'saved@example.com'))
+        @valid_invitation = @user.invitations.new(invitation_attributes)
+      end
 
       context '#create_invitation_digest' do
         it 'creates an token in the database before creation and saves it to the database' do
-          expect(invitation.token.present?).to eql(true)
+          expect(@saved_invitation.token.present?).to eql(true)
         end
       end
 
       context '#send_invitation_email' do
-        it 'sends the email' do
-          expect { invitation.send_invitation_email }.to change { ActionMailer::Base.deliveries.count }.by(2)
+        it 'sends the invitation email' do
+          expect { @saved_invitation.send_invitation_email }.to change { ActionMailer::Base.deliveries.count }.by(1)
         end
 
         it 'updates the sent_at column' do
-          expect(invitation.sent_at).to_not be_nil
+          expect(@saved_invitation.sent_at).to_not be_nil
         end
       end
 
       context '#already_invited?' do
-        let(:invitation_already_sent) { create(:invitation_already_sent) }
-        let(:valid_invitation) { build(:valid_invitation) }
-
-        it 'returns true if the recipient email is found' do
-          expect(invitation_already_sent.already_invited?).to eql(true)
+        before do
+          @old_invitation = @user.invitations.create!(invitation_attributes(recipient_email: 'old_invite@example.com'))
         end
 
-        it 'returns false if the recipient email is not found' do
-          expect(valid_invitation.already_invited?).to eql(false)
+        it 'returns true if an invitation is found' do
+          invitation = @user.invitations.new(invitation_attributes(recipient_email: 'saved@example.com'))
+          expect(invitation.already_invited?).to eql(true)
+        end
+
+        it 'returns false if an invitation is not found' do
+          expect(@valid_invitation.already_invited?).to eql(false)
         end
       end
 
       context '#invited_self?' do
-        let(:user_as_self) { create(:user_as_self) }
-        let(:invitation_to_self) { build(:invitation_to_self, user: user_as_self) }
-        let(:valid_invitation) { build(:valid_invitation) }
-
         it 'returns true if the user is inviting himself' do
-          expect(invitation_to_self.invited_self?).to eql(true)
+          invitation = @user.invitations.new(invitation_attributes(recipient_email: 'user@example.com'))
+          expect(invitation.invited_self?).to eql(true)
         end
 
         it 'returns false if the user is not inviting himself' do
-          expect(valid_invitation.invited_self?).to eql(false)
+          expect(@valid_invitation.invited_self?).to eql(false)
         end
       end
 
       context '#already_relatives_with?' do
-        let(:user) { create(:user) }
-        let(:relative) { create(:user_already_relative) }
-        # Relationship.create!(user: user, relative: relative, pending: false)
+        before do
+          relative = User.create!(user_attributes(email: 'relative@example.com'))
+          Relationship.create(user_id: @user.id, relative_id: relative.id, pending: false)
+        end
 
-        it 'returns true if the user is already relatives with the recipient'
+        it 'returns true if the user is already relatives with the recipient' do
+          invitation = @user.invitations.new(invitation_attributes(recipient_email: 'relative@example.com'))
+          expect(invitation.already_relatives_with?).to eql(true)
+        end
 
-        it 'returns false if the user it not relatives with the recipient'
+        it 'returns false if the user it not relatives with the recipient' do
+          expect(@valid_invitation.already_relatives_with?).to eql(false)
+        end
       end
 
-      context '#is_member?' do
-        let(:user_is_member) { create(:user_as_member) }
-        let(:invitation_to_member) { build(:invitation_to_member) }
-        let(:valid_invitation) { build(:valid_invitation) }
-
+      context '#recipient_is_member?' do
         it 'returns true if the recipient is already a member' do
-          expect(invitation_to_member.recipient_is_member?).to be(true)
+          expect(@member_invitation.recipient_is_member?).to eql(true)
         end
 
         it 'returns false if the recipient is not a member' do
-          expect(valid_invitation.recipient_is_member?).to eql(false)
+          expect(@valid_invitation.recipient_is_member?).to eql(false)
         end
       end
 
       context '#find_by_recipient_email' do
-        let(:user_to_find) { create(:user_to_find) }
-        let(:invitation) { build(:invitation, recipient_email: 'find_me@example.com') }
-
         it 'should find the member' do
-          expect(invitation.find_by_recipient_email).to eql(user_to_find)
+          expect(@member_invitation.find_by_recipient_email).to eql(@member)
         end
       end
     end

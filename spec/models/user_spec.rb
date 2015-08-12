@@ -15,8 +15,12 @@ require 'rails_helper'
 
 describe User, type: :model do
 
-  it 'it has a valid factory' do
-    expect(build(:user)).to be_valid
+  it 'it valid with example attributes' do
+    expect(User.new(user_attributes)).to be_valid
+  end
+
+  before do
+    @user = User.new(user_attributes)
   end
 
   describe 'ActiveModel validations' do
@@ -36,9 +40,8 @@ describe User, type: :model do
     end
 
     it 'does not require a password when updating' do
-      user = build(:user)
-      user.password = ''
-      expect(user).to be_valid
+      @user.password = ''
+      expect(@user).to be_valid
     end
 
     # format validations:
@@ -80,24 +83,23 @@ describe User, type: :model do
     end
 
     context 'executes methods correctly' do
-      let(:user) { create(:user) }
-
       context '#send_activation_email' do
         it 'sends the email' do
-          expect { user.send_activation_email }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          expect { @user.send_activation_email }.to change { ActionMailer::Base.deliveries.count }.by(1)
         end
       end
 
       context '#create_activity' do
         it 'should create an activity when it is created' do
-          expect(user.activities.last).to eql(PublicActivity::Activity.last)
+          expect(@user.activities.last).to eql(PublicActivity::Activity.last)
         end
       end
 
       context '#remove_activities' do
         it 'should remove all activities associated with the user' do
-          create(:storybook, user: user)
-          create(:story, user: user)
+          user = User.create!(user_attributes)
+          user.storybooks.create!(storybook_attributes)
+          user.stories.create!(story_attributes)
 
           user.destroy
 
@@ -107,7 +109,7 @@ describe User, type: :model do
 
       context '#gravatar_id' do
         it 'returns a digest to be used by the Gravatar web service' do
-          expect(Digest::MD5.hexdigest(user.email.downcase)).to eql('b58996c504c5638798eb6b511e6f49af')
+          expect(Digest::MD5.hexdigest(@user.email.downcase)).to eql('b58996c504c5638798eb6b511e6f49af')
         end
       end
     end

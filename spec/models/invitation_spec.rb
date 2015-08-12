@@ -24,7 +24,7 @@ describe Invitation, type: :model do
     expect(@user.invitations.new(invitation_attributes)).to be_valid
   end
 
-  context 'ActiveModel validations' do
+  describe 'ActiveModel validations' do
     # basic validations:
     it { should validate_presence_of(:user_id) }
     it { should validate_presence_of(:recipient_email) }

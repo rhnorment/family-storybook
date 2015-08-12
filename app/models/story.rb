@@ -38,3 +38,5 @@ class Story < ActiveRecord::Base
 
 end
 
+# TODO:  refactor activities as trackable concern.
+

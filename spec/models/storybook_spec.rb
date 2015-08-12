@@ -17,10 +17,12 @@ require 'rails_helper'
 
 describe Storybook, type: :model do
 
-  let(:user) { User.create!(user_attributes) }
+  before do
+    @user = User.create!(user_attributes)
+  end
 
   it 'is valid with example attributes' do
-    expect(user.storybooks.new(storybook_attributes)).to be_valid
+    expect(@user.storybooks.new(storybook_attributes)).to be_valid
   end
 
   describe 'ActiveModel validations' do
@@ -61,7 +63,7 @@ describe Storybook, type: :model do
 
     context 'executes its methods corrects' do
       it 'should create an activity when created' do
-        expect(user.activities.last).to eql(PublicActivity::Activity.last)
+        expect(@user.activities.last).to eql(PublicActivity::Activity.last)
       end
     end
   end

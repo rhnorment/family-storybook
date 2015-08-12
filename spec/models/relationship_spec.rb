@@ -13,66 +13,84 @@
 require 'rails_helper'
 
 describe Relationship, type: :model do
+
   before do
     @user1 = User.create!(user_attributes)
     @user2 = User.create!(user_attributes(email: 'user2@example.com'))
-    @user3 = User.create!(user_attributes(email: 'user3@example.com'))
-    @user4 = User.create!(user_attributes(email: 'user4@example.com'))
   end
 
-  it 'should validate the presence of the user and relative ids' do
-    relationship = Relationship.new
-
-    expect(relationship).to_not be_valid
-    expect(relationship.errors).to include(:user_id)
-    expect(relationship.errors).to include(:relative_id)
-    expect(relationship.errors.size).to eq(2)
+  it 'is valid with example attributes' do
+    expect(Relationship.new(user_id: @user1.id, relative_id: @user2.id)).to be_valid
   end
 
-  context 'when creating a new relationship' do
-    before do
-      @user1.invite(@user2)
-      @relationship = Relationship.first
-    end
-
-    it 'should be pending' do
-      expect(@relationship.pending?).to eql(true)
-    end
-
-    it 'should not be approved' do
-      expect(@relationship.approved?).to eql(false)
-    end
+  describe 'ActiveModel validations' do
+    # basic validations:
+    it { should validate_presence_of(:user_id) }
+    it { should validate_presence_of(:relative_id) }
   end
 
-  context 'when approving a relationship' do
-    before do
-      @user1.invite(@user2)
-      @user2.approve(@user1)
-      @relationship = Relationship.first
-    end
+  describe 'ActiveRecord associations' do
+    # database columns:
+    it { should have_db_column(:user_id).of_type(:integer) }
+    it { should have_db_column(:relative_id).of_type(:integer) }
+    it { should have_db_column(:pending).of_type(:boolean).with_options(default: true) }
 
-    it 'should be approved' do
-      expect(@relationship.approved?).to eql(true)
-    end
+    it { should have_db_index([:user_id, :relative_id]).unique(:true) }
 
-    it 'should not be pending' do
-      expect(@relationship.pending?).to eql(false)
+    # associations:
+    it { should belong_to(:user) }
+    it { should belong_to(:user).class_name('User') }
+  end
+
+  context 'callbacks' do
+    it 'should callback to create_activity on create'
+  end
+
+  describe 'public class methods' do
+    context 'responds to its methods' do
+      it { should respond_to(:user_id) }
+      it { should respond_to(:relative_id) }
+      it { should respond_to(:pending) }
     end
   end
 
-  context 'when removing a relationship' do
-    before do
-      @user1.invite(@user2)
-      @user2.approve(@user1)
-      @relationship = Relationship.first
-      @user1.remove_relationship(@user2)
+  describe 'public instance methods' do
+    context 'respond to its methods' do
+      it { should respond_to(:approved?) }
+      it { should respond_to(:pending?) }
     end
 
-    it 'the relationship record should not exist' do
-      expect(Relationship.all.size).to eq(0)
+    context 'method behaves at it should' do
+      before do
+        @relationship = Relationship.new(user_id: @user1.id, relative_id: @user2.id)
+      end
+
+      context '#approved?' do
+        it 'should return false if the relationship is not approved' do
+          expect(@relationship.approved?).to be_falsey
+        end
+
+        it 'should return true if the relationship is approved' do
+          @relationship.pending = false
+          expect(@relationship.approved?).to be_truthy
+        end
+      end
+
+      context '#pending?' do
+        it 'should return true if the relationship is pending' do
+          expect(@relationship.pending?).to be_truthy
+        end
+
+        it 'should return false if the relationship is not pending' do
+          @relationship.pending = false
+          expect(@relationship.pending?).to be_falsey
+        end
+      end
     end
   end
 
 end
+
+
 
 # TODO:  add specs for tracking relationship creations.

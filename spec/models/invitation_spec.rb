@@ -45,6 +45,8 @@ describe Invitation, type: :model do
     it { should have_db_index(:user_id) }
     it { should have_db_index(:recipient_email) }
     it { should have_db_index(:token) }
+    it 'should have db column pending'
+
     it { should have_db_index([:user_id, :recipient_email]).unique(:true) }
 
     # associations:
@@ -75,6 +77,8 @@ describe Invitation, type: :model do
       it { should respond_to(:already_relatives_with?) }
       it { should respond_to(:recipient_is_member?) }
       it { should respond_to(:find_by_recipient_email) }
+      it 'should respond to pending?'
+      it 'should respond to accepted?'
     end
 
     context 'executes methods correctly' do

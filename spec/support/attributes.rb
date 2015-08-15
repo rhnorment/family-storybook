@@ -7,6 +7,15 @@ def user_attributes(overrides = {})
   }.merge(overrides)
 end
 
+def wrong_user_attributes(overrides={})
+{
+    name: 'Wrong User',
+    email: 'wrong_user@example.com',
+    password: 'secret',
+    password_confirmation: 'secret'
+}.merge(overrides)
+end
+
 def storybook_attributes(overrides = {})
   {
       title: 'Storybook Title',

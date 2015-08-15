@@ -14,3 +14,5 @@ module Invitable
 
 end
 # TODO:  implement create relationship from invitation methods.
+
+# TODO:  market pending=false instead of deleting an executed invitation.

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe UsersController, type: :controller do
 
   describe 'GET :show' do
-   before { @user = User.create(user_attributes) }
+   before { create_user }
 
     context 'when not signed in' do
       before do
@@ -43,8 +43,7 @@ describe UsersController, type: :controller do
 
     context 'when signed is as a different user' do
       before do
-        @wrong_user = User.create!(wrong_user_attributes)
-        session[:user_id] = @wrong_user.id
+        create_and_sign_in_wrong_user
         get :show, id: @user.id
       end
 
@@ -74,8 +73,7 @@ describe UsersController, type: :controller do
 
     context 'when signed in' do
       before do
-        @user = User.create(user_attributes)
-        session[:user_id] = @user.id
+        create_and_sign_in_current_user
         get :new
       end
 
@@ -121,8 +119,7 @@ describe UsersController, type: :controller do
 
     context 'when signed in' do
       before do
-        @user = User.create(user_attributes)
-        session[:user_id] = @user.id
+        create_and_sign_in_current_user
         post(:create, user: @new_user)
       end
 
@@ -131,7 +128,7 @@ describe UsersController, type: :controller do
   end
 
   describe 'GET :edit' do
-    before { @user = User.create(user_attributes) }
+    before { create_user }
 
     context 'when not signed in' do
       before do
@@ -159,8 +156,7 @@ describe UsersController, type: :controller do
 
     context 'when signed is as a different user' do
       before do
-        @wrong_user = User.create!(wrong_user_attributes)
-        session[:user_id] = @wrong_user.id
+        create_and_sign_in_wrong_user
         get :edit, id: @user.id
       end
 
@@ -216,8 +212,7 @@ describe UsersController, type: :controller do
 
     context 'when signed in as a different user' do
       before do
-        @wrong_user = User.create!(wrong_user_attributes)
-        session[:user_id] = @wrong_user.id
+        create_and_sign_in_wrong_user
         patch(:update, id: @user.id, user: { name: 'Example Two User' })
       end
 
@@ -226,7 +221,7 @@ describe UsersController, type: :controller do
   end
 
   describe 'DELETE :destroy' do
-    before { @user = User.create!(user_attributes) }
+    before { create_user }
 
     context 'when not signed in' do
       before do
@@ -256,16 +251,15 @@ describe UsersController, type: :controller do
           it { should_not set_flash }
         end
       end
+    end
 
-      context 'when signed in as a different user' do
-        before do
-          @wrong_user = User.create!(wrong_user_attributes)
-          session[:user_id] = @wrong_user.id
-          delete(:destroy, id: @user.id)
-        end
-
-        it_behaves_like 'signed in as a different user'
+    context 'when signed in as a different user' do
+      before do
+        create_and_sign_in_wrong_user
+        delete(:destroy, id: @user.id)
       end
+
+      it_behaves_like 'signed in as a different user'
     end
   end
 

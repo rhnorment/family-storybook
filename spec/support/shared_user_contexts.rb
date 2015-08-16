@@ -15,3 +15,4 @@ shared_context 'signed in as the current user' do
   it { should redirect_to(@user) }
   it { should_not set_flash }
 end
+

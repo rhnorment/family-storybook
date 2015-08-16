@@ -1,4 +1,4 @@
-shared_context 'a user not signed in' do
+shared_context 'user not signed in' do
   it { should respond_with(:redirect) }
   it { should redirect_to(new_session_url) }
   it { should set_flash[:alert] }

@@ -3,20 +3,20 @@ require 'rails_helper'
 describe UsersController, type: :controller do
 
   describe 'GET :show' do
-   before { create_user }
+    before { create_user }
 
     context 'when not signed in' do
       before do
-        session[:user_id] = nil
+        sign_out_current_user
         get :show, id: @user.id
       end
 
-      it_behaves_like 'a user not signed in'
+      it_behaves_like 'user not signed in'
     end
 
     context 'when signed in' do
       before do
-        session[:user_id] = @user.id
+        sign_in_current_user
         get :show, id: @user.id
       end
 
@@ -53,6 +53,8 @@ describe UsersController, type: :controller do
   end
 
   describe 'GET :new' do
+    before { create_user }
+
     context 'when not signed in' do
       before { get :new }
 
@@ -73,7 +75,7 @@ describe UsersController, type: :controller do
 
     context 'when signed in' do
       before do
-        create_and_sign_in_current_user
+        sign_in_current_user
         get :new
       end
 
@@ -83,14 +85,17 @@ describe UsersController, type: :controller do
 
   describe 'POST :create' do
     before do
-      session[:user_id] = nil
+      create_user
       @new_user = { name: 'New User', email: 'newuser@exaxmple.com', password: 'secret', password_confirmation: 'secret' }
       @bad_user = { name: 'Bad User', email: 'baduser@exaxmple.com', password: nil, password_confirmation: nil }
     end
 
     context 'when not signed in' do
       context 'upon successfully creating a new user' do
-        before { post(:create, user: @new_user) }
+        before do
+          sign_out_current_user
+          post(:create, user: @new_user)
+        end
 
         describe 'routes and responses' do
           it { should route(:post, '/users').to(action: :create) }
@@ -99,7 +104,7 @@ describe UsersController, type: :controller do
 
         describe 'controller actions' do
           it 'should change the User count' do
-            expect(User.count).to eql(1)
+            expect(User.count).to eql(2)  # initial user + newly created user from test action.
           end
           it { should redirect_to(user_url(User.last)) }
           it { should set_flash[:success] }
@@ -119,7 +124,7 @@ describe UsersController, type: :controller do
 
     context 'when signed in' do
       before do
-        create_and_sign_in_current_user
+        sign_in_current_user
         post(:create, user: @new_user)
       end
 
@@ -132,16 +137,16 @@ describe UsersController, type: :controller do
 
     context 'when not signed in' do
       before do
-        session[:user_id] = nil
+        sign_out_current_user
         get :edit, id: @user.id
       end
 
-      it_behaves_like 'a user not signed in'
+      it_behaves_like 'user not signed in'
     end
 
     context 'when signed in' do
       before do
-        session[:user_id] = @user.id
+        sign_in_current_user
         get :edit, id: @user.id
       end
 
@@ -165,19 +170,19 @@ describe UsersController, type: :controller do
   end
 
   describe 'PATCH :update' do
-    before { @user = User.create(user_attributes) }
+    before { create_user }
 
     context 'when not signed in' do
       before do
-        session[:user_id] = nil
+        sign_out_current_user
         patch(:update, id: @user.id, user: { name: 'Example Two User' })
       end
 
-      it_behaves_like 'a user not signed in'
+      it_behaves_like 'user not signed in'
     end
 
     context 'when signed in as the current user' do
-      before { session[:user_id] = @user.id }
+      before { sign_in_current_user }
 
       context 'when successfully updating a user' do
         before { patch(:update, id: @user.id, user: { email: 'change@example.com' }) }
@@ -222,22 +227,22 @@ describe UsersController, type: :controller do
 
   describe 'DELETE :destroy' do
     before { create_user }
-
     context 'when not signed in' do
       before do
-        session[:user_id] = nil
+        sign_out_current_user
         delete(:destroy, id: @user.id)
       end
 
-      it_behaves_like 'a user not signed in'
+      it_behaves_like 'user not signed in'
     end
 
     context 'when signed in as the current user' do
-      before { session[:user_id] = @user.id }
+      before do
+        sign_in_current_user
+        delete(:destroy, id: @user.id)
+      end
 
       context 'when successfully deleting a user' do
-        before { delete(:destroy, id: @user.id) }
-
         describe 'routes and responses' do
           it { should route(:delete, '/users/1-Example-User').to(action: :destroy, id: '1-Example-User') }
           it { should respond_with(:found) }
@@ -266,3 +271,5 @@ describe UsersController, type: :controller do
 end
 
 # TODO:  determine how to test collections.
+
+# TODO: add specs for creating a new user from an invitation token

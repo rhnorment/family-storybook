@@ -33,7 +33,7 @@ describe StorybooksController, type: :controller do
         expect(assigns(:page_title)).to eql('My storybooks')
       end
 
-      it 'should make the storybook collection available to the view' do
+      it 'should correctly assign the storybook collection' do
         expect(assigns(:storybooks)).to include(@storybook_1, @storybook_2)
       end
     end
@@ -96,7 +96,7 @@ describe StorybooksController, type: :controller do
 
         it { should route(:post, '/storybooks').to(action: :create) }
         it { should respond_with(:found) }
-        it { should redirect_to(storybook_url(Storybook.last)) }
+        it { should redirect_to(Storybook.last) }
         it { should set_flash[:success] }
 
         it 'should change the Storybook count' do
@@ -110,6 +110,10 @@ describe StorybooksController, type: :controller do
         it { should respond_with(:success) }
         it { should render_template(:new) }
         it { should set_flash.now[:danger] }
+
+        it 'should not change the Storybook count' do
+          expect(@user.storybooks.count).to eql(2)  # 2 original stories.
+        end
       end
     end
   end
@@ -200,7 +204,7 @@ describe StorybooksController, type: :controller do
       it { should set_flash[:warning] }
 
       it 'should remove the user from the database' do
-        expect(Storybook.count).to eql(1) # 2 initial books less the one just destroyed.
+        expect(@user.storybooks.count).to eql(1) # 2 initial books less the one just destroyed.
       end
     end
   end

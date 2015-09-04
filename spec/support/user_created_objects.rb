@@ -7,3 +7,4 @@ def create_user_stories
   @story_1 = @user.stories.create!(story_attributes)
   @story_2 = @user.stories.create!(story_attributes(title: 'Story Two Title'))
 end
+

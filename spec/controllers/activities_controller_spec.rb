@@ -3,22 +3,37 @@ require 'rails_helper'
 describe ActivitiesController, type: :controller do
 
   before do
-    @user = User.create!(user_attributes)
+    create_user
+    create_user_storybooks
+    create_user_stories
   end
 
-  context 'when not signed in' do
-    it 'cannot access index' do
-      session[:user_id] = nil
+  describe 'GET :index' do
+    context 'when not signed in' do
+      before { get :index }
 
-      expect(get :index).to redirect_to(new_session_url)
+      it_behaves_like 'user not signed in'
     end
-  end
 
-  context 'when signed in as current user' do
-    it 'can access index' do
-      session[:user_id] = @user.id
+    context 'when signed in as the current user' do
+      before do
+        sign_in_current_user
+        get :index
+      end
 
-      expect(get :index).to render_template(:index)
+      it { should route(:get, '/activities').to(action: :index) }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:application) }
+      it { should render_template(:index) }
+      it { should_not set_flash }
+
+      it 'should set the page title' do
+        expect(assigns(:page_title)).to eql('My activities')
+      end
+
+      it 'should set the collection of user activities' do
+        expect(assigns(:activities)).to include { PublicActivity::Activity.where(owner_id: @user.id) }
+      end
     end
   end
 

@@ -1,54 +1,73 @@
 require 'rails_helper'
 
 describe SessionsController, type: :controller do
+  before { create_user }
 
-  before do
-    @user = User.create!(user_attributes)
-  end
+  describe 'GET :new' do
+    context 'when not signed in' do
+      before { get :new }
 
-  context 'when not signed in' do
-    it 'presents a new session view' do
-      get :new
+      it { should route(:get, '/signin').to(action: :new) }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:session) }
+      it { should render_template(:new) }
+      it { should_not set_flash }
+    end
 
-      expect(response).to render_template('layouts/session')
-      expect(response).to render_template :new
+    context 'when signed in as the current user' do
+      before do
+        sign_in_current_user
+        get(:new)
+      end
+
+      it_behaves_like 'signed in as the current user'
     end
   end
 
-  context 'when signed in' do
+  describe 'POST :create' do
     before do
-      session[:user_id] = @user.id
+      @good_session = { email: 'user@example.com', password: 'secret' }
+      @bad_session = { email: 'bad_user@example.com', password: 'secret' }
     end
 
-    it 'prevents a new session view' do
-      get :new
+    context 'when not signed in' do
+      before { post(:create, @good_session) }
 
-      expect(response).to redirect_to(@user)
+      it { should route(:post, '/session').to(action: :create) }
+      it { should respond_with(:found) }
+      it { should redirect_to(storybooks_url) }
+      it { should set_flash[:success] }
+
+      it 'should set the session[:user_id] key to the user id' do
+        expect(session[:user_id]).to eql(@user.id)
+      end
     end
 
-    it 'deletes the session and redirects to the new session view' do
-      delete :destroy
+    context 'when signed in as the current user' do
+      before do
+        sign_in_current_user
+        post(:create, @good_session)
+      end
 
-      expect(session[:user_id]).to eql(nil)
-      expect(response).to redirect_to signin_url
+      it_behaves_like 'signed in as the current user'
     end
   end
 
-  context 'when not signed in and using valid credentials' do
-    it 'authenticates the user and creates a new session' do
-      post :create, user: { email: @user.email, password: 'secret' }
+  describe 'DELETE :destroy' do
+    context 'when signed in as the current user' do
+      before do
+        sign_in_current_user
+        delete(:destroy)
+      end
 
-      expect(User.authenticate(@user.email, 'secret')).to eql(@user)
-      # expect(session[:user_id]).to eql(@user.id)
+      it { should respond_with(:redirect) }
+      it { should redirect_to(signin_url) }
+      it { should set_flash[:info] }
+
+      it 'should make sure the :user_id key in the session hash is nil' do
+        expect(session[:user_id]).to be_nil
+      end
     end
-  end
-
-  context 'when not signed in and using invalid credentials' do
-    it 'does not authenticate the user' do
-      post :create, user: { email: 'baduser@example.com', password: 'secret' }
-
-      expect(User.authenticate('bad-user@example.com', 'password')).to eq(nil)
-     end
   end
 
 end

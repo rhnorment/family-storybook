@@ -3,20 +3,33 @@ require 'rails_helper'
 describe SearchController, type: :controller do
 
   before do
-    @user = User.create!(user_attributes)
+    create_user
   end
 
-  context 'when not signed in' do
-    it 'cannot access search' do
-      expect(get :search).to redirect_to(new_session_url)
+  describe 'SEARCH :search' do
+    context 'user not signed in' do
+      before do
+        get :search
+      end
+
+      it_behaves_like 'user not signed in'
     end
-  end
 
-  context 'when signed in' do
-    it 'can access search' do
-      session[:user_id] = @user.id
+    context 'sign in as the current user' do
+      before do
+        sign_in_current_user
+        get :search
+      end
 
-      expect(get :search).to render_template(:search)
+      it { should route(:get, '/search').to(action: :search) }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:application) }
+      it { should render_template(:search) }
+      it { should_not set_flash }
+
+      it 'should set the page title' do
+        expect(assigns(:page_title)).to eql('Search results')
+      end
     end
   end
 

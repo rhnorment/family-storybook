@@ -20,25 +20,21 @@ describe UsersController, type: :controller do
         get :show, id: @user.id
       end
 
-      describe 'routes and responses' do
-        it { should route(:get, '/users/1-Example-User').to(action: :show, id: '1-Example-User') }
-        it { should respond_with(:success) }
-        it { should render_with_layout(:application) }
-        it { should render_template(:show) }
-        it { should_not set_flash }
+      it { should route(:get, '/users/1-Example-User').to(action: :show, id: '1-Example-User') }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:application) }
+      it { should render_template(:show) }
+      it { should_not set_flash }
+
+      it 'assigns the requested user to @user' do
+        expect(assigns(:user)).to eql(@user)
       end
 
-      describe 'variable assignments' do
-        it 'assigns the requested user to @user' do
-          expect(assigns(:user)).to eql(@user)
-        end
-
-        it 'assigns the user name to @page_title' do
-          expect(assigns(:page_title)).to eql(@user.name)
-        end
-
-        it 'assigns the associated collections to @user'
+      it 'assigns the user name to @page_title' do
+        expect(assigns(:page_title)).to eql(@user.name)
       end
+
+      it 'assigns the associated collections to @user'
     end
 
     context 'when signed is as a different user' do
@@ -58,18 +54,14 @@ describe UsersController, type: :controller do
     context 'when not signed in' do
       before { get :new }
 
-      describe 'routes and responses' do
-        it { should route(:get, '/signup').to(action: :new) }
-        it { should respond_with(:success) }
-        it { should render_with_layout(:session) }
-        it { should render_template(:new) }
-        it { should_not set_flash }
-      end
+      it { should route(:get, '/signup').to(action: :new) }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:session) }
+      it { should render_template(:new) }
+      it { should_not set_flash }
 
-      describe 'variable assignments' do
-        it 'should set @user to be a new object' do
-          expect(assigns(:user)).to be_a_new(User)
-        end
+      it 'should set @user to be a new object' do
+        expect(assigns(:user)).to be_a_new(User)
       end
     end
 
@@ -96,29 +88,22 @@ describe UsersController, type: :controller do
           sign_out_current_user
           post(:create, user: @new_user)
         end
+        it { should route(:post, '/users').to(action: :create) }
+        it { should respond_with(:found) }
+        it { should redirect_to(user_url(User.last)) }
+        it { should set_flash[:success] }
 
-        describe 'routes and responses' do
-          it { should route(:post, '/users').to(action: :create) }
-          it { should respond_with(:found) }
-        end
-
-        describe 'controller actions' do
-          it 'should change the User count' do
-            expect(User.count).to eql(2)  # initial user + newly created user from test action.
-          end
-          it { should redirect_to(user_url(User.last)) }
-          it { should set_flash[:success] }
+        it 'should change the User count' do
+          expect(User.count).to eql(2)  # initial user + newly created user from test action.
         end
       end
 
       context 'when unsuccessfully creating a new user' do
         before { post(:create, user: @bad_user) }
 
-        describe 'controller actions' do
-          it { should respond_with(:success) }
-          it { should render_template(:new) }
-          it { should_not set_flash } # caught by javascript on client side.
-        end
+        it { should respond_with(:success) }
+        it { should render_template(:new) }
+        it { should_not set_flash }
       end
     end
 
@@ -144,19 +129,17 @@ describe UsersController, type: :controller do
       it_behaves_like 'user not signed in'
     end
 
-    context 'when signed in' do
+    context 'when signed in as current user' do
       before do
         sign_in_current_user
         get :edit, id: @user.id
       end
 
-      describe 'routes and responses' do
-        it { should route(:get, '/users/1-Example-User/edit').to(action: :edit, id: '1-Example-User') }
-        it { should respond_with(:success) }
-        it { should render_with_layout(:application) }
-        it { should render_template(:edit) }
-        it { should_not set_flash }
-      end
+      it { should route(:get, '/users/1-Example-User/edit').to(action: :edit, id: '1-Example-User') }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:application) }
+      it { should render_template(:edit) }
+      it { should_not set_flash }
     end
 
     context 'when signed is as a different user' do
@@ -187,31 +170,22 @@ describe UsersController, type: :controller do
       context 'when successfully updating a user' do
         before { patch(:update, id: @user.id, user: { email: 'change@example.com' }) }
 
-        describe 'routes and responses' do
-          it { should route(:patch, '/users/1-Example-User').to(action: :update, id: '1-Example-User') }
-          it { should respond_with(:found) }
-        end
+        it { should route(:patch, '/users/1-Example-User').to(action: :update, id: '1-Example-User') }
+        it { should respond_with(:found) }
+        it { should redirect_to(@user) }
+        it { should set_flash[:success] }
 
-        describe 'controller actions' do
-          it 'should have the new email address in the database' do
-            expect(@user.reload.email).to eql('change@example.com')
-          end
-          it { should redirect_to(@user) }
-          it { should set_flash[:success] }
+        it 'should have the new email address in the database' do
+          expect(@user.reload.email).to eql('change@example.com')
         end
       end
 
       context 'when unsuccessfully updating a user ' do
         before { patch(:update, id: @user.id, user: { email: '@example.com' }) }
 
-        describe 'routes and responses' do
-          it { should respond_with(:success) }
-        end
-
-        describe 'controller actions' do
-          it { should render_template(:edit) }
-          it { should_not set_flash } # caught by javascript on client side.
-        end
+        it { should respond_with(:success) }
+        it { should render_template(:edit) }
+        it { should_not set_flash }
       end
     end
 
@@ -227,6 +201,7 @@ describe UsersController, type: :controller do
 
   describe 'DELETE :destroy' do
     before { create_user }
+
     context 'when not signed in' do
       before do
         sign_out_current_user
@@ -243,17 +218,13 @@ describe UsersController, type: :controller do
       end
 
       context 'when successfully deleting a user' do
-        describe 'routes and responses' do
-          it { should route(:delete, '/users/1-Example-User').to(action: :destroy, id: '1-Example-User') }
-          it { should respond_with(:found) }
-        end
+        it { should route(:delete, '/users/1-Example-User').to(action: :destroy, id: '1-Example-User') }
+        it { should respond_with(:found) }
+        it { should redirect_to(root_url) }
+        it { should_not set_flash }
 
-        describe 'controller actions' do
-          it 'should remove the user from the database' do
-            expect(User.count).to eql(0)
-          end
-          it { should redirect_to(root_url) }
-          it { should_not set_flash }
+        it 'should remove the user from the database' do
+          expect(User.count).to eql(0)
         end
       end
     end

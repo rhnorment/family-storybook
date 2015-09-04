@@ -1,0 +1,17 @@
+ITEMS TO DO!!!!!!!!!!!!!!
+
+1.  Finish refactoring specs using RSpec 3.0 syntax.
+
+2.  Refactor models to use custom classes.
+
+3.  Uses non-ActiveRecord models to handle registration and cancellation.
+
+4.  Create controller concerns for commenting and liking.
+
+5.  Consider view decorators instead of view helpers.
+
+6.  Consider active_model_serializers' gem
+
+7.  Refactor queries to only use what is needed in views.
+
+8.  JSON API for Android and iOS devices.

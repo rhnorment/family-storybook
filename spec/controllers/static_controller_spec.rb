@@ -15,7 +15,8 @@ describe StaticController, type: :controller do
 
     context 'when signed in' do
       before do
-        create_and_sign_in_current_user
+        create_user
+        sign_in_current_user
         get :home
       end
 
@@ -36,7 +37,8 @@ describe StaticController, type: :controller do
 
     context 'when signed in' do
       before do
-        create_and_sign_in_current_user
+        create_user
+        sign_in_current_user
         get :how
       end
 
@@ -57,7 +59,8 @@ describe StaticController, type: :controller do
 
     context 'when signed in' do
       before do
-        create_and_sign_in_current_user
+        create_user
+        sign_in_current_user
         get :showcase
       end
 

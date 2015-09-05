@@ -35,6 +35,7 @@ describe SessionsController, type: :controller do
 
       it { should route(:post, '/session').to(action: :create) }
       it { should respond_with(:found) }
+      it { should set_session[:user_id] }
       it { should redirect_to(storybooks_url) }
       it { should set_flash[:success] }
 

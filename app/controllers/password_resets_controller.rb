@@ -1,7 +1,8 @@
 class PasswordResetsController < ApplicationController
 
   layout 'session'
-  before_action       :get_user,            only: [:create, :edit, :update]
+  before_action       :walled_garden
+  before_action       :get_user,            only: [:edit, :update]
   before_action       :valid_user,          only: [:edit, :update]
   before_action       :check_expiration,    only: [:edit, :update]
 
@@ -9,6 +10,8 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
+    @user = User.find_by(email: params[:password_reset][:email].downcase)
+
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
@@ -27,8 +30,8 @@ class PasswordResetsController < ApplicationController
   end
 
   def update
-    if password_blank?
-      flash.now[:danger] = "Password can't be blank."
+    if params[:user][:password].empty?
+      flash.now[:danger] = 'Password cannot be blank.'
 
       render :edit
     elsif @user.update_attributes(user_params)
@@ -46,10 +49,6 @@ class PasswordResetsController < ApplicationController
 
     def user_params
       params.require(:user).permit(:password, :password_confirmation)
-    end
-
-    def password_blank?
-      params[:user][:password].blank?
     end
 
     def get_user

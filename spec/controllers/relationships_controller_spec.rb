@@ -3,274 +3,229 @@ require 'rails_helper'
 describe RelationshipsController, type: :controller do
 
   before do
-    @user1 = User.create!(user_attributes)
-    @user2 = User.create!(user_attributes(email: 'user2@example.com'))
-    @user3 = User.create!(user_attributes(email: 'user3@example.com'))
-    @user4 = User.create!(user_attributes(email: 'user4@example.com'))
-    @user5 = User.create!(user_attributes(email: 'user5@example.com'))
-    session[:user_id] = @user1.id
-    @relationship = @user1.relationships.create!(relative: @user2)
+    create_user
+    create_other_users
+    create_user_relationships
   end
 
-  context 'when not signed in' do
-    before do
-      session[:user_id] = nil
+  describe 'GET :index' do
+    context 'when not signed in' do
+      before { get :index }
+
+      it_behaves_like 'user not signed in'
     end
 
-    it 'cannot access index' do
-      expect(get :index).to redirect_to(new_session_url)
-    end
+    context 'when signed in' do
+      before do
+        sign_in_current_user
+        get :index
+      end
 
-    it 'cannot access pending' do
-      expect(get :pending).to redirect_to(new_session_url)
-    end
+      it { should route(:get, '/relationships').to(action: :index) }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:application) }
+      it { should render_template(:index) }
+      it { should_not set_flash }
 
-    it 'cannot access update' do
-      expect(patch :update, id: @relationship).to redirect_to(new_session_url)
-    end
+      it 'assigns the page title' do
+        expect(assigns(:page_title)).to eql('My family members')
+      end
 
-    it 'cannot access destroy' do
-      expect(delete :destroy, id: @relationship).to redirect_to(new_session_url)
-    end
-  end
+      it 'assigns the user relatives' do
+        expect(assigns(:relatives)).to include(@user_2, @user_3)
+      end
 
-  context 'when creating relationships' do
-    before do
-      Relationship.delete_all
-    end
-
-    it 'should invite other users to be family members' do
-      expect(@user1.invite(@user2)).to eql(true)
-      expect(@user3.invite(@user1)).to eql(true)
-    end
-
-    it 'should approve only relationships requested by other users' do
-      expect(@user1.invite(@user2)).to eql(true)
-      expect(@user2.approve(@user1)).to eql(true)
-      expect(@user3.invite(@user1)).to eql(true)
-      expect(@user1.approve(@user3)).to eql(true)
-    end
-
-    it 'should not invite an already invited user' do
-      expect(@user1.invite(@user2)).to eql(true)
-      expect(@user1.invite(@user2)).to eql(false)
-      expect(@user2.invite(@user1)).to eql(false)
-    end
-
-    it 'should not invite an already approved user' do
-      expect(@user1.invite(@user2)).to eql(true)
-      expect(@user2.approve(@user1)).to eql(true)
-      expect(@user2.invite(@user1)).to eql(false)
-      expect(@user1.invite(@user2)).to eql(false)
-    end
-
-    it 'should not approve a self-requested relationship' do
-      expect(@user1.invite(@user2)).to eql(true)
-      expect(@user1.approve(@user2)).to eql(false)
-      expect(@user3.invite(@user1)).to eql(true)
-      expect(@user3.approve(@user1)).to eql(false)
-    end
-
-    it 'should not create a relationship with itself' do
-      expect(@user1.invite(@user1)).to eql(false)
-    end
-
-    it 'should not approve a non-existent relationship' do
-      expect(@user4.approve(@user1)).to eql(false)
+      it 'does not assign non-relatives' do
+        expect(assigns(:relatives)).to_not include(@user_4)
+      end
     end
   end
 
-  context 'when listing relationships' do
-    before do
-      Relationship.delete_all
-      expect(@user1.invite(@user2)).to eql(true)    # john invites jane
-      expect(@user3.invite(@user1)).to eql(true)    # peter invites john
-      expect(@user1.invite(@user4)).to eql(true)    # john invites james
-      expect(@user4.approve(@user1)).to eql(true)   # james approves john
-      expect(@user5.invite(@user1)).to eql(true)    # mary invites john
-      expect(@user1.approve(@user5)).to eql(true)   # john approves mary
+  describe 'GET :new' do
+    context 'when not signed in' do
+      before { get :new }
+
+      it_behaves_like 'user not signed in'
     end
 
-    it 'should list all the relatives' do
-      expect(@user1.relatives).to match_array([@user4, @user5])
-    end
+    context 'when signed in' do
+      before do
+        sign_in_current_user
+        get :new
+      end
 
-    it 'should not list non-connection relationships' do
-      expect(@user1.relatives).to match_array([@user4, @user5])
-      expect(@user2.relatives).to_not include(@user1)
-      expect(@user3.relatives).to_not include(@user1)
-    end
+      it { should route(:get, '/relationships/new').to(action: :new) }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:application) }
+      it { should render_template(:new) }
+      it { should_not set_flash }
 
-    it 'should list the relatives who invited the user' do
-      expect(@user1.invited_by).to eq([@user5])
-    end
+      it 'assigns the page title' do
+        expect(assigns(:page_title)).to eql('Add family members')
+      end
 
-    it 'should list the relatives who were invited by the user' do
-      expect(@user1.invited).to eq([@user4])
-    end
+      it 'assigns the user invitees to non-relatives' do
+        expect(assigns(:invitees)).to include(@user_4, @user_5)
+      end
 
-    it 'should list the pending relationships who invited the user' do
-      expect(@user1.pending_invited).to eq([@user2])
-    end
-
-    it 'should list the pending relationships invited by the user' do
-      expect(@user2.pending_invited_by).to eq([@user1])
-    end
-
-    it 'should list the relationships in common with a given user' do
-      expect(@user4.common_relatives_with(@user5)).to eq([@user1])
-    end
-
-    it 'should not list the relationships not in common with a given user' do
-      expect(@user1.common_relatives_with(@user5).count).to eq(0)
-      expect(@user1.common_relatives_with(@user5)).to_not include(@user4)
-      expect(@user1.common_relatives_with(@user3).count).to eq(0)
-      expect(@user1.common_relatives_with(@user3)).to_not include(@user2)
-    end
-
-    it 'should check if a given user is a relative' do
-      expect(@user1.related_to?(@user4)).to eql(true)
-      expect(@user4.related_to?(@user1)).to eql(true)
-      expect(@user1.related_to?(@user5)).to eql(true)
-      expect(@user5.related_to?(@user1)).to eql(true)
-    end
-
-    it 'should check is a user is not a relative' do
-      expect(@user1.related_to?(@user2)).to eql(false)
-      expect(@user2.related_to?(@user1)).to eql(false)
-      expect(@user1.related_to?(@user3)).to eql(false)
-      expect(@user3.related_to?(@user1)).to eql(false)
-    end
-
-    it 'should check if a user has any connections with another user' do
-      expect(@user1.connected_with?(@user2)).to eql(true)
-      expect(@user2.connected_with?(@user1)).to eql(true)
-      expect(@user1.connected_with?(@user3)).to eql(true)
-      expect(@user3.connected_with?(@user1)).to eql(true)
-    end
-
-    it 'should check if a user does not have any connections with another user' do
-      expect(@user2.connected_with?(@user3)).to eql(false)
-      expect(@user3.connected_with?(@user2)).to eql(false)
-    end
-
-    it 'should check if a user was invited by another' do
-      expect(@user2.invited_by?(@user1)).to eql(true)
-      expect(@user4.invited_by?(@user1)).to eql(true)
-    end
-
-    it 'should check if a user was not invited by another' do
-      expect(@user1.invited_by?(@user2)).to eql(false)
-      expect(@user3.invited_by?(@user1)).to eql(false)
-    end
-
-    it 'should check if a user has invited another user' do
-      expect(@user1.invited?(@user2)).to eql(true)
-      expect(@user1.invited?(@user4)).to eql(true)
-    end
-
-    it 'should check if a user has not invited another user' do
-      expect(@user2.invited?(@user1)).to eql(false)
-      expect(@user4.invited?(@user1)).to eql(false)
-      expect(@user3.invited?(@user4)).to eql(false)
+      it 'does not assign the current user or current relatives as invitees' do
+        expect(assigns(:invitees)).to_not include(@user, @user_2, @user_3)
+      end
     end
   end
 
-  context 'when removing relationships' do
-    before do
-      Relationship.delete_all
-      expect(@user1.invite(@user2)).to eql(true)
-      expect(@user2.approve(@user1)).to eql(true)
-      expect(@user2.invite(@user3)).to eql(true)
-      expect(@user3.approve(@user2)).to eql(true)
-      expect(@user3.invite(@user4)).to eql(true)
-      expect(@user4.approve(@user3)).to eql(true)
-      expect(@user3.invite(@user5)).to eql(true)
-      expect(@user5.approve(@user3)).to eql(true)
-      expect(@user4.invite(@user5)).to eql(true)
+  describe 'POST :create' do
+    context 'when not signed in' do
+      before { post(:create, user_id: @user_4.id) }
+
+      it_behaves_like 'user not signed in'
     end
 
-    it 'should remove the relatives invited by the user' do
-      expect(@user3.relatives.size).to eq(3)
-      expect(@user3.relatives).to include(@user4)
-      expect(@user3.invited).to include(@user4)
-      expect(@user4.relatives.size).to eq(1)
-      expect(@user4.relatives).to include(@user3)
-      expect(@user4.invited_by).to include(@user3)
+    context 'when signed in' do
+      before { sign_in_current_user }
 
-      expect(@user3.remove_relationship(@user4)).to eql(true)
-      expect(@user3.relatives.size).to eq(2)
-      expect(@user3.relatives).to_not include(@user4)
-      expect(@user3.invited).to_not include(@user4)
-      expect(@user4.relatives.size).to eq(0)
-      expect(@user4.relatives).to_not include(@user3)
-      expect(@user4.invited_by).to_not include(@user3)
-    end
+      context 'when successfully inviting a user to become a family member' do
+        before { post(:create, user_id: @user_4.id) }
 
-    it 'should remove the relatives who invited the user' do
-      expect(@user3.relatives.size).to eq(3)
-      expect(@user3.relatives).to include(@user2)
-      expect(@user3.invited_by).to include(@user2)
-      expect(@user2.relatives.size).to eq(2)
-      expect(@user2.relatives).to include(@user3)
-      expect(@user2.invited).to include(@user3)
+        it { should route(:post, '/relationships').to(action: :create) }
+        it { should respond_with(:redirect) }
+        it { should redirect_to(new_relationship_url) }
+        it { should set_flash[:success] }
 
-      expect(@user3.remove_relationship(@user2)).to eql(true)
-      expect(@user3.relatives.size).to eq(2)
-      expect(@user3.relatives).to_not include(@user2)
-      expect(@user3.invited_by).to_not include(@user2)
-      expect(@user2.relatives.size).to eq(1)
-      expect(@user2.relatives).to_not include(@user3)
-      expect(@user2.invited).to_not include(@user3)
-    end
+        it 'should create a new pending relationship' do
+          expect(@user.relationships.size).to eql(3)  # 2 original relationships + new pending one.
+        end
+      end
 
-    it 'should remove the pending relationships invited by the user' do
-      expect(@user4.pending_invited.size).to eq(1)
-      expect(@user4.pending_invited).to include(@user5)
-      expect(@user5.pending_invited_by.size).to eq(1)
-      expect(@user5.pending_invited_by).to include(@user4)
+      context 'when unsuccessfully inviting a user to become a family member' do
+        before {  post(:create, user_id: @user_2.id) }
 
-      expect(@user4.remove_relationship(@user5)).to eql(true)
-      expect(@user4.pending_invited.size).to eq(0)
-      expect(@user4.pending_invited).to_not include(@user5)
-      expect(@user5.pending_invited_by.size).to eq(0)
-      expect(@user5.pending_invited_by).to_not include(@user4)
-    end
+        it { should route(:post, '/relationships').to(action: :create) }
+        it { should respond_with(:redirect) }
+        it { should redirect_to(new_relationship_url) }
+        it { should set_flash[:danger] }
 
-    it 'should remove the pending relationships sent to the user' do
-      expect(@user5.pending_invited_by.size).to eq(1)
-      expect(@user5.pending_invited_by).to include(@user4)
-      expect(@user4.pending_invited.size).to eq(1)
-      expect(@user4.pending_invited).to include(@user5)
-
-      expect(@user5.remove_relationship(@user4)).to eql(true)
-      expect(@user5.pending_invited_by.size).to eq(0)
-      expect(@user5.pending_invited_by).to_not include(@user4)
-      expect(@user4.pending_invited.size).to eq(0)
-      expect(@user4.pending_invited).to_not include(@user5)
+        it 'should not create a new pending relatiosnship' do
+          expect(@user.relationships.size).to eql(2)  # 2 original relationships
+        end
+      end
     end
   end
 
-  context 'when counting relationships' do
-    before do
-      Relationship.delete_all
-      expect(@user1.invite(@user2)).to eql(true)
-      expect(@user2.approve(@user1)).to eql(true)
-      expect(@user1.invite(@user3)).to eql(true)
-      expect(@user3.approve(@user1)).to eql(true)
-      expect(@user4.invite(@user1)).to eql(true)
-      expect(@user1.approve(@user4)).to eql(true)
-      expect(@user2.invite(@user5)).to eql(true)
-      expect(@user5.approve(@user2)).to eql(true)
-      expect(@user5.remove_relationship(@user2)).to eql(true)
-      expect(@user5.invite(@user1)).to eql(true)
+  describe 'GET :pending' do
+    context 'when not signed in' do
+      before { get :pending }
+
+      it_behaves_like 'user not signed in'
     end
 
-    it 'should return the correct count for total_friends' do
-      expect(@user1.total_relatives).to eq(3)
-      expect(@user2.total_relatives).to eq(1)
-      expect(@user3.total_relatives).to eq(1)
-      expect(@user4.total_relatives).to eq(1)
+    context 'when signed in' do
+      before do
+        sign_in_current_user
+        @user.invite(@user_4)
+        @user_5.invite(@user)
+        get :pending
+      end
+
+      it { should route(:get, '/relationships/pending').to(action: :pending) }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:application) }
+      it { should render_template(:pending) }
+      it { should_not set_flash }
+
+      it 'assigns the page title' do
+        expect(assigns(:page_title)).to eql('Pending invitations')
+      end
+
+      it 'assigns the pending relationships the user invited' do
+        expect(assigns(:pending_invited)).to include(@user_4)
+      end
+
+      it 'does not assign the current user or current relatives' do
+        expect(assigns(:pending_invited)).to_not include(@user, @user_2, @user_3)
+        expect(assigns(:pending_invited_by)).to_not include(@user, @user_2, @user_3)
+      end
+
+      it 'assigns the pending relationships the user has invited' do
+        expect(assigns(:pending_invited_by)).to include(@user_5)
+      end
+    end
+  end
+
+  describe 'PATCH :update' do
+    before { @user_5.invite(@user) }
+
+    context 'when not signed in' do
+      before { patch(:update, id: @user_5.id) }
+
+      it_behaves_like 'user not signed in'
+    end
+    context 'when signed in' do
+      before { sign_in_current_user }
+
+      context 'when successfully approving a relationship' do
+        before { patch(:update, id: @user_5.id) }
+
+        it { should route(:patch, "/relationships/#{@user_5.id}").to(action: :update, id: @user_5.id) }
+        it { should respond_with(:redirect) }
+        it { should redirect_to(pending_relationships_url) }
+        it { should set_flash[:success]}
+
+        it 'should create an approved relationship' do
+          expect(@user.relatives.size).to eql(3)  # 2 original relatives + newly approved one.
+        end
+      end
+
+      context 'when unsuccessfully approving a relationship' do
+        before { patch(:update, id: @user_2.id) }
+
+        it { should route(:patch, "/relationships/#{@user_2.id}").to(action: :update, id: @user_2.id) }
+        it { should respond_with(:redirect) }
+        it { should redirect_to(pending_relationships_url) }
+        it { should set_flash[:danger]}
+
+        it 'should create an approved relationship' do
+          expect(@user.relatives.size).to eql(2)  # 2 original relatives
+        end
+      end
+    end
+  end
+
+  describe 'DELETE :destroy' do
+    context 'when not signed in' do
+      before { delete(:destroy, id: @user_3.id) }
+
+      it_behaves_like 'user not signed in'
+    end
+
+    context 'when signed in' do
+      before { sign_in_current_user }
+
+      context 'when successfully destroying a relationship' do
+        before { delete(:destroy, id: @user_3.id) }
+
+        it { should route(:delete, "/relationships/#{@user_3.id}").to(action: :destroy, id: @user_3.id) }
+        it { should respond_with(:redirect) }
+        it { should redirect_to(relationships_url) }
+        it { should set_flash[:warning] }
+
+        it 'should destroy the relationship' do
+          expect(@user.relatives.size).to eql(1)  # 2 original relatives - the one just removed.
+        end
+      end
+
+      context 'when unsuccessfully destroying a relationship' do
+        before { delete(:destroy, id: @user_4.id) }
+
+        it { should route(:delete, "/relationships/#{@user_4.id}").to(action: :destroy, id: @user_4.id) }
+        it { should respond_with(:redirect) }
+        it { should redirect_to(relationships_url) }
+        it { should set_flash[:danger] }
+
+        it 'should destroy the relationship' do
+          expect(@user.relatives.size).to eql(2)  # 2 original relatives
+        end
+      end
     end
   end
 

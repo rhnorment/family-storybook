@@ -2,46 +2,102 @@ require 'rails_helper'
 
 describe PasswordResetsController, type: :controller do
 
-  context 'when requesting a password reset' do
-    before do
-      @user = User.create!(user_attributes)
-    end
+  before { create_user }
 
-    it 'has access to new' do
-      expect(get :new).to render_template :new
-    end
+  describe 'GET :new' do
+    context 'when not signed in'
 
-    it 'creates a password reset if the credentials are valid' do
-      expect {
-        post :create, email: @user.email
-        @user.create_reset_digest
-      }.to change(ActionMailer::Base.deliveries, :count).by(+1)
-    end
+    context 'when signed in as the current user' do
+      before do
+        sign_in_current_user
+        get :new
+      end
 
-    it 'does not create a password reset if the credentials are invalid' do
-      expect { post :create, email: 'notamember@example.com' }.to_not change(ActionMailer::Base.deliveries, :count)
+      it_behaves_like 'signed in as the current user'
     end
   end
 
-  context 'when resetting a password' do
-    before do
-      @user = User.create!(user_attributes)
-      post :create, email: @user.email
-      @user.create_reset_digest
+  describe 'POST :create' do
+
+    context 'when not signed in' do
+      context 'if the user is found' do
+        before { post(:create, password_reset: { email: 'user@example.com' }) }
+
+        it { should route(:post, '/password_resets').to(action: :create) }
+        it { should respond_with(:ok) }
+        it { should render_with_layout(:session) }
+        it { should render_template(:new) }
+        it { should set_flash.now[:info] }
+
+        it 'user object should receive #create_reset_digest'
+
+        it 'user object should receive #send_password_reset_email'
+      end
+
+      context 'if the user is not found' do
+        before { post(:create, password_reset: { email: 'wrong_user@example.com' }) }
+
+        it { should respond_with(:ok) }
+        it { should render_with_layout(:session) }
+        it { should render_template(:new) }
+        it { should set_flash.now[:danger] }
+      end
     end
+  end
 
-    it 'has access to edit' do
-      expect(get :edit, id: @user.reset_token, email: @user.email).to render_template :edit
+  describe 'GET :edit' do
+    context 'when not signed in' do
+      before do
+        @user.create_reset_digest
+        get(:edit, id: @user.reset_token, email: 'user@example.com' )
+      end
+
+      it { should route(:get, "/password_resets/#{@user.reset_token}/edit").to(action: :edit, id: @user.reset_token) }
+      it { should respond_with(:ok) }
+      it { should render_with_layout(:session) }
+      it { should render_template(:edit) }
+      it { should_not set_flash }
+
+      it 'should assign the correct user' do
+        expect(assigns(:user)).to eql(@user)
+      end
     end
+  end
 
-    it 'does not reset the password if the password field is blank' do
-      expect { patch :update, id: @user.reset_token }.to_not change(@user, :password_digest)
+  describe 'PATCH :update' do
+    context 'when not signed in' do
+      before { @user.create_reset_digest }
+
+      context 'the password reset is blank' do
+        before { patch(:update, id: @user.reset_token, email: 'user@example.com', user: { password: '', password_confirmation: '' }) }
+
+        it { should route(:patch, "/password_resets/#{@user.reset_token}").to(action: :update, id: @user.reset_token) }
+        it { should respond_with(:ok) }
+        it { should render_with_layout(:session) }
+        it { should render_template(:edit) }
+        it { should set_flash.now[:danger] }
+      end
+
+      context 'the password reset is successful' do
+        before { patch(:update, id: @user.reset_token, email: 'user@example.com', user: { password: 'secret', password_confirmation: 'secret' }) }
+
+        it { should route(:patch, "/password_resets/#{@user.reset_token}").to(action: :update, id: @user.reset_token) }
+        it { should respond_with(:redirect) }
+        it { should set_session[:user_id] }
+        it { should redirect_to(@user) }
+        it { should set_flash[:success] }
+      end
+
+      context 'the password reset is unsuccessful' do
+        before { patch(:update, id: @user.reset_token, email: 'user@example.com', user: { password: 'secret', password_confirmation: 'wrong' }) }
+
+        it { should route(:patch, "/password_resets/#{@user.reset_token}").to(action: :update, id: @user.reset_token) }
+        it { should respond_with(:ok) }
+        it { should render_with_layout(:session) }
+        it { should render_template(:edit) }
+        it { should set_flash.now[:warning] }
+      end
     end
-
-    it 'resets the password if the credentials are valid'
-
-    it 'does not reset the password if the credentials are invalid'
-
   end
 
 end

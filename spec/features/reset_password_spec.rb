@@ -27,7 +27,7 @@ describe 'resetting a user password', type: :feature do
 
     expect(page).to have_text('An email has been sent with password reset instructions.  You may close this window.')
 
-    expect(ActionMailer::Base.deliveries.size).to eq(1)
+    expect(ActionMailer::Base.deliveries.size).to eq(2) # initial user registration email + password reset email.
   end
 
   it 'does not find the user by email address if the user is inactive' do
@@ -73,12 +73,12 @@ describe 'resetting a user password', type: :feature do
     expect(page).to have_field('Confirm password')
 
     fill_in 'Password', with: ' '
-    fill_in 'Confirm password', with: 'secret'
+    fill_in 'Confirm password', with: ''
     click_button 'Change my password'
 
     expect(page).to have_field('Password')
     expect(page).to have_field('Confirm password')
-    expect(page).to have_text("Password can't be blank.")
+    expect(page).to have_text("Password cannot be blank.")
   end
 
   it 'rejects and invalid password reset' do
@@ -92,7 +92,7 @@ describe 'resetting a user password', type: :feature do
     expect(page).to have_field('Password')
     expect(page).to have_field('Confirm password')
 
-    fill_in 'Password', with: 'secret '
+    fill_in 'Password', with: 'secret'
     fill_in 'Confirm password', with: 'secret2'
     click_button 'Change my password'
 

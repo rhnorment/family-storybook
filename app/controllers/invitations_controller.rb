@@ -15,19 +15,18 @@ class InvitationsController < ApplicationController
     elsif invitation.invited_self?
       redirect_to new_relationship_url, warning: 'You cannot invite yourself.  Please try again.'
 
-    elsif already_relatives_with?
-      redirect_to relationships_url, info: "You are already relatives with #{invitation.find_member.name}."
+    elsif invitation.already_relatives_with?
+      redirect_to relationships_url, info: "You are already relatives with #{invitation.find_by_recipient_email.name}."
 
-    elsif invitation.is_member?
+    elsif invitation.recipient_is_member?
       session[:recipient_email] = invitation.recipient_email
       redirect_to new_relationship_url, info: "#{invitation.recipient_email} is already a member."
 
+    elsif invitation.save
+      redirect_to new_relationship_url, success: 'Your invitation was sent.'
+
     else
-      if invitation.save
-        redirect_to new_relationship_url, success: 'Your invitation was sent.'
-      else
-        redirect_to new_relationship_url, danger: 'You entered an invalid email address.  Please try again.'
-      end
+      redirect_to new_relationship_url, danger: 'You entered an invalid email address.  Please try again.'
     end
   end
 
@@ -43,3 +42,5 @@ class InvitationsController < ApplicationController
     end
 
 end
+
+# TODO:   refactor away from using session hash between controllers.

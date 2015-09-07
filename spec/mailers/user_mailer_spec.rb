@@ -25,7 +25,7 @@ describe UserMailer, type: :mailer do
   context 'when resetting user password' do
     before do
       @user = User.new(user_attributes(email:'test@example.com'))
-      @user.reset_token = User.new_token
+      @user.reset_token = Tokenable.new_token
     end
 
     describe 'password_reset' do
@@ -48,7 +48,7 @@ describe UserMailer, type: :mailer do
     before do
       user = User.new(user_attributes)
       @invitation = user.invitations.new(invitation_attributes)
-      @invitation.token = User.new_token
+      @invitation.token = Tokenable.new_token
     end
 
     describe 'invitation email' do

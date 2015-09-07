@@ -14,9 +14,11 @@
 
 class User < ActiveRecord::Base
 
-  # inclusions:
+  # configuration:
   to_param            :name
+  include             Tokenable
   include             Authentication
+  include             PasswordReset
   include             PublicActivity::Common
   include             Relatable
   include             Invitable
@@ -39,11 +41,6 @@ class User < ActiveRecord::Base
   #  sets user avatar using the gravitar web service:
   def gravatar_id
     Digest::MD5::hexdigest(email.downcase)
-  end
-
-  # generates a new URL token for a variety of functions:
-  def User.new_token
-    SecureRandom.urlsafe_base64
   end
 
   protected

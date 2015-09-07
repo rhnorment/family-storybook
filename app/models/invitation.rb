@@ -14,6 +14,9 @@
 
 class Invitation < ActiveRecord::Base
 
+  # configuration
+  include         Tokenable
+
   # model validations:
   validates       :recipient_email, :user_id, presence: true
   validates       :recipient_email, format: { with: /\A\S+@\S+\z/ }
@@ -55,7 +58,7 @@ class Invitation < ActiveRecord::Base
 
     # creates a unique invitation token:
     def create_invitation_digest
-      self.token = User.new_token
+      self.token = Tokenable.new_token
     end
 
     # send the invitation email:

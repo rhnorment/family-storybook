@@ -15,6 +15,8 @@ require 'rails_helper'
 
 describe User, type: :model do
 
+  before { User.send(:public, *User.protected_instance_methods) }
+
   it 'it valid with example attributes' do
     expect(User.new(user_attributes)).to be_valid
   end

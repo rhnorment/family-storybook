@@ -26,17 +26,6 @@ class Invitation < ActiveRecord::Base
   before_create   :create_invitation_digest
   after_create    :send_invitation_email
 
-  # creates a unique invitation token:
-  def create_invitation_digest
-    self.token = User.new_token
-  end
-
-  # send the invitation email:
-  def send_invitation_email
-    UserMailer.invitation(self).deliver_now
-    update_attribute(:sent_at, Time.zone.now)
-  end
-
   # check to see if an invitation has already been sent to the recipient email address by the user:
   def already_invited?
     Invitation.find_by_user_id_and_recipient_email(user, recipient_email).present?
@@ -61,5 +50,18 @@ class Invitation < ActiveRecord::Base
   def find_by_recipient_email
     User.find_by_email(recipient_email)
   end
+
+  protected
+
+    # creates a unique invitation token:
+    def create_invitation_digest
+      self.token = User.new_token
+    end
+
+    # send the invitation email:
+    def send_invitation_email
+      UserMailer.invitation(self).deliver_now
+      update_attribute(:sent_at, Time.zone.now)
+    end
 
 end

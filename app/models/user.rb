@@ -46,22 +46,24 @@ class User < ActiveRecord::Base
     SecureRandom.urlsafe_base64
   end
 
-  # sends an email to a newly registered user:
-  def send_activation_email
-    UserMailer.registration_confirmation(self).deliver_now
-  end
+  protected
 
-  # creates activity record when a new user is created:
-  def create_activity
-    PublicActivity::Activity.create   key: 'user.create', trackable_id: self.id, trackable_type: 'User',
-                                      recipient_id: self.id, recipient_type: 'User', owner_id: self.id, owner_type: 'User',
-                                      created_at: self.created_at, parameters: {}
-  end
+    # sends an email to a newly registered user:
+    def send_activation_email
+      UserMailer.registration_confirmation(self).deliver_now
+    end
 
-  # removes all user associated activities before the user is destroyed.
-  def remove_activities
-    PublicActivity::Activity.where(owner_id: self.id).delete_all
-  end
+    # creates activity record when a new user is created:
+    def create_activity
+      PublicActivity::Activity.create   key: 'user.create', trackable_id: self.id, trackable_type: 'User',
+                                        recipient_id: self.id, recipient_type: 'User', owner_id: self.id, owner_type: 'User',
+                                        created_at: self.created_at, parameters: {}
+    end
+
+    # removes all user associated activities before the user is destroyed.
+    def remove_activities
+      PublicActivity::Activity.where(owner_id: self.id).delete_all
+    end
 
 end
 

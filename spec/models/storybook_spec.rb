@@ -18,7 +18,8 @@ require 'rails_helper'
 describe Storybook, type: :model do
 
   before do
-    @user = User.create!(user_attributes)
+    Storybook.send(:public, *Storybook.protected_instance_methods)
+    create_user
   end
 
   it 'is valid with example attributes' do

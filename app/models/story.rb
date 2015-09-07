@@ -29,12 +29,14 @@ class Story < ActiveRecord::Base
   # callbacks:
   after_create        :create_activity
 
-  # create activity method:
-  def create_activity
-    PublicActivity::Activity.create   key: 'story.create', trackable_id: self.id, trackable_type: 'Story',
-                                      recipient_id: self.user.id, recipient_type: 'User', owner_id: self.user.id, owner_type: 'User',
-                                      created_at: self.created_at, parameters: {}
-  end
+  protected
+
+    # create activity method:
+    def create_activity
+      PublicActivity::Activity.create   key: 'story.create', trackable_id: self.id, trackable_type: 'Story',
+                                        recipient_id: self.user.id, recipient_type: 'User', owner_id: self.user.id, owner_type: 'User',
+                                        created_at: self.created_at, parameters: {}
+    end
 
 end
 

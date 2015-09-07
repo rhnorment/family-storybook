@@ -17,7 +17,8 @@ require 'rails_helper'
 describe Invitation, type: :model do
 
   before do
-    @user = User.create!(user_attributes)
+    Invitation.send(:public, *Invitation.protected_instance_methods)
+    create_user
   end
 
   it 'is valid with example attributes' do

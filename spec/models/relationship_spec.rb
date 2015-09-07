@@ -15,12 +15,12 @@ require 'rails_helper'
 describe Relationship, type: :model do
 
   before do
-    @user1 = User.create!(user_attributes)
-    @user2 = User.create!(user_attributes(email: 'user2@example.com'))
+    create_user
+    create_other_users
   end
 
   it 'is valid with example attributes' do
-    expect(Relationship.new(user_id: @user1.id, relative_id: @user2.id)).to be_valid
+    expect(Relationship.new(user_id: @user.id, relative_id: @user_2.id)).to be_valid
   end
 
   describe 'ActiveModel validations' do
@@ -62,7 +62,7 @@ describe Relationship, type: :model do
 
     context 'method behaves at it should' do
       before do
-        @relationship = Relationship.new(user_id: @user1.id, relative_id: @user2.id)
+        @relationship = Relationship.new(user_id: @user.id, relative_id: @user_2.id)
       end
 
       context '#approved?' do

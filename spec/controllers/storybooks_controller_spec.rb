@@ -57,15 +57,6 @@ describe StorybooksController, type: :controller do
         end
       end
     end
-
-    context 'when signed in as a different user' do
-      before do
-        create_and_sign_in_wrong_user
-        get(:show, id: @storybook_1.id)
-      end
-
-      it_behaves_like 'signed in as a different user'
-    end
   end
 
   describe 'GET :show' do
@@ -107,6 +98,15 @@ describe StorybooksController, type: :controller do
           expect(@storybook_1.title).to eql(storybook[:title])
         end
       end
+    end
+
+    context 'when signed in as a different user' do
+      before do
+        create_and_sign_in_wrong_user
+        get(:show, id: @storybook_1.id)
+      end
+
+      it_behaves_like 'signed in as a different user'
     end
 
   end
@@ -167,7 +167,7 @@ describe StorybooksController, type: :controller do
         before { post(:create, storybook: @good_storybook) }
 
         it { should route(:post, '/storybooks').to(action: :create) }
-        it { should respond_with(:found) }
+        it { should respond_with(:redirect) }
         it { should redirect_to(Storybook.last) }
         it { should set_flash[:success] }
 

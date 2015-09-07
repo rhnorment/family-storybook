@@ -21,9 +21,7 @@ describe User, type: :model do
     expect(User.new(user_attributes)).to be_valid
   end
 
-  before do
-    @user = User.new(user_attributes)
-  end
+  before { @user = User.new(user_attributes) }
 
   describe 'ActiveModel validations' do
     # basic validations:
@@ -56,8 +54,6 @@ describe User, type: :model do
     it { should have_db_column(:name).of_type(:string) }
     it { should have_db_column(:email).of_type(:string) }
     it { should have_db_column(:password_digest).of_type(:string) }
-    it { should have_db_column(:reset_token).of_type(:string) }
-    it { should have_db_column(:reset_sent_at).of_type(:datetime) }
 
     it { should have_db_index(:email) }
 
@@ -65,9 +61,6 @@ describe User, type: :model do
     it { should have_many(:storybooks).dependent(:destroy) }
     it { should have_many(:stories).dependent(:destroy) }
     it { should have_many(:activities).dependent(:destroy) }
-    it { should have_many(:invitations).dependent(:destroy) }
-    it { should have_many(:relationships).dependent(:destroy) }
-    it { should have_many(:inverse_relationships).dependent(:destroy) }
   end
 
   context 'callbacks' do
@@ -99,11 +92,11 @@ describe User, type: :model do
 
       context '#remove_activities' do
         it 'should remove all activities associated with the user' do
-          user = User.create!(user_attributes)
-          user.storybooks.create!(storybook_attributes)
-          user.stories.create!(story_attributes)
+          create_user
+          create_user_storybooks
+          create_user_stories
 
-          user.destroy
+          @user.destroy
 
           expect(PublicActivity::Activity.count).to eql(0)
         end
@@ -123,6 +116,57 @@ describe User, type: :model do
       it { should respond_to(:email) }
       it { should respond_to(:reset_token) }
       it { should respond_to(:reset_sent_at) }
+    end
+  end
+
+  describe 'Authentication module' do
+    describe 'responds to public class methods' do
+      it { should respond_to(:authenticate) }
+    end
+  end
+
+  describe 'Invitable module' do
+    describe 'ActiveRecord associations' do
+      it { should have_db_column(:reset_token).of_type(:string) }
+      it { should have_db_column(:reset_sent_at).of_type(:datetime) }
+
+      it { should have_many(:invitations).dependent(:destroy) }
+    end
+
+    describe 'responds to its public instance methods' do
+      it { should respond_to(:create_relationship_from_invitation) }
+    end
+  end
+
+  describe 'PasswordReset module' do
+    describe 'responds to public instance methods' do
+      it { should respond_to(:create_reset_digest) }
+      it { should respond_to(:send_password_reset_email) }
+      it { should respond_to(:password_reset_expired?) }
+    end
+  end
+
+  describe 'Relatable module' do
+    describe 'ActiveRecord associatons' do
+      it { should have_many(:relationships).dependent(:destroy) }
+      it { should have_many(:inverse_relationships).dependent(:destroy) }
+    end
+
+    describe 'respond to public instance methods' do
+      it { should respond_to(:invite) }
+      it { should respond_to(:approve) }
+      it { should respond_to(:remove_relationship) }
+      it { should respond_to(:relatives) }
+      it { should respond_to(:total_relatives) }
+      it { should respond_to(:invitation_approved_on) }
+      it { should respond_to(:related_to?) }
+      it { should respond_to(:connected_with?) }
+      it { should respond_to(:invitees) }
+      it { should respond_to(:invitation_sent_on) }
+      it { should respond_to(:invited_by?) }
+      it { should respond_to(:invited?) }
+      it { should respond_to(:common_relatives_with) }
+      it { should respond_to(:find_any_relationship_with) }
     end
   end
 

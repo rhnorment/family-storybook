@@ -6,10 +6,8 @@ class UsersController < ApplicationController
 
   def show
     @page_title = @user.name
-    @storybooks = @user.storybooks.order(created_at: :desc).limit(10)
-    @stories = @user.stories.order(created_at: :desc).limit(10)
-    @relatives = @user.relatives.order(created_at: :desc).limit(10)
-    @activities = PublicActivity::Activity.where(owner_id: @user.id).order(created_at: :desc).limit(10)
+
+    get_user_vars
   end
 
   def new
@@ -24,7 +22,7 @@ class UsersController < ApplicationController
     @token = params[:invitation_token]
 
     if @user.save
-      session[:user_id] = @user.id
+      sign_in(@user)
 
       @user.create_relationship_from_invitation(@token) if @token
 
@@ -49,21 +47,28 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
 
-    session[:user_id] = nil
+    sign_out_user
 
     redirect_to root_url
   end
 
   private
 
-  def require_correct_user
-    @user = User.find(params[:id])
+    def require_correct_user
+      @user = User.find(params[:id])
 
-    redirect_to user_url(current_user) unless current_user?(@user)
-  end
+      redirect_to user_url(current_user) unless current_user?(@user)
+    end
 
-  def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
-  end
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+
+    def get_user_vars
+      @storybooks = @user.storybooks.order(created_at: :desc).limit(10)
+      @stories = @user.stories.order(created_at: :desc).limit(10)
+      @relatives = @user.relatives.order(created_at: :desc).limit(10)
+      @activities = PublicActivity::Activity.where(owner_id: @user.id).order(created_at: :desc).limit(10)
+    end
 
 end

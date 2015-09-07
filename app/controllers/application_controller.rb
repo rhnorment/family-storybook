@@ -8,6 +8,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def sign_in(user)
+    session[:user_id] = user.id
+  end
+
+  def sign_out_user
+    session[:user_id] = nil
+  end
+
   def require_signin
     unless current_user
       session[:intended_url] = request.url

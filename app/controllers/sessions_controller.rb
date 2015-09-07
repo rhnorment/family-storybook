@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
 
   def create
     if user = User.authenticate(params[:email], params[:password])
-      session[:user_id] = user.id
+      sign_in(user)
 
       flash[:success] = "Welcome back, #{user.name}!"
 
@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    sign_out_user
 
     redirect_to signin_url, info: 'You are now signed out.'
   end

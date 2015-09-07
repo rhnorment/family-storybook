@@ -15,7 +15,7 @@
 class Invitation < ActiveRecord::Base
 
   # configuration
-  include         Tokenable
+  include         TokenGenerator
 
   # model validations:
   validates       :recipient_email, :user_id, presence: true

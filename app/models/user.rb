@@ -16,12 +16,11 @@ class User < ActiveRecord::Base
 
   # configuration:
   to_param            :name
-  include             Tokenable
+  include             TokenGenerator
   include             Authentication
   include             PasswordReset
   include             PublicActivity::Common
-  include             Relatable
-  include             Invitable
+  include             Family
 
   # validations:
   validates           :name,  :email, presence: true

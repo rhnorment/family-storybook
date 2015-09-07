@@ -1,8 +1,9 @@
-module Relatable
+module Family
 
   extend           ActiveSupport::Concern
 
   included do
+    has_many       :invitations,           dependent:  :destroy
     has_many       :relationships,         dependent:  :destroy
     has_many       :inverse_relationships, class_name: 'Relationship', foreign_key: 'relative_id',   dependent: :destroy
     has_many       :pending_invited,     ->  { where('relationships.pending = ?', true) },   through: :relationships, source: :relative
@@ -22,6 +23,13 @@ module Relatable
     relationship = find_any_relationship_with(user)
     return false if relationship.nil? || invited?(user)
     relationship.update_attribute(:pending, false)
+  end
+
+  # creates a relationship from an invitation token via email:
+  def create_relationship_from_invitation(token)
+    invitation = Invitation.find_by_token(token)
+    Relationship.create(user_id: self.id, relative_id: invitation.user.id, pending: false)
+    invitation.delete
   end
 
   # deletes a relationship:

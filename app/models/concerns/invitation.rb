@@ -1,4 +1,4 @@
-module Invitable
+module Invitation
 
   extend ActiveSupport::Concern
 

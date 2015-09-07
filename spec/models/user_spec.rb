@@ -116,57 +116,56 @@ describe User, type: :model do
       it { should respond_to(:email) }
       it { should respond_to(:reset_token) }
       it { should respond_to(:reset_sent_at) }
+      it { should respond_to(:new_token) }
     end
   end
 
-  describe 'Authentication module' do
-    describe 'responds to public class methods' do
-      it { should respond_to(:authenticate) }
-    end
-  end
+  describe 'module and mixin methods' do
+    before { create_user }
 
-  describe 'Invitable module' do
-    describe 'ActiveRecord associations' do
-      it { should have_db_column(:reset_token).of_type(:string) }
-      it { should have_db_column(:reset_sent_at).of_type(:datetime) }
-
-      it { should have_many(:invitations).dependent(:destroy) }
+    describe 'Authentication module' do
+      describe 'responds to public class methods' do
+        it { should respond_to(:authenticate) }
+      end
     end
 
-    describe 'responds to its public instance methods' do
-      it { should respond_to(:create_relationship_from_invitation) }
-    end
-  end
+    describe 'PasswordReset module' do
+      describe 'ActiveRecord associations' do
+        it { should have_db_column(:reset_token).of_type(:string) }
+        it { should have_db_column(:reset_sent_at).of_type(:datetime) }
+      end
 
-  describe 'PasswordReset module' do
-    describe 'responds to public instance methods' do
-      it { should respond_to(:create_reset_digest) }
-      it { should respond_to(:send_password_reset_email) }
-      it { should respond_to(:password_reset_expired?) }
-    end
-  end
-
-  describe 'Relatable module' do
-    describe 'ActiveRecord associatons' do
-      it { should have_many(:relationships).dependent(:destroy) }
-      it { should have_many(:inverse_relationships).dependent(:destroy) }
+      describe 'responds to public instance methods' do
+        it { should respond_to(:create_reset_digest) }
+        it { should respond_to(:send_password_reset_email) }
+        it { should respond_to(:password_reset_expired?) }
+      end
     end
 
-    describe 'respond to public instance methods' do
-      it { should respond_to(:invite) }
-      it { should respond_to(:approve) }
-      it { should respond_to(:remove_relationship) }
-      it { should respond_to(:relatives) }
-      it { should respond_to(:total_relatives) }
-      it { should respond_to(:invitation_approved_on) }
-      it { should respond_to(:related_to?) }
-      it { should respond_to(:connected_with?) }
-      it { should respond_to(:invitees) }
-      it { should respond_to(:invitation_sent_on) }
-      it { should respond_to(:invited_by?) }
-      it { should respond_to(:invited?) }
-      it { should respond_to(:common_relatives_with) }
-      it { should respond_to(:find_any_relationship_with) }
+    describe 'Family module' do
+      describe 'ActiveRecord associatons' do
+        it { should have_many(:invitations).dependent(:destroy) }
+        it { should have_many(:relationships).dependent(:destroy) }
+        it { should have_many(:inverse_relationships).dependent(:destroy) }
+      end
+
+      describe 'respond to public instance methods' do
+        it { should respond_to(:invite) }
+        it { should respond_to(:approve) }
+        it { should respond_to(:create_relationship_from_invitation) }
+        it { should respond_to(:remove_relationship) }
+        it { should respond_to(:relatives) }
+        it { should respond_to(:total_relatives) }
+        it { should respond_to(:invitation_approved_on) }
+        it { should respond_to(:related_to?) }
+        it { should respond_to(:connected_with?) }
+        it { should respond_to(:invitees) }
+        it { should respond_to(:invitation_sent_on) }
+        it { should respond_to(:invited_by?) }
+        it { should respond_to(:invited?) }
+        it { should respond_to(:common_relatives_with) }
+        it { should respond_to(:find_any_relationship_with) }
+      end
     end
   end
 

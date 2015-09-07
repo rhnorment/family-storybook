@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
-
   root      'static#home'
 
   get       'how_it_works'  =>    'static#how'
@@ -26,5 +23,8 @@ Rails.application.routes.draw do
   resources :search,            only:   :index
   resources :activities,        only:   :index
   resources :password_resets,   only:   [:new, :create, :edit, :update]
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
 
 end

@@ -18,25 +18,71 @@ describe StoriesController, type: :controller do
     end
 
     context 'signed in as current user' do
-      before do
-        sign_in_current_user
-        get :index
-      end
+      before { sign_in_current_user }
 
-      it { should route(:get, '/stories').to(action: :index) }
-      it { should respond_with(:success) }
-      it { should render_with_layout(:application) }
-      it { should render_template(:index) }
-      it { should_not set_flash }
+      context 'when requesting HTML format' do
+        before { get :index }
 
-      it 'should set the page title' do
-        expect(assigns(:page_title)).to eql('My stories')
-      end
+        it { should route(:get, '/stories').to(action: :index) }
+        it { should respond_with(:success) }
+        it { should render_with_layout(:application) }
+        it { should render_template(:index) }
+        it { should_not set_flash }
 
-      it 'should correctly assign the story collection' do
-        expect(assigns(:stories)).to include(@story_1, @story_2)
+        it 'should set the page title' do
+          expect(assigns(:page_title)).to eql('My stories')
+        end
+
+        it 'should correctly assign the story collection' do
+          expect(assigns(:stories)).to include(@story_1, @story_2)
+        end
       end
     end
+  end
+
+  describe 'GET :show' do
+    context 'when not signed in' do
+      before { get(:show, id: @story_1.id) }
+
+      it_behaves_like 'user not signed in'
+    end
+
+    context 'when signed in as the current user' do
+      before { sign_in_current_user }
+
+      context 'when requesting the HTML content type' do
+        before { get(:show, id: @story_1.id) }
+
+        it { should route(:get, '/stories/1').to(action: :show, id: '1') }
+        it { should respond_with(:success) }
+        it { should render_with_layout(:application) }
+        it { should render_template(:show) }
+        it { should_not set_flash }
+
+        it 'assigns the page title' do
+          expect(assigns(:page_title)).to eql('Showing: Story Title')
+        end
+
+      end
+
+      context 'when requesting JSON content type' do
+        before { get(:show, id: @story_1.id, format: :json) }
+
+        it { should route(:get, '/stories/1.json').to(action: :show, id: '1', format: :json) }
+        it { should respond_with(:success) }
+
+        it 'should retrieve a JSON content type' do
+          expect(response.content_type).to eql('application/json')
+        end
+
+        it 'should include the user stories in the response body' do
+          story = json(response.body)
+          expect(@story_1.title).to eql(story[:title])
+        end
+      end
+    end
+
+    context 'when signed in as a different user'
   end
 
   describe 'GET :new' do

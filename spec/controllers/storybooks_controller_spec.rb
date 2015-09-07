@@ -18,25 +18,97 @@ describe StorybooksController, type: :controller do
     end
 
     context 'when signed in as current user' do
-      before do
-        sign_in_current_user
-        get :index
+      before { sign_in_current_user }
+
+      context 'when requesting HTML format' do
+        before do
+          get :index
+        end
+
+        it { should route(:get, '/storybooks').to(action: :index) }
+        it { should respond_with(:success) }
+        it { should render_with_layout(:application) }
+        it { should render_template(:index) }
+        it { should_not set_flash }
+
+        it 'should set the page title' do
+          expect(assigns(:page_title)).to eql('My storybooks')
+        end
+
+        it 'should correctly assign the storybook collection' do
+          expect(assigns(:storybooks)).to include(@storybook_1, @storybook_2)
+        end
       end
 
-      it { should route(:get, '/storybooks').to(action: :index) }
-      it { should respond_with(:success) }
-      it { should render_with_layout(:application) }
-      it { should render_template(:index) }
-      it { should_not set_flash }
+      context 'when requesting JSON content type' do
+        before { get(:index, format: :json) }
 
-      it 'should set the page title' do
-        expect(assigns(:page_title)).to eql('My storybooks')
-      end
+        it { should route(:get, '/storybooks.json').to(action: :index, format: :json) }
+        it { should respond_with(:success) }
 
-      it 'should correctly assign the storybook collection' do
-        expect(assigns(:storybooks)).to include(@storybook_1, @storybook_2)
+        it 'should retrieve JSON content type' do
+          expect(response.header['Content-Type']).to include('application/json')
+        end
+
+        it 'should include the user storybooks in the response body' do
+          storybooks = json(response.body)
+          titles = storybooks.map { |s| s[:title] }
+          expect(titles).to include('Storybook Title', 'Storybook Two Title')
+        end
       end
     end
+
+    context 'when signed in as a different user' do
+      before do
+        create_and_sign_in_wrong_user
+        get(:show, id: @storybook_1.id)
+      end
+
+      it_behaves_like 'signed in as a different user'
+    end
+  end
+
+  describe 'GET :show' do
+    context 'user not signed in' do
+      before { get(:show, id: @storybook_1.id) }
+
+      it_behaves_like 'user not signed in'
+    end
+
+    context 'signed in as the current user' do
+      before { sign_in_current_user }
+
+      context 'requesting HTML format' do
+        before { get( :show, id: @storybook_1.id) }
+
+        it { should route(:get, '/storybooks/1').to(action: :show, id: '1') }
+        it { should respond_with(:success) }
+        it { should render_with_layout(:application) }
+        it { should render_template(:show) }
+        it { should_not set_flash }
+
+        it 'assigns the page title' do
+          expect(assigns(:page_title)).to eql('Showing: Storybook Title')
+        end
+      end
+
+      context 'requesting JSON format' do
+        before { get(:show, id: @storybook_1.id, format: :json) }
+
+        it { should route(:get, '/storybooks/1.json').to(action: :show, id: '1', format: :json) }
+        it { should respond_with(:success) }
+
+        it 'should retrieve a JSON content type' do
+          expect(response.content_type).to eql('application/json')
+        end
+
+        it 'should return the story by ID' do
+          storybook = json(response.body)
+          expect(@storybook_1.title).to eql(storybook[:title])
+        end
+      end
+    end
+
   end
 
   describe 'GET :new' do

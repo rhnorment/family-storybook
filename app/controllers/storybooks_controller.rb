@@ -7,10 +7,20 @@ class StorybooksController < ApplicationController
   def index
     @page_title = 'My storybooks'
     @storybooks = @user.storybooks.page params[:page]
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @storybooks, status: :ok }
+    end
   end
 
   def show
     @page_title = "Showing: #{@storybook.title}"
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @storybook, status: :ok }
+    end
   end
 
   def new

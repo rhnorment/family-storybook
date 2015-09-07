@@ -8,7 +8,7 @@ module PasswordReset
 
   #  creates a digest for resetting a forgotten password:
   def create_reset_digest
-    update_attribute(:reset_token, Tokenable.new_token)
+    update_attribute(:reset_token, TokenGenerator.new_token)
     update_attribute(:reset_sent_at, Time.zone.now)
   end
 

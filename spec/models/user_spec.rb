@@ -116,7 +116,6 @@ describe User, type: :model do
       it { should respond_to(:email) }
       it { should respond_to(:reset_token) }
       it { should respond_to(:reset_sent_at) }
-      it { should respond_to(:new_token) }
     end
   end
 

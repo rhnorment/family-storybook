@@ -58,7 +58,7 @@ class Invitation < ActiveRecord::Base
 
     # creates a unique invitation token:
     def create_invitation_digest
-      self.token = Tokenable.new_token
+      self.token = TokenGenerator.new_token
     end
 
     # send the invitation email:

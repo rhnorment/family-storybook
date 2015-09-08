@@ -60,20 +60,15 @@ describe User, type: :model do
     # associations:
     it { should have_many(:storybooks).dependent(:destroy) }
     it { should have_many(:stories).dependent(:destroy) }
-    it { should have_many(:activities).dependent(:destroy) }
   end
 
   context 'callbacks' do
     it { should callback(:send_activation_email).after(:create) }
-    it { should callback(:create_activity).after(:create) }
-    it { should callback(:remove_activities).before(:destroy) }
   end
 
   describe 'public instance methods' do
     context 'responds to its methods' do
       it { should respond_to(:send_activation_email) }
-      it { should respond_to(:create_activity) }
-      it { should respond_to(:remove_activities) }
       it { should respond_to(:gravatar_id) }
     end
 
@@ -81,24 +76,6 @@ describe User, type: :model do
       context '#send_activation_email' do
         it 'sends the email' do
           expect { @user.send_activation_email }.to change { ActionMailer::Base.deliveries.count }.by(1)
-        end
-      end
-
-      context '#create_activity' do
-        it 'should create an activity when it is created' do
-          expect(@user.activities.last).to eql(PublicActivity::Activity.last)
-        end
-      end
-
-      context '#remove_activities' do
-        it 'should remove all activities associated with the user' do
-          create_user
-          create_user_storybooks
-          create_user_stories
-
-          @user.destroy
-
-          expect(PublicActivity::Activity.count).to eql(0)
         end
       end
 

@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   include             TokenGenerator
   include             Authentication
   include             PasswordReset
-  include             PublicActivity::Common
   include             Family
 
   # validations:
@@ -28,14 +27,12 @@ class User < ActiveRecord::Base
   validates           :email, uniqueness: { case_sensitive: false }
 
   # data relationships
-  has_many            :storybooks,    dependent:  :destroy
-  has_many            :stories,       dependent:  :destroy
-  has_many            :activities,    as: :trackable, class_name: 'PublicActivity::Activity',   dependent: :destroy
+  has_many            :storybooks,    dependent:    :destroy
+  has_many            :stories,       dependent:    :destroy
+  has_many            :activities,    as: :owner,   class_name: 'PublicActivity::Activity',  dependent: :destroy
 
   # callbacks:
   after_create        :send_activation_email
-  after_create        :create_activity
-  before_destroy      :remove_activities
 
   #  sets user avatar using the gravitar web service:
   def gravatar_id
@@ -49,19 +46,6 @@ class User < ActiveRecord::Base
       UserMailer.registration_confirmation(self).deliver_now
     end
 
-    # creates activity record when a new user is created:
-    def create_activity
-      PublicActivity::Activity.create   key: 'user.create', trackable_id: self.id, trackable_type: 'User',
-                                        recipient_id: self.id, recipient_type: 'User', owner_id: self.id, owner_type: 'User',
-                                        created_at: self.created_at, parameters: {}
-    end
-
-    # removes all user associated activities before the user is destroyed.
-    def remove_activities
-      PublicActivity::Activity.where(owner_id: self.id).delete_all
-    end
-
 end
 
-# TODO:  refactor activites as an ActiveModel concern.
 

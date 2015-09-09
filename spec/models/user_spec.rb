@@ -64,6 +64,8 @@ describe User, type: :model do
 
   context 'callbacks' do
     it { should callback(:send_activation_email).after(:create) }
+    it { should callback(:track_activity).after(:create) }
+    it { should callback(:remove_user_activity).before(:destroy) }
   end
 
   describe 'public instance methods' do
@@ -82,6 +84,24 @@ describe User, type: :model do
       context '#gravatar_id' do
         it 'returns a digest to be used by the Gravatar web service' do
           expect(Digest::MD5.hexdigest(@user.email.downcase)).to eql('b58996c504c5638798eb6b511e6f49af')
+        end
+      end
+
+      context '#remove_user_activity' do
+        before do
+          create_user
+          create_user_storybooks
+          create_user_stories
+        end
+
+        it 'should have an initial activity count of 5' do
+          expect(Activity.all.count).to eql(5)
+          expect(@user.activities.count).to eql(5)
+        end
+
+        it 'should remove all activities when the user is destoyed' do
+          @user.destroy
+          expect(Activity.all.count).to eql(0)
         end
       end
     end

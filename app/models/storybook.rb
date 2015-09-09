@@ -19,6 +19,7 @@ class Storybook < ActiveRecord::Base
   mount_uploader      :cover,       ImageUploader
   include             PgSearch
   multisearchable     against:      [:title, :description]
+  include             Trackable
 
   # validations:
   validates           :title,       presence: true
@@ -28,6 +29,9 @@ class Storybook < ActiveRecord::Base
   belongs_to          :user
   has_many            :chapters,      dependent: :destroy
   has_many            :stories,       through: :chapters
+
+  # callbacks:
+  after_create        :track_activity
 
 end
 

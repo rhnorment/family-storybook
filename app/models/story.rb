@@ -13,6 +13,7 @@
 class Story < ActiveRecord::Base
 
   # configuration:
+  include             Trackable
   include             PgSearch
   multisearchable     against:        [:title, :content]
 
@@ -24,6 +25,9 @@ class Story < ActiveRecord::Base
   belongs_to          :user
   has_many            :chapters,      dependent: :destroy
   has_many            :storybooks,    through: :chapters
+
+  # callbacks:
+  after_create        :track_activity
 
 end
 

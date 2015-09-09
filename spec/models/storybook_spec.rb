@@ -51,6 +51,10 @@ describe Storybook, type: :model do
     it { should have_many(:stories).through(:chapters) }
   end
 
+  context 'callbacks' do
+    it { should callback(:track_activity).after(:create) }
+  end
+
   describe 'public class methods' do
     context 'responds to its methods' do
       it { should respond_to(:id) }

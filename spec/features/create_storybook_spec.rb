@@ -23,7 +23,7 @@ describe 'create storybook', type: :feature do
 
     expect(page).to have_text('New Storybook Title')
     expect(page).to have_text('Your storybook was successfully created!')
-    expect(PublicActivity::Activity.last.trackable.title).to eq(Storybook.last.title)
+    expect(Activity.last.trackable.title).to eq(Storybook.last.title)
   end
 
 

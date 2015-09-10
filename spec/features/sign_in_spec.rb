@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'Signing in', type: :feature do
+  before { create_user }
 
   it 'prompts for an email and password' do
     visit root_url
@@ -13,19 +14,15 @@ describe 'Signing in', type: :feature do
     expect(page).to have_field('Password')
   end
 
-  it 'signs in the user if the email/password combination is valid' do
-    user = User.create!(user_attributes)
-
+  scenario 'signing in the user if the email/password combination is valid' do
     visit root_url
 
     click_link 'Sign in'
 
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
+    fill_in 'Email', with: 'user@example.com'
+    fill_in 'Password', with: 'secret'
 
     click_button 'Sign in'
-
-    expect(current_path).to eq(storybooks_path)
 
     expect(page).to have_field('query')
     expect(page).to have_link('Sign out')
@@ -33,50 +30,19 @@ describe 'Signing in', type: :feature do
     expect(page).not_to have_link('Sign up')
   end
 
-  it 'does not sign in the user if the email/password combination is invalid' do
-    user = User.create!(user_attributes)
-
+  scenario 'does not sign in the user if the email/password combination is invalid' do
     visit root_url
 
     click_link 'Sign in'
 
-    fill_in 'Email', with: user.email
+    fill_in 'Email', with: 'wrong_user@example.com'
     fill_in 'Password', with: 'no match'
 
     click_button 'Sign in'
 
     expect(page).to have_text('Invalid')
-    expect(page).not_to have_link(user.name)
+    expect(page).not_to have_link(@user.name)
     expect(page).not_to have_link('Sign out')
-  end
-
-  it 'redirects to the intended page' do
-    user = User.create!(user_attributes)
-
-    visit stories_url
-
-    expect(current_path).to eq(new_session_path)
-
-    sign_in(user)
-
-    expect(current_path).to eq(stories_path)
-  end
-
-  it 'does not allow access to certain pages based on an active session' do
-    user = User.create!(user_attributes)
-
-    sign_in(user)
-
-    visit user_url(user)
-
-    visit root_url
-    expect(current_path).to eq(user_path(user))
-
-    visit signin_url
-    expect(current_path).to eq(user_path(user))
-
-    visit signup_url
-    expect(current_path).to eq(user_path(user))
   end
 
 end

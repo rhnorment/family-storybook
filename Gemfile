@@ -20,7 +20,6 @@ gem 'carrierwave'
 gem 'cloudinary'
 gem 'pg_search'
 gem 'prawn'
-gem 'public_activity'
 gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
 

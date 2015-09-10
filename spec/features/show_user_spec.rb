@@ -3,14 +3,16 @@ require 'rails_helper'
 describe 'Viewing a user profile page', type: :feature do
 
   before do
-    @user = User.create!(user_attributes)
-    @user2 = User.create!(user_attributes(email: 'user2@example.com'))
+    create_user
+    create_other_users
     sign_in(@user)
+    create_user_storybooks
+    create_user_stories
+    create_user_relationships
+    visit user_url(@user)
   end
 
   it 'shows the user details' do
-    visit user_url(@user)
-
     expect(page).to have_text(@user.name)
     expect(page).to have_text('Storybooks')
     expect(page).to have_text('Stories')
@@ -23,43 +25,46 @@ describe 'Viewing a user profile page', type: :feature do
   end
 
   it 'lists ONLY the user storybooks in the storybooks tab' do
-    @user.storybooks.create!(storybook_attributes(title: 'Storybook 1'))
-    @user.storybooks.create!(storybook_attributes(title: 'Storybook 2'))
-    @user2.storybooks.create!(storybook_attributes(title: 'Storybook 3'))
+    @user_2.storybooks.create!(storybook_attributes(title: 'Storybook 3'))
 
-    visit user_url(@user)
+    within('#user-storybooks') do
+      @user_2.storybooks.create!(storybook_attributes(title: 'Storybook 3'))
+      expect(page).to have_text('Storybook Title')
+      expect(page).to have_text('Storybook Two Title')
+      expect(page).to have_text('Not published')
+      expect(page).to have_text('Started')
 
-    expect(page).to have_text('Storybook 1')
-    expect(page).to have_text('Storybook 2')
-    expect(page).to have_text('Not published')
-    expect(page).to have_text('Started')
-    expect(page).to_not have_text('Storybook 3')
+      expect(page).to_not have_text('Storybook 3')
+    end
+
   end
 
-  it 'lists the user stories in the stories tab' do
-    @user.stories.create!(story_attributes(title: 'Story 1'))
-    @user.stories.create!(story_attributes(title: 'Story 2'))
-    @user2.stories.create!(story_attributes(title: 'Story 3'))
+  it 'lists ONLY the user stories in the stories tab' do
+    within('#user-stories') do
+      expect(page).to have_text('Story Title')
+      expect(page).to have_text('Story Two Title')
+      expect(page).to have_text('Inclusions')
+      expect(page).to have_text('Written')
 
-    visit user_url(@user)
-
-    expect(page).to have_text('Story 1')
-    expect(page).to have_text('Story 2')
-    expect(page).to have_text('Inclusions')
-    expect(page).to have_text('Written')
-    expect(page).to_not have_text('Story 3')
+      expect(page).to_not have_text('Story 3')
+    end
   end
 
-  it 'lists the user activities in the activity tab' do
-    storybook = @user.storybooks.create!(storybook_attributes)
-    story = @user.stories.create!(story_attributes)
+  it 'lists ONLY the most recent family members in the relatives tab' do
+    within('#user-relatives') do
+      expect(page).to have_text('User Two')
+      expect(page).to have_text('User Three')
 
-    visit user_url(@user)
+      expect(page).to_not have_text('User Four')
+    end
+  end
 
-    expect(page).to have_text(@user.name)
-    expect(page).to have_text(storybook.title)
-    expect(page).to have_text(story.title)
-    expect(page).to have_text('ago')
+  it 'lists ONLY the user activities in the activity tab' do
+    within('#user-activities') do
+      expect(page).to have_text('Storybook Title')
+      expect(page).to have_text('Story Title')
+      expect(page).to have_text('ago')
+    end
   end
 
 end

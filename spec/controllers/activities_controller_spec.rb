@@ -32,7 +32,7 @@ describe ActivitiesController, type: :controller do
       end
 
       it 'should set the collection of user activities' do
-        expect(assigns(:activities)).to include { PublicActivity::Activity.where(owner_id: @user.id) }
+        expect(assigns(:activities)).to include { Activity.where(owner_id: @user.id) }
       end
     end
   end

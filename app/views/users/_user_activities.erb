@@ -4,7 +4,11 @@
 
     <% if @activities.any? %>
 
-        <%= render_activity(@activities) %>
+        <% @activities.each do |activity| %>
+
+            <%= render_each(activity) %>
+
+        <% end %>
 
         <%= content_tag :p, (link_to 'Vew all activities', activities_path), class:'lead m-t-lg' %>
 

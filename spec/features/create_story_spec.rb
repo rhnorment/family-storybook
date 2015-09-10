@@ -23,7 +23,7 @@ describe 'create story', type: :feature do
 
     expect(page).to have_text('New Story Title')
     expect(page).to have_text('Your story was saved.')
-    expect(PublicActivity::Activity.last.trackable.title).to eq(Story.last.title)
+    expect(Activity.last.trackable.title).to eq(Story.last.title)
   end
 
   it 'does not save the story if it is invalid' do

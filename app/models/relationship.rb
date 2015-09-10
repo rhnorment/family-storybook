@@ -13,7 +13,7 @@
 class Relationship < ActiveRecord::Base
 
   # configuration
-  include       PublicActivity::Common
+  include       Trackable
 
   # model validations:
   validates     :user_id,  :relative_id,     presence: true

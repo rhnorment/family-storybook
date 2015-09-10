@@ -1,16 +1,16 @@
-<!-- USER -->
-
 <li class="list-group-item row">
 
   <div class="col-lg-1">
 
-    <%= icon 'user', nil, class:'text-primary fa-2x' %>
+    <%= icon 'book', nil, class:'text-primary fa-2x' %>
 
   </div>
 
   <div class="col-lg-8">
 
-    <%= activity.owner.name %> became a member
+    <%= activity.owner.name %> created storybook
+
+    <%= content_tag :span, link_to(activity.trackable.title, storybook_path(activity.trackable)) %>
 
   </div>
 

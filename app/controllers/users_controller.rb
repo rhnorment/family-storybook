@@ -68,7 +68,7 @@ class UsersController < ApplicationController
       @storybooks = @user.storybooks.order(created_at: :desc).limit(10)
       @stories = @user.stories.order(created_at: :desc).limit(10)
       @relatives = @user.relatives.order(created_at: :desc).limit(10)
-      @activities = PublicActivity::Activity.where(owner_id: @user.id).order(created_at: :desc).limit(10)
+      @activities = Activity.where(owner_id: @user.id).order(created_at: :desc).limit(10)
     end
 
 end

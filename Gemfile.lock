@@ -172,11 +172,6 @@ GEM
     prawn (2.0.1)
       pdf-core (~> 0.5.1)
       ttfunk (~> 1.4.0)
-    public_activity (1.4.2)
-      actionpack (>= 3.0.0)
-      activerecord (>= 3.0)
-      i18n (>= 0.5.0)
-      railties (>= 3.0.0)
     puma (2.11.3)
       rack (>= 1.1, < 2.0)
     rack (1.6.4)
@@ -302,7 +297,6 @@ DEPENDENCIES
   pg
   pg_search
   prawn
-  public_activity
   puma
   rails (= 4.2.1)
   rails_12factor

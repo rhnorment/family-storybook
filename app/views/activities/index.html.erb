@@ -5,9 +5,11 @@
 <% else %>
 
     <ul class="list-group">
+        <% @activities.each do |activity| %>
 
-        <%= render_activity(@activities) %>
+           <%= render_each(activity) %>
 
+      <% end %>
     </ul>
 
     <%= paginate @activities %>

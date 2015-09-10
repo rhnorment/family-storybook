@@ -23,7 +23,7 @@ describe 'Creating a new user', type: :feature do
       expect(page).to have_text('Example User')
       expect(page).to have_text('Thanks for signing up!')
       expect(ActionMailer::Base.deliveries.size).to eq(1)
-      expect(PublicActivity::Activity.last.trackable.name).to eq(User.last.name)
+      expect(Activity.last.trackable.name).to eq(User.last.name)
     end
 
     it 'does not save the user if invalid' do

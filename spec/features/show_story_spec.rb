@@ -3,18 +3,17 @@ require 'rails_helper'
 describe 'showing a storybook', type: :feature do
 
   before do
-    @user = User.create!(user_attributes)
+    create_user
     sign_in(@user)
+    create_user_stories
   end
 
   it 'shows a story details' do
-    story = @user.stories.create!(story_attributes)
+    visit story_url(@story_1)
 
-    visit story_url(story)
-
-    expect(page).to have_text(story.title)
-    expect(page).to have_text(story.content)
-    expect(page).to have_text(story.user.name)
+    expect(page).to have_text(@story_1.title)
+    expect(page).to have_text(@story_1.content)
+    expect(page).to have_text(@story_1.user.name)
     expect(page).to have_link('Edit this story')
     expect(page).to have_link('Return to my stories')
   end

@@ -3,24 +3,23 @@ require 'rails_helper'
 describe 'showing a storybook', type: :feature do
 
   before do
-    @user = User.create!(user_attributes)
+    create_user
     sign_in(@user)
+    create_user_storybooks
+    create_user_stories
   end
 
   it 'shows a storybooks details and included stories' do
-    storybook = @user.storybooks.create!(storybook_attributes)
-    story1 = @user.stories.create!(story_attributes)
-    story2 = @user.stories.create!(story_attributes)
-    storybook.stories << [story1, story2]
+    @storybook_1.stories << [@story_1, @story_2]
 
-    visit storybook_url(storybook)
+    visit storybook_url(@storybook_1)
 
-    expect(page).to have_text(storybook.title)
-    expect(page).to have_text(storybook.description)
-    expect(page).to have_text(storybook.user.name)
-    expect(page).to have_text(story1.title)
-    expect(page).to have_text(story2.title)
-    expect(page).to have_selector("img[src$='#{storybook.cover_url}']")
+    expect(page).to have_text(@storybook_1.title)
+    expect(page).to have_text(@storybook_1.description)
+    expect(page).to have_text(@storybook_1.user.name)
+    expect(page).to have_text(@story_1.title)
+    expect(page).to have_text(@story_2.title)
+    expect(page).to have_selector("img[src$='#{@storybook_1.cover_url}']")
     expect(page).to have_link('Edit this storybook')
     expect(page).to have_link('Return to my storybooks')
   end

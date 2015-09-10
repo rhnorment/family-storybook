@@ -12,16 +12,19 @@ describe 'Viewing a user profile page', type: :feature do
     visit user_url(@user)
   end
 
+  it 'shows the primary user nav elements' do
+    expect(page).to have_link('Start a new storybook')
+    expect(page).to have_link('Write a new story')
+    expect(page).to have_link('Invite a new family member')
+    expect(page).to have_link('Edit')
+  end
+
   it 'shows the user details' do
     expect(page).to have_text(@user.name)
     expect(page).to have_text('Storybooks')
     expect(page).to have_text('Stories')
     expect(page).to have_text('Family')
     expect(page).to have_text('Activity')
-    expect(page).to have_link('Start a new storybook')
-    expect(page).to have_link('Write a new story')
-    expect(page).to have_link('Invite a new family member')
-    expect(page).to have_link('Edit')
   end
 
   it 'lists ONLY the user storybooks in the storybooks tab' do

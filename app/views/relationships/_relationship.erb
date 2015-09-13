@@ -1,28 +1,19 @@
-<li class="list-group-item row">
+<%= content_tag :li, class:'list-group-item row' do %>
 
   <div class="col-lg-1">
-
     <%= profile_image_for(item, size: 30) %>
-
   </div>
 
   <div class="col-lg-4">
-
     <%= item.name %>
-
   </div>
 
   <div class="col-lg-4">
-
     <%= time_for(item, type) %>
-
   </div>
 
   <div class="col-lg-3">
-
     <%= relationship_action_for(item, type) %>
-
   </div>
 
-
-</li>
+<% end %>

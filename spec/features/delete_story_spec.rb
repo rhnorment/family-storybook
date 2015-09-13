@@ -3,19 +3,30 @@ require 'rails_helper'
 describe 'delete a story', type: :feature do
 
   before do
-    @user = User.create!(user_attributes)
+    create_user
     sign_in(@user)
+    create_user_storybooks
+    create_user_stories
+    create_storybook_stories
+    visit edit_story_url(@story_1)
   end
 
-  it 'deletes the selected story' do
-    story = @user.stories.create!(story_attributes)
+  describe 'delete action is visible and actionable to the user' do
+    it 'is visible and actionable' do
+      expect(page).to have_link('Delete this story')
+    end
+  end
 
-    visit edit_story_url(story)
+  describe 'user deletes the selected story' do
+    before { click_link 'Delete this story' }
 
-    click_link 'Delete this story'
+    it 'deletes the selected story' do
+      expect(page).not_to have_text('Story Title')
+    end
 
-    expect(current_path).to eq(stories_path)
-    expect(page).not_to have_text(story.title)
+    it 'does not delete associated storybooks' do
+      expect(@user.storybooks.count).to eql(2)
+    end
   end
 
 end

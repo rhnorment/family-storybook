@@ -22,12 +22,10 @@ describe 'page not found exception handling', type: :feature do
   end
 
   context 'when a record is not found' do
-    before do
-      @user = User.create!(user_attributes)
-      sign_in(@user)
-    end
-
     it 'should flash an error message and redirect the user back to his profile page' do
+      create_user
+      sign_in(@user)
+
       visit storybooks_url
       visit storybook_url(42)
 

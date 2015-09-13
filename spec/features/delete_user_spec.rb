@@ -1,18 +1,28 @@
 require 'rails_helper'
 
 describe 'delete a user', type: :feature do
+  before do
+    create_user
+    sign_in(@user)
+    visit edit_user_path(@user)
+  end
 
-  it 'automatically signs out that user' do
-    user = User.create!(user_attributes)
+  describe 'delete action is visible and accessible to the user' do
+    it 'presents the delete action to the user' do
+      expect(page).to have_link('Delete my account')
+    end
+  end
 
-    sign_in(user)
+  describe 'user deletes his/her account' do
+    it 'automatically signs out that user' do
+      click_link 'Delete my account'
 
-    visit edit_user_path(user)
+      expect(page).to have_link('Sign in')
+      expect(page).not_to have_link('Sign out')
+    end
 
-    click_link 'Delete my account'
+    it 'sends an email to the user confirming the account removal'
 
-    expect(page).to have_link('Sign in')
-    expect(page).not_to have_link('Sign out')
   end
 
 end

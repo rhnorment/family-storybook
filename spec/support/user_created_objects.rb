@@ -8,6 +8,11 @@ def create_user_stories
   @story_2 = @user.stories.create!(story_attributes(title: 'Story Two Title'))
 end
 
+def create_storybook_stories
+  @storybook_1.stories << [@story_1, @story_2]
+end
+
+
 def create_user_relationships
   Relationship.create!(user_id: @user.id, relative_id: @user_2.id, pending: false)
   Relationship.create!(user_id: @user.id, relative_id: @user_3.id, pending: false)

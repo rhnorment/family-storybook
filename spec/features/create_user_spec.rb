@@ -2,62 +2,48 @@ require 'rails_helper'
 
 describe 'Creating a new user', type: :feature do
 
-  context 'creating a user without using an invitation token' do
-    it 'saves the user and shows the user profile page' do
-      ActionMailer::Base.deliveries.clear
-
+  describe 'the user registration page is accessible and prompts for the attributes' do
+    it 'is assessible and prompts the user for account creation attributes' do
       visit root_url
 
       click_link 'Sign up'
 
-      expect(current_path).to eq(signup_path)
+      expect(current_path).to eql(signup_path)
 
-      fill_in 'Name',  with: 'Example User'
-      fill_in 'Email', with: 'user@example.com'
-      fill_in 'Password', with: 'secret'
-      fill_in 'Confirm password', with: 'secret'
-
-      click_button 'Register'
-
-      expect(current_path).to eq(user_path(User.last))
-      expect(page).to have_text('Example User')
-      expect(page).to have_text('Thanks for signing up!')
-      expect(ActionMailer::Base.deliveries.size).to eq(1)
-      expect(Activity.last.trackable.name).to eq(User.last.name)
-    end
-
-    it 'does not save the user if invalid' do
-      visit signup_url
-
-      expect {
-        click_button 'Register'
-      }.not_to change(User, :count)
-
-      expect(page).to have_text("can't be blank")
+      expect(page).to have_field('Name')
+      expect(page).to have_field('Email')
+      expect(page).to have_field('Password')
+      expect(page).to have_field('Confirm password')
+      expect(page).to have_button('Register')
+      expect(page).to have_link('Cancel')
+      expect(page).to have_link('Sign in here')  # if user already has account.
     end
   end
 
-  context 'creating a user using an invitation token' do
-    before do
-      Invitation.delete_all
-      @inviter = User.create!(user_attributes)
-      @invitation = @inviter.invitations.create!(invitation_attributes)
+  describe 'the user creates an account' do
+    before { visit signup_url }
+
+    context 'user enters valid parameters parameters' do
+      it 'creates the account and redirects the user dashboard' do
+        fill_in 'Name',  with: 'Example User'
+        fill_in 'Email', with: 'user@example.com'
+        fill_in 'Password', with: 'secret'
+        fill_in 'Confirm password', with: 'secret'
+
+        click_button 'Register'
+
+        expect(current_path).to eq(user_path(User.last))
+        expect(page).to have_text('Example User')
+        expect(page).to have_text('Thanks for signing up!')
+      end
     end
 
-    it 'saves the user and creates a polymorphic relationship with the inviter' do
-      visit signup_url(invitation_token: @invitation.token)
+    context 'user enters invalid parameters' do
+      it 'does not create the account and renders the form again' do
+        click_button 'Register'
 
-      fill_in 'Name',  with: 'Example2 User'
-      fill_in 'Email', with: 'tester@example.com'
-      fill_in 'Password', with: 'secret'
-      fill_in 'Confirm password', with: 'secret'
-
-      click_button 'Register'
-
-      user = User.last
-
-      expect(user.relatives).to include(@inviter)
-      expect(Invitation.count).to eq(0)
+        expect(page).to have_text("can't be blank")
+      end
     end
   end
 

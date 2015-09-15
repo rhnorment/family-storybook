@@ -5,133 +5,85 @@ describe 'create an invitation to join the site', type: :feature do
   before do
     @user = User.create!(user_attributes)
     sign_in(@user)
+    create_other_users
+    create_user_relationships
+    create_user_invitations
+    visit new_relationship_url
   end
 
-  context 'when entering a blank email address' do
-    it 'should present an error message and reload the page' do
-      visit new_relationship_url
-
-      click_button 'Invite by email'
-
-      expect(current_path).to eq(new_relationship_path)
-      expect(page).to have_text('You entered an invalid email address.  Please try again.')
-    end
-  end
-
-  context 'when entering an invalid email address' do
-    it 'should present an error message and reload the page' do
-      visit new_relationship_url
-
-      fill_in 'invitation[recipient_email]', with: '@org'
-
-      click_button 'Invite by email'
-
-      expect(current_path).to eq(new_relationship_path)
-      expect(page).to have_text('You entered an invalid email address.  Please try again.')
+  describe 'CREATE action is visible and actionable to the user' do
+    it 'is visible to the current user' do
+      expect(page).to have_field('email')
+      expect(page).to have_button('Invite')
     end
   end
 
-  context 'when entering his or her own email address' do
-    it 'should present an error message and reload the page' do
-      visit new_relationship_url
+  describe 'user attempts to create an invitation' do
+    context 'user enters an invalid recipient email address' do
+      it 'reloads the form and flashes an en error message' do
+        fill_in 'invitation[recipient_email]', with: '@org'
 
-      fill_in 'invitation[recipient_email]', with: 'user@example.com'
+        click_button 'Invite by email'
 
-      click_button 'Invite by email'
-
-      expect(current_path).to eq(new_relationship_path)
-      expect(page).to have_text('You cannot invite yourself.  Please try again')
-    end
-  end
-
-  context 'when entering an email address of a user who has already considered a relative' do
-    before do
-      @user2 = User.create!(user_attributes(email: 'user2@example.com', name:'User2 Example'))
-      @user.invite @user2
-      @user2.approve @user
-    end
-
-    it 'should present an information message and redirect to the relationships index page' do
-      visit new_relationship_url
-
-      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
-
-      click_button 'Invite by email'
-
-      expect(current_path).to eq(relationships_path)
-      expect(page).to have_text('You are already relatives with User2 Example.')
-    end
-  end
-
-  context 'when entering an email address of a non-existing member that has already been sent an invitation email' do
-    before do
-      visit new_relationship_url
-      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
-      click_button 'Invite'
-    end
-
-    it 'should notify the user that the recipient has already been invited by email and to contact that person directly' do
-      visit new_relationship_url
-
-      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
-      click_button 'Invite by email'
-
-      expect(current_path).to eq(new_relationship_path)
-      expect(page).to have_text('You have already invited user2@example.com.  Please contact this person directly.')
-    end
-  end
-
-  context 'when entering an email address of an existing member' do
-    before do
-      @user2 = User.create!(user_attributes(email: 'user2@example.com'))
-    end
-
-    it 'should present an information message to the user and reload the page' do
-      visit new_relationship_url
-
-      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
-
-      click_button 'Invite by email'
-
-      expect(current_path).to eq(new_relationship_path)
-      expect(page).to have_text('user2@example.com is already a member.')
-    end
-
-    it 'present the user with the option to invite the member to connect' do
-      visit new_relationship_url
-
-      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
-
-      click_button 'Invite by email'
-
-      within('#recipients') do
-        expect(page).to have_link('Invite')
+        expect(current_path).to eq(new_relationship_path)
+        expect(page).to have_text('You entered an invalid email address.  Please try again.')
       end
     end
-  end
 
-  context 'when entering a valid email address of a non-member' do
-    it 'should present a success message to the user and reload the page' do
-      visit new_relationship_url
+    context 'user enters own email address' do
+      it 'reloads the form and flashes an en error message' do
+        fill_in 'invitation[recipient_email]', with: 'user@example.com'
 
-      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
+        click_button 'Invite by email'
 
-      click_button 'Invite by email'
-
-      expect(current_path).to eq(new_relationship_path)
-      expect(page).to have_text('Your invitation was sent.')
+        expect(current_path).to eq(new_relationship_path)
+        expect(page).to have_text('You cannot invite yourself.  Please try again')
+      end
     end
 
-    it 'should send an email invitation to the recipient' do
-      ActionMailer::Base.deliveries.clear
+    context 'user enters an email address of an approved relative' do
+      it 'reloads the form and flashes an en error message' do
+        fill_in 'invitation[recipient_email]', with: 'user_2@example.com'
 
-      visit new_relationship_url
+        click_button 'Invite by email'
 
-      fill_in 'invitation[recipient_email]', with: 'user2@example.com'
+        expect(current_path).to eq(relationships_path)
+        expect(page).to have_text('You are already relatives with User Two.')
+      end
 
-      click_button 'Invite by email'
+    end
 
-      expect(ActionMailer::Base.deliveries.size).to eq(1)
+    context 'user enters an email address of an invitee' do
+      it 'reloads the form and flashes an en error message' do
+        fill_in 'invitation[recipient_email]', with: 'invitee@example.com'
+
+        click_button 'Invite by email'
+
+        expect(current_path).to eq(new_relationship_path)
+        expect(page).to have_text('You have already invited invitee@example.com.  Please contact this person directly.')
+      end
+    end
+
+    context 'user enters an email address of an existing member' do
+      it 'reloads the form and flashes an en error message' do
+        fill_in 'invitation[recipient_email]', with: 'user_4@example.com'
+
+        click_button 'Invite by email'
+
+        expect(current_path).to eq(new_relationship_path)
+        expect(page).to have_text('user_4@example.com is already a member.')
+      end
+    end
+
+    context 'user enters a valid email address to a valid recipient' do
+      it 'should present a success message to the user and reload the page' do
+        fill_in 'invitation[recipient_email]', with: 'want_to_connect@example.com'
+
+        click_button 'Invite by email'
+
+        expect(current_path).to eq(new_relationship_path)
+        expect(page).to have_text('Your invitation was sent.')
+      end
     end
   end
 

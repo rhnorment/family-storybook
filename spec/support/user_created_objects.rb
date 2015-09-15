@@ -12,12 +12,14 @@ def create_storybook_stories
   @storybook_1.stories << [@story_1, @story_2]
 end
 
-
 def create_user_relationships
   Relationship.create!(user_id: @user.id, relative_id: @user_2.id, pending: false)
   Relationship.create!(user_id: @user.id, relative_id: @user_3.id, pending: false)
 end
 
+def create_user_invitations
+  @user.invitations.create!(recipient_email: 'invitee@example.com')
+end
 
 
 

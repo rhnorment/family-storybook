@@ -70,9 +70,7 @@ module Family
 
   # returns users recommended to invite as family members:
   def invitees
-    approved_relationships = Relationship.where(user_id: id, pending: false).select(:relative_id).to_sql
-    pending_invited_relationships = Relationship.where(user_id: id, pending: true).select(:relative_id).to_sql
-    self.class.where("id not in (#{approved_relationships}) AND id not in (#{pending_invited_relationships})")
+    User.all
   end
 
   # returns the date of a given invitation:

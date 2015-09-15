@@ -3,35 +3,54 @@ require 'rails_helper'
 describe 'create storybook', type: :feature do
 
   before do
-    user = User.create!(user_attributes)
-    sign_in(user)
+    create_user
+    sign_in(@user)
   end
 
-  it 'saves the storybook and shows its details' do
-    visit storybooks_url
+  describe ':create action is accessible and prompts the user to enter :create attributes' do
+    before do
+      visit storybooks_url
+      click_link 'Start a new storybook'
+    end
 
-    click_link 'Start a new storybook'
+    it 'is accessible to the user' do
+      expect(current_path).to eql(new_storybook_path)
+    end
 
-    expect(current_path).to eq(new_storybook_path)
-
-    fill_in 'Title', with: 'New Storybook Title'
-    fill_in 'Description', with: 'This is my storybook description'
-
-    click_button 'Create my storybook'
-
-    expect(current_path).to eq(storybook_path(Storybook.last))
-
-    expect(page).to have_text('New Storybook Title')
-    expect(page).to have_text('Your storybook was successfully created!')
-    expect(Activity.last.trackable.title).to eq(Storybook.last.title)
+    it 'prompts the user for the :create attributes' do
+      expect(page).to have_field('Title')
+      expect(page).to have_field('Description')
+      expect(page).to have_button('Create my storybook')
+    end
   end
 
+  describe 'user attempts to create a new storybook' do
+    before { visit new_storybook_url }
 
-  it 'does not save the storybook if it is invalid' do
-    visit new_storybook_url
+    context 'user enters valid :create attributes' do
+      it 'creates and redirects to the new storybook' do
+        fill_in 'Title', with: 'Storybook Title'
+        fill_in 'Description', with: 'This is my storybook description.'
 
-    expect { click_button 'Create my storybook' }.to_not change(Storybook, :count)
-    expect(page).to have_text('There was a problem creating your storybook.  Please try again')
+        click_button 'Create my storybook'
+
+        expect(current_path).to eql(storybook_path(Storybook.last))
+
+        expect(page).to have_text('Storybook Title')
+        expect(page).to have_text('This is my storybook description.')
+      end
+    end
+
+    context 'user enters invalid :create attributes' do
+      it 'does not create the new storybook and renders the :create form' do
+        fill_in 'Title', with: ''
+        fill_in 'Description', with: 'This is my storybook description.'
+
+        click_button 'Create my storybook'
+
+        expect(page).to have_text('There was a problem creating your storybook.  Please try again.')
+      end
+    end
   end
 
 end

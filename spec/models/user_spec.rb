@@ -155,7 +155,7 @@ describe User, type: :model do
         it { should respond_to(:invitation_approved_on) }
         it { should respond_to(:related_to?) }
         it { should respond_to(:connected_with?) }
-        it { should respond_to(:invitees) }
+        it { should respond_to(:prospective_relatives) }
         it { should respond_to(:invitation_sent_on) }
         it { should respond_to(:invited_by?) }
         it { should respond_to(:invited?) }

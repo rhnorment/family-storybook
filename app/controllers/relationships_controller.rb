@@ -11,7 +11,7 @@ class RelationshipsController < ApplicationController
   def new
     @page_title = 'Add family members'
     @recipient = User.find_by_email(session[:recipient_email])  # used to send invitation email.
-    @invitees = User.all
+    @invitees = @user.prospective_relatives.order(created_at: :desc).limit(5) - [@user]
     session[:recipient_email] = nil
   end
 

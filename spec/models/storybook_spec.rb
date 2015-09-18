@@ -27,15 +27,13 @@ describe Storybook, type: :model do
   end
 
   describe 'ActiveModel validations' do
-    # basic validations:
     it { should validate_presence_of(:title) }
+    it { should validate_presence_of(:user_id) }
 
-    # format validations:
     it { should allow_value('cover.jpg', 'cover.png', 'cover.gif').for(:cover) }
   end
 
   describe 'ActiveRecord associations' do
-    # database columns / indexes:
     it { should have_db_column(:title).of_type(:string) }
     it { should have_db_column(:description).of_type(:text) }
     it { should have_db_column(:cover).of_type(:string) }
@@ -45,7 +43,6 @@ describe Storybook, type: :model do
 
     it { should have_db_index(:user_id) }
 
-    # associations:
     it { should belong_to(:user) }
     it { should have_many(:chapters) }
     it { should have_many(:stories).through(:chapters) }

@@ -15,22 +15,21 @@
 
 class Storybook < ActiveRecord::Base
 
-  # configuration:
-  mount_uploader      :cover,       ImageUploader
   include             PgSearch
-  multisearchable     against:      [:title, :description]
   include             Trackable
 
-  # validations:
-  validates           :title,       presence: true
-  validates           :cover,       format: { with: /\w+.(gif|jpg|png)\z/i, allow_blank: true }
+  mount_uploader      :cover,       ImageUploader
 
-  # data relationships:
+  multisearchable     against:      [:title, :description]
+
   belongs_to          :user
   has_many            :chapters,      dependent: :destroy
   has_many            :stories,       through: :chapters
 
-  # callbacks:
+  validates           :cover,       format: { with: /\w+.(gif|jpg|png)\z/i, allow_blank: true }
+  validates           :title,       presence: true
+  validates           :user_id,     presence: true
+
   after_create        :track_activity
 
 end

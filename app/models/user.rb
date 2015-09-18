@@ -14,31 +14,27 @@
 
 class User < ActiveRecord::Base
 
-  # configuration:
-  to_param            :name
-  include             TokenGenerator
   include             Authentication
-  include             PasswordReset
   include             Family
+  include             PasswordReset
+  include             TokenGenerator
   include             Trackable
 
-  # validations:
+  to_param            :name
+
+  has_many            :activities,    as: :owner
+  has_many            :activities,    as: :recipient
+  has_many            :stories,       dependent:      :destroy
+  has_many            :storybooks,    dependent:      :destroy
+
   validates           :name,  :email, presence: true
   validates           :email, format: { with: /\A\S+@\S+\z/ }
   validates           :email, uniqueness: { case_sensitive: false }
 
-  # data relationships
-  has_many            :storybooks,    dependent:      :destroy
-  has_many            :stories,       dependent:      :destroy
-  has_many            :activities,    as: :owner
-  has_many            :activities,    as: :recipient
-
-  # callbacks:
   after_create        :send_activation_email
   after_create        :track_activity
   before_destroy      :remove_user_activity
 
-  #  sets user avatar using the gravitar web service:
   def gravatar_id
     Digest::MD5::hexdigest(email.downcase)
   end

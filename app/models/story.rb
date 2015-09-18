@@ -12,21 +12,18 @@
 
 class Story < ActiveRecord::Base
 
-  # configuration:
-  include             Trackable
   include             PgSearch
+  include             Trackable
+
   multisearchable     against:        [:title, :content]
 
-
-  # validations:
-  validates           :title,         presence: true
-
-  # data relationships:
   belongs_to          :user
   has_many            :chapters,      dependent: :destroy
   has_many            :storybooks,    through: :chapters
 
-  # callbacks:
+  validates           :title,         presence: true
+  validates           :user_id,       presence: true
+
   after_create        :track_activity
 
 end

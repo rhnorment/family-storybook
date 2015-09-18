@@ -12,17 +12,18 @@ Rails.application.routes.draw do
   get       '/422'          =>    'errors#unprocessable'
   get       '/500'          =>    'errors#server_error'
 
-  resource  :session
-  resources :users,             except: :index
+
+  resources :activities,        only:   :index
+  resources :invitations,       only:   [:new, :create]
+  resources :password_resets,   only:   [:new, :create, :edit, :update]
   resources :relationships do
     get 'pending', on: :collection
   end
-  resources :invitations,       only:   [:new, :create]
-  resources :storybooks
-  resources :stories
   resources :search,            only:   :index
-  resources :activities,        only:   :index
-  resources :password_resets,   only:   [:new, :create, :edit, :update]
+  resource  :session
+  resources :stories
+  resources :storybooks
+  resources :users,             only:   [:show, :new, :create, :edit, :update, :destroy]
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

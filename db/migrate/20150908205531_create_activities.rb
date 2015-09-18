@@ -1,9 +1,9 @@
 class CreateActivities < ActiveRecord::Migration
   def change
     create_table :activities do |t|
-      t.references :trackable, polymorphic: true
-      t.references :owner, polymorphic: true
-      t.references :recipient, polymorphic: true
+      t.references :trackable,  polymorphic: true
+      t.references :owner,      polymorphic: true
+      t.references :recipient,  polymorphic: true
       t.string :key
       t.text :parameters
 

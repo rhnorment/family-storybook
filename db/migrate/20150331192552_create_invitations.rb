@@ -1,8 +1,8 @@
 class CreateInvitations < ActiveRecord::Migration
   def change
     create_table :invitations do |t|
-      t.integer :user_id
-      t.string  :recipient_email
+      t.integer :user_id,           null: false
+      t.string  :recipient_email,   null: false
       t.string :token
       t.datetime :sent_at
       t.datetime :accepted_at

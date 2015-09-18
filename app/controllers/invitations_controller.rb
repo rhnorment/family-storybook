@@ -9,7 +9,7 @@ class InvitationsController < ApplicationController
   def create
     invitation = @user.invitations.new(invitation_params)
 
-    if invitation.already_invited?
+    if Invitation.invitation_exists?(@user, invitation.recipient_email)
       redirect_to new_relationship_url, warning: "You have already invited #{invitation.recipient_email}.  Please contact this person directly."
 
     elsif invitation.invited_self?

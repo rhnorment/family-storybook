@@ -24,20 +24,17 @@ describe Relationship, type: :model do
   end
 
   describe 'ActiveModel validations' do
-    # basic validations:
     it { should validate_presence_of(:user_id) }
     it { should validate_presence_of(:relative_id) }
   end
 
   describe 'ActiveRecord associations' do
-    # database columns:
     it { should have_db_column(:user_id).of_type(:integer) }
     it { should have_db_column(:relative_id).of_type(:integer) }
     it { should have_db_column(:pending).of_type(:boolean).with_options(default: true) }
 
     it { should have_db_index([:user_id, :relative_id]).unique(:true) }
 
-    # associations:
     it { should belong_to(:user) }
     it { should belong_to(:user).class_name('User') }
   end

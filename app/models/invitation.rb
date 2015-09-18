@@ -14,29 +14,21 @@
 
 class Invitation < ActiveRecord::Base
 
-  # configuration
   include         TokenGenerator
 
-  # model validations:
-  validates       :recipient_email, :user_id, presence: true
-  validates       :recipient_email, format: { with: /\A\S+@\S+\z/ }
-
-  # data associations:
   belongs_to      :user
   has_one         :recipient, class_name: 'User'
 
-  # callbacks
-  before_create   :create_invitation_digest
+  validates       :recipient_email, format: { with: /\A\S+@\S+\z/ }
+  validates       :recipient_email, presence: true
+  validates       :user_id,         presence: true
+
   after_create    :send_invitation_email
+  before_create   :create_invitation_digest
 
   # check to see if an invitation has already been sent to the recipient email address by the user:
-  def already_invited?
-    Invitation.find_by_user_id_and_recipient_email(user, recipient_email).present?
-  end
-
-  # check to see if the user invited himself:
-  def invited_self?
-    recipient_email == user.email
+  def self.invitation_exists?(user, recipient_email)
+    find_by_user_id_and_recipient_email(user, recipient_email).present?
   end
 
   # check to see if the user is already relatives with the invitee:
@@ -44,14 +36,19 @@ class Invitation < ActiveRecord::Base
     user.relatives.include?(find_by_recipient_email)
   end
 
-  # check to see if the user is already a member:
-  def recipient_is_member?
-    find_by_recipient_email != nil
-  end
-
   # check to see if the recipient is already a member:
   def find_by_recipient_email
     User.find_by_email(recipient_email)
+  end
+
+  # check to see if the user invited himself:
+  def invited_self?
+    recipient_email == user.email
+  end
+
+  # check to see if the user is already a member:
+  def recipient_is_member?
+    find_by_recipient_email != nil
   end
 
   protected

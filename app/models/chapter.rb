@@ -11,7 +11,6 @@
 
 class Chapter < ActiveRecord::Base
 
-  # database associations:
   belongs_to :storybook
   belongs_to :story
 

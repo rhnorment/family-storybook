@@ -29,7 +29,6 @@ describe InvitationsController, type: :controller do
     end
   end
 
-
   describe 'POST :create' do
     context 'when not signed in' do
       before { post(:create, recipient_email: 'invitee@example.com' ) }

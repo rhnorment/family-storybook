@@ -12,25 +12,22 @@
 
 class Relationship < ActiveRecord::Base
 
-  # configuration
   include       Trackable
 
-  # model validations:
-  validates     :user_id,  :relative_id,     presence: true
-  validates     :relative_id, uniqueness: { scope: :user_id, message: 'This user is already a family member.' }
+  belongs_to    :user
+  belongs_to    :relative,  class_name: 'User'
 
-  # data relationships:
-  belongs_to            :user
-  belongs_to            :relative,  class_name: 'User'
+  validates     :relative_id, uniqueness: { scope: :user_id, message: 'This user is already a family member.' }
+  validates     :user_id,  :relative_id,     presence: true
 
   # returns true if a relationship has been approved, else false:
   def approved?
-    !self.pending
+    !pending
   end
 
   # returns true if a relationship has not been approved, else false:
   def pending?
-    self.pending
+    pending
   end
 
 end

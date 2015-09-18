@@ -26,17 +26,14 @@ describe Invitation, type: :model do
   end
 
   describe 'ActiveModel validations' do
-    # basic validations:
     it { should validate_presence_of(:user_id) }
     it { should validate_presence_of(:recipient_email) }
 
-    # format validations:
     it { should allow_value('recipient@example.com').for(:recipient_email) }
     it { should_not allow_value('@example.com', 'example.com').for(:recipient_email) }
   end
 
   describe 'ActiveRecord associations' do
-    # database columns:
     it { should have_db_column(:user_id).of_type(:integer) }
     it { should have_db_column(:recipient_email).of_type(:string) }
     it { should have_db_column(:token).of_type(:string) }
@@ -50,7 +47,6 @@ describe Invitation, type: :model do
 
     it { should have_db_index([:user_id, :recipient_email]).unique(:true) }
 
-    # associations:
     it { should belong_to(:user) }
   end
 
@@ -73,7 +69,6 @@ describe Invitation, type: :model do
     context 'responds to its methods' do
       it { should respond_to(:create_invitation_digest) }
       it { should respond_to(:send_invitation_email) }
-      it { should respond_to(:already_invited?) }
       it { should respond_to(:invited_self?) }
       it { should respond_to(:already_relatives_with?) }
       it { should respond_to(:recipient_is_member?) }
@@ -113,11 +108,11 @@ describe Invitation, type: :model do
 
         it 'returns true if an invitation is found' do
           invitation = @user.invitations.new(invitation_attributes(recipient_email: 'saved@example.com'))
-          expect(invitation.already_invited?).to eql(true)
+          expect(Invitation.invitation_exists?(@user, invitation.recipient_email)).to eql(true)
         end
 
         it 'returns false if an invitation is not found' do
-          expect(@valid_invitation.already_invited?).to eql(false)
+          expect(Invitation.invitation_exists?@user, @valid_invitation.recipient_email).to eql(false)
         end
       end
 

@@ -17,8 +17,8 @@
 
 class Activity < ActiveRecord::Base
 
-  # ActiveRecord associations:
   belongs_to :trackable,  polymorphic: true
   belongs_to :owner,      polymorphic: true
   belongs_to :recipient,  polymorphic: true
+
 end

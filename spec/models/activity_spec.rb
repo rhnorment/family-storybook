@@ -19,12 +19,7 @@ require 'rails_helper'
 
 describe Activity, type: :model do
 
-  it 'is valid with example attributes'
-
-  describe 'ActiveModel validations'
-
   describe 'ActiveRecord associations' do
-    # database tables / indexes:
     it { should have_db_column(:trackable_id).of_type(:integer) }
     it { should have_db_column(:trackable_type).of_type(:string) }
     it { should have_db_column(:owner_id).of_type(:integer) }
@@ -38,18 +33,9 @@ describe Activity, type: :model do
     it { should have_db_index([:owner_id, :owner_type]) }
     it { should have_db_index([:recipient_id, :recipient_type]) }
 
-    # associations
     it { should belong_to(:trackable) }
     it { should belong_to(:owner) }
     it { should belong_to(:recipient) }
   end
-
-
-  describe 'Callbacks'
-
-  describe 'Public instance methods'
-
-  describe 'Public class methods'
-
 
 end

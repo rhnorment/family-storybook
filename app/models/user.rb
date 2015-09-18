@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
 
   after_create        :send_activation_email
   after_create        :track_activity
+
   before_destroy      :remove_user_activity
 
   def gravatar_id

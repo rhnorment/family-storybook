@@ -10,8 +10,14 @@ module Trackable
     Activity.create(trackable: self, owner: owner_and_recipient, recipient: owner_and_recipient, key: "#{self.class.name.downcase}.create")
   end
 
-  def owner_and_recipient
-    self.class.name == 'User' ? self : self.user
-  end
+  protected
+
+    def owner_and_recipient
+      if self.class.name == 'User'
+        self
+      else
+        self.user
+      end
+    end
 
 end

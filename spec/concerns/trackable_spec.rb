@@ -19,7 +19,10 @@ require 'rails_helper'
 
 describe Trackable, type: :concern do
 
-  before { create_user }
+  before do
+    create_user
+    @user.activate
+  end
 
   describe 'tracking a new user registration' do
     before { @activity = @user.activity }

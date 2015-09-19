@@ -4,6 +4,7 @@ describe 'listing a users activities' do
 
   before do
     create_user
+    @user.activate
     sign_in(@user)
   end
 

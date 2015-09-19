@@ -7,6 +7,11 @@ class UserMailer < ActionMailer::Base
     mail to: user.email, subject: 'FamilyBook registration'
   end
 
+  def deactivation_confirmation(user)
+    @user = user
+    mail to: user.email, subject: 'FamilyBook account deactivation'
+  end
+
   def password_reset(user)
     @user = user
     mail to: user.email, subject: 'Password reset'

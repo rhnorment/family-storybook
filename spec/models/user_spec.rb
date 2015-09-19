@@ -26,7 +26,7 @@ describe User, type: :model do
     expect(User.new(user_attributes)).to be_valid
   end
 
-  describe 'ActiveRecord columns' do
+  describe 'ActiveRecord' do
     it { should have_db_column(:name).of_type(:string) }
     it { should have_db_column(:email).of_type(:string) }
     it { should have_db_column(:password_digest).of_type(:string) }
@@ -35,14 +35,12 @@ describe User, type: :model do
     it { should have_db_column(:active).of_type(:boolean).with_options(default: false) }
 
     it { should have_db_index(:email) }
-  end
 
-  describe 'ActiveRecord associations' do
     it { should have_many(:storybooks).dependent(:destroy) }
     it { should have_many(:stories).dependent(:destroy) }
   end
 
-  describe 'ActiveModel validations' do
+  describe 'ActiveModel' do
     before { User.new }
 
     it { should validate_presence_of(:name) }
@@ -92,6 +90,7 @@ describe User, type: :model do
 
     describe 'Account module' do
       it { should respond_to(:activate) }
+      it { should respond_to(:deactivate) }
       it { should respond_to(:is_active?) }
       it { should respond_to(:is_inactive?) }
     end

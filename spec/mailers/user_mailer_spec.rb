@@ -3,15 +3,34 @@ require 'rails_helper'
 describe UserMailer, type: :mailer do
 
   context 'when registering for a new account' do
-    before do
-      @user = User.new(user_attributes(email:'test@example.com'))
-    end
+    before { @user = User.new(user_attributes(email:'test@example.com')) }
 
     describe 'registration_confirmation' do
       let(:mail) { UserMailer.registration_confirmation(@user) }
 
       it 'renders the headers' do
         expect(mail.subject).to eql('FamilyBook registration')
+        expect(mail.to).to eql([@user.email])
+        expect(mail.from).to eql(['no-reply@familybook.com'])
+      end
+
+      it 'renders the body' do
+        expect(mail.body.encoded).to match(@user.name)
+      end
+    end
+  end
+
+  context 'when deactivating the user account' do
+    before do
+      create_user
+      @user.deactivate
+    end
+
+    describe 'deactivation confirmation' do
+      let(:mail) { UserMailer.deactivation_confirmation(@user) }
+
+      it 'renders the headers' do
+        expect(mail.subject).to eql('FamilyBook account deactivation')
         expect(mail.to).to eql([@user.email])
         expect(mail.from).to eql(['no-reply@familybook.com'])
       end

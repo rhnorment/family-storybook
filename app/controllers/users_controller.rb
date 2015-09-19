@@ -45,11 +45,14 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
+    if @user.deactivate
+      sign_out_user
 
-    sign_out_user
-
-    redirect_to root_url
+      redirect_to root_url
+    else
+      flash.now[:danger] = 'You are not authorized to deactivate this account.'
+      render :edit
+    end
   end
 
   private

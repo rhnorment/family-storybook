@@ -14,6 +14,14 @@ module Account
     track_activity
   end
 
+  def deactivate
+    return false if !self
+
+    self.update!(active: false)
+
+    UserMailer.deactivation_confirmation(self).deliver_now
+  end
+
   def is_active?
     active
   end

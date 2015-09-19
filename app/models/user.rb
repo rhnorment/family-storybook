@@ -33,20 +33,11 @@ class User < ActiveRecord::Base
   validates           :email, format: { with: /\A\S+@\S+\z/ }
   validates           :email, uniqueness: { case_sensitive: false }
 
-  before_destroy      :remove_user_activity
-
   def gravatar_id
     Digest::MD5::hexdigest(email.downcase)
   end
 
-  protected
-
-    def remove_user_activity
-      Activity.where(owner: self).delete_all
-    end
-
 end
 
-# TODO:  refactor user regisration process.
 
 

@@ -2,6 +2,10 @@ def create_user
   @user = User.create!(user_attributes)
 end
 
+def create_inactive_user
+  @inactive_user = User.create!(user_attributes(active: false))
+end
+
 def create_other_users
   @user_2 = User.create!(user_attributes(name: 'User Two', email: 'user_2@example.com'))
   @user_3 = User.create!(user_attributes(name: 'User Three', email: 'user_3@example.com'))

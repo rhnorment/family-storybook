@@ -222,10 +222,6 @@ describe UsersController, type: :controller do
         it { should respond_with(:found) }
         it { should redirect_to(root_url) }
         it { should_not set_flash }
-
-        it 'should remove the user from the database' do
-          expect(User.count).to eql(0)
-        end
       end
     end
 

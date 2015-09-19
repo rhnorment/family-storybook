@@ -24,7 +24,6 @@ describe User, type: :model do
   before { @user = User.new(user_attributes) }
 
   describe 'ActiveModel validations' do
-    # basic validations:
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:email) }
     it { should validate_uniqueness_of(:email) }
@@ -44,42 +43,31 @@ describe User, type: :model do
       expect(@user).to be_valid
     end
 
-    # format validations:
     it { should allow_value('user@example.com').for(:email) }
     it { should_not allow_value('example.com', 'example.').for(:email) }
   end
 
   describe 'ActiveRecord associations' do
-    # database columns / indexes
     it { should have_db_column(:name).of_type(:string) }
     it { should have_db_column(:email).of_type(:string) }
     it { should have_db_column(:password_digest).of_type(:string) }
 
     it { should have_db_index(:email) }
 
-    # associations:
     it { should have_many(:storybooks).dependent(:destroy) }
     it { should have_many(:stories).dependent(:destroy) }
   end
 
   context 'callbacks' do
-    it { should callback(:send_activation_email).after(:create) }
-    it { should callback(:track_activity).after(:create) }
     it { should callback(:remove_user_activity).before(:destroy) }
   end
 
   describe 'public instance methods' do
     context 'responds to its methods' do
-      it { should respond_to(:send_activation_email) }
       it { should respond_to(:gravatar_id) }
     end
 
     context 'executes methods correctly' do
-      context '#send_activation_email' do
-        it 'sends the email' do
-          expect { @user.send_activation_email }.to change { ActionMailer::Base.deliveries.count }.by(1)
-        end
-      end
 
       context '#gravatar_id' do
         it 'returns a digest to be used by the Gravatar web service' do
@@ -118,6 +106,12 @@ describe User, type: :model do
 
   describe 'module and mixin methods' do
     before { create_user }
+
+    describe 'Account module' do
+      describe 'responds to public instance methods' do
+        it { should respond_to(:activate) }
+      end
+    end
 
     describe 'Authentication module' do
       describe 'responds to public class methods' do

@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @token = params[:invitation_token]
 
-    if @user.save
+    if @user.activate
       sign_in(@user)
 
       @user.create_relationship_from_invitation(@token) if @token

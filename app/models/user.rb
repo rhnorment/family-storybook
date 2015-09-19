@@ -14,6 +14,7 @@
 
 class User < ActiveRecord::Base
 
+  include             Account
   include             Authentication
   include             Family
   include             PasswordReset
@@ -31,9 +32,6 @@ class User < ActiveRecord::Base
   validates           :email, format: { with: /\A\S+@\S+\z/ }
   validates           :email, uniqueness: { case_sensitive: false }
 
-  after_create        :send_activation_email
-  after_create        :track_activity
-
   before_destroy      :remove_user_activity
 
   def gravatar_id
@@ -42,15 +40,12 @@ class User < ActiveRecord::Base
 
   protected
 
-    # sends an email to a newly registered user:
-    def send_activation_email
-      UserMailer.registration_confirmation(self).deliver_now
-    end
-
     def remove_user_activity
       Activity.where(owner: self).delete_all
     end
 
 end
+
+# TODO:  refactor user regisration process.
 
 

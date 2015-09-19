@@ -3,7 +3,7 @@ def create_user
 end
 
 def create_inactive_user
-  @inactive_user = User.create!(user_attributes(active: false))
+  @user = User.create!(user_attributes(active: false))
 end
 
 def create_other_users

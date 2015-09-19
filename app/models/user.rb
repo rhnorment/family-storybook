@@ -3,13 +3,14 @@
 # Table name: users
 #
 #  id              :integer          not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  password_digest :string(255)
-#  reset_token     :string(255)
+#  name            :string
+#  email           :string
+#  password_digest :string
+#  reset_token     :string
 #  reset_sent_at   :datetime
 #  created_at      :datetime
 #  updated_at      :datetime
+#  active          :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base

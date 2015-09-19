@@ -45,4 +45,28 @@ describe Account, type: :concern do
     end
   end
 
+  describe '#is_active' do
+    context 'for an active user' do
+      before { create_user }
+
+      it 'is active' do
+        expect(@user.is_active?).to be_truthy
+      end
+    end
+
+    context 'for an inactive user'
+  end
+
+  describe '#is_inactive' do
+    context 'for an active user' do
+      before { create_user }
+
+      it 'is not inactive' do
+        expect(@user.is_inactive?).to be_falsey
+      end
+    end
+
+    context 'for an inactive user'
+  end
+
 end

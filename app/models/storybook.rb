@@ -3,12 +3,12 @@
 # Table name: storybooks
 #
 #  id           :integer          not null, primary key
-#  title        :string(255)
-#  description  :text
-#  cover        :string(255)
+#  title        :string           not null
+#  description  :text             default("")
+#  cover        :string
 #  published    :boolean          default(FALSE)
-#  published_on :datetime
-#  user_id      :integer
+#  published_on :date
+#  user_id      :integer          not null
 #  created_at   :datetime
 #  updated_at   :datetime
 #

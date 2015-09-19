@@ -3,8 +3,8 @@
 # Table name: invitations
 #
 #  id              :integer          not null, primary key
-#  user_id         :integer
-#  recipient_email :string
+#  user_id         :integer          not null
+#  recipient_email :string           not null
 #  token           :string
 #  sent_at         :datetime
 #  accepted_at     :datetime

@@ -3,7 +3,8 @@ def user_attributes(overrides = {})
       name: 'Example User',
       email: 'user@example.com',
       password: 'secret',
-      password_confirmation: 'secret'
+      password_confirmation: 'secret',
+      active: true,
   }.merge(overrides)
 end
 
@@ -12,7 +13,7 @@ def wrong_user_attributes(overrides={})
     name: 'Wrong User',
     email: 'wrong_user@example.com',
     password: 'secret',
-    password_confirmation: 'secret'
+    password_confirmation: 'secret',
 }.merge(overrides)
 end
 
@@ -20,7 +21,7 @@ def storybook_attributes(overrides = {})
   {
       title: 'Storybook Title',
       description: 'This is a storybook description',
-      cover: 'cover.jpg'
+      cover: 'cover.jpg',
   }.merge(overrides)
 end
 
@@ -34,7 +35,7 @@ end
 def relationship_attributes(overrides = {})
   {
       user_id: 1,
-      relative_id: 2
+      relative_id: 2,
   }.merge(overrides)
 end
 

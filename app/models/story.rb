@@ -3,9 +3,9 @@
 # Table name: stories
 #
 #  id         :integer          not null, primary key
-#  title      :string(255)
-#  content    :text
-#  user_id    :integer
+#  title      :string           not null
+#  content    :text             default("")
+#  user_id    :integer          not null
 #  created_at :datetime
 #  updated_at :datetime
 #

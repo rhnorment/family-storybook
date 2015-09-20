@@ -11,17 +11,11 @@ describe Authentication, type: :concern do
       end
     end
 
-    context 'user is valid and inactive' do
-      before { create_inactive_user }
-
+    context 'user is invalid' do
       it 'does not authenticate the user' do
-        expect(User.authenticate('user@example.com', 'secret')).to eql(false)
+        expect(User.authenticate('not_found@example.com', 'secret')).to eql(nil)
       end
     end
-
-    context 'user is invalid'
   end
 
 end
-
-# TODO:  add error messages for inactive user

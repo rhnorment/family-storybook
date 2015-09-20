@@ -17,7 +17,7 @@ describe 'Signing in', type: :feature do
   describe 'user attempts to sign into the system' do
     before { visit signin_url }
 
-    context 'user enters a valid email / password combination' do
+    context 'user enters a valid email/password combination AND is active' do
       it 'signs the user in' do
         fill_in 'Email', with: 'user@example.com'
         fill_in 'Password', with: 'secret'
@@ -31,6 +31,24 @@ describe 'Signing in', type: :feature do
       end
     end
 
+    context 'user enters a valid email/password combination BUT is not active' do
+      before do
+        create_inactive_user
+        visit signin_url
+      end
+
+      it 'does not sign the user in' do
+        fill_in 'Email', with: 'inactive@example.com'
+        fill_in 'Password', with: 'secret'
+
+        click_button 'Sign in'
+
+        expect(page).to have_text('Your account is currently inactive.')
+        expect(page).not_to have_link(@user.name)
+        expect(page).not_to have_link('Sign out')
+      end
+    end
+
     context 'user enters an invalid email / password combination' do
       it 'does not sign the user in' do
         fill_in 'Email', with: 'wrong_user@example.com'
@@ -38,7 +56,7 @@ describe 'Signing in', type: :feature do
 
         click_button 'Sign in'
 
-        expect(page).to have_text('Invalid')
+        expect(page).to have_text('Invalid email/password combination.')
         expect(page).not_to have_link(@user.name)
         expect(page).not_to have_link('Sign out')
       end

@@ -10,8 +10,6 @@ module Authentication
     def authenticate(email, password)
       user = User.find_by(email: email)
 
-      return false if user.is_inactive?
-
       user && user.authenticate(password)
     end
   end

@@ -77,7 +77,7 @@ describe Account, type: :concern do
       before { create_inactive_user }
 
       it 'is not active' do
-        expect(@inactive_user.is_active?).to be_falsey
+         expect(@user.is_active?).to be_falsey
       end
     end
   end
@@ -95,7 +95,7 @@ describe Account, type: :concern do
       before { create_inactive_user }
 
       it 'is inactive' do
-        expect(@inactive_user.is_inactive?).to be_truthy
+        expect(@user.is_inactive?).to be_truthy
       end
     end
   end

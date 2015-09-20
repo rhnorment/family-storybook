@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 describe SessionsController, type: :controller do
-  before { create_user }
 
   describe 'GET :new' do
+    before { create_user }
+
     context 'when not signed in' do
       before { get :new }
 
@@ -25,13 +26,10 @@ describe SessionsController, type: :controller do
   end
 
   describe 'POST :create' do
-    before do
-      @good_session = { email: 'user@example.com', password: 'secret' }
-      @bad_session = { email: 'bad_user@example.com', password: 'secret' }
-    end
+    before { create_user }
 
-    context 'when not signed in' do
-      before { post(:create, @good_session) }
+    context 'valid and active user' do
+      before { post(:create, email: 'user@example.com', password: 'secret') }
 
       it { should route(:post, '/session').to(action: :create) }
       it { should respond_with(:found) }
@@ -44,17 +42,33 @@ describe SessionsController, type: :controller do
       end
     end
 
-    context 'when signed in as the current user' do
+    context 'valid and inactive user' do
       before do
-        sign_in_current_user
-        post(:create, @good_session)
+        create_inactive_user
+        post(:create, email: 'inactive@example.com', password: 'secret')
       end
 
-      it_behaves_like 'signed in as the current user'
+      it { should route(:post, '/session').to(action: :create) }
+      it { should respond_with(:ok) }
+      it { should_not set_session[:user_id] }
+      it { should render_template(:new) }
+      it { should set_flash.now[:danger] }
+    end
+
+    context 'invalid user' do
+      before { post(:create, email:'bad_user@example.com', password: 'secret') }
+
+      it { should route(:post, '/session').to(action: :create) }
+      it { should respond_with(:ok) }
+      it { should_not set_session[:user_id] }
+      it { should render_template(:new) }
+      it { should set_flash.now[:danger] }
     end
   end
 
   describe 'DELETE :destroy' do
+    before { create_user }
+
     context 'when signed in as the current user' do
       before do
         sign_in_current_user

@@ -8,15 +8,21 @@ class SessionsController < ApplicationController
 
   def create
     if user = User.authenticate(params[:email], params[:password])
-      sign_in(user)
+      if user.is_active?
+        sign_in(user)
 
-      flash[:success] = "Welcome back, #{user.name}!"
+        flash[:success] = "Welcome back, #{user.name}!"
 
-      redirect_to session[:intended_url] || storybooks_url
+        redirect_to session[:intended_url] || storybooks_url
 
-      session[:intended_url] = nil
+        session[:intended_url] = nil
+      else
+        flash.now[:danger] = 'Your account is currently inactive.'
+
+        render :new
+     end
     else
-      flash.now[:danger] = 'Invalid email/password combination'
+      flash.now[:danger] = 'Invalid email/password combination.'
 
       render :new
     end

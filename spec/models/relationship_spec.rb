@@ -14,13 +14,8 @@ require 'rails_helper'
 
 describe Relationship, type: :model do
 
-  before do
-    create_user
-    create_other_users
-  end
-
   it 'is valid with example attributes' do
-    expect(Relationship.new(user_id: @user.id, relative_id: @user_2.id)).to be_valid
+    expect(build(:relationship)).to be_valid
   end
 
   describe 'ActiveModel validations' do
@@ -58,29 +53,27 @@ describe Relationship, type: :model do
     end
 
     context 'method behaves at it should' do
-      before do
-        @relationship = Relationship.new(user_id: @user.id, relative_id: @user_2.id)
-      end
+      let(:relationship) { create(:relationship) }
 
       context '#approved?' do
         it 'should return false if the relationship is not approved' do
-          expect(@relationship.approved?).to be_falsey
+          expect(relationship.approved?).to be_falsey
         end
 
         it 'should return true if the relationship is approved' do
-          @relationship.pending = false
-          expect(@relationship.approved?).to be_truthy
+          relationship.pending = false
+          expect(relationship.approved?).to be_truthy
         end
       end
 
       context '#pending?' do
         it 'should return true if the relationship is pending' do
-          expect(@relationship.pending?).to be_truthy
+          expect(relationship.pending?).to be_truthy
         end
 
         it 'should return false if the relationship is not pending' do
-          @relationship.pending = false
-          expect(@relationship.pending?).to be_falsey
+          relationship.pending = false
+          expect(relationship.pending?).to be_falsey
         end
       end
     end

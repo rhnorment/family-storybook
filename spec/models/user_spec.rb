@@ -17,13 +17,10 @@ require 'rails_helper'
 
 describe User, type: :model do
 
-  before do
-    User.send(:public, *User.protected_instance_methods)
-    @user = User.new(user_attributes)
-  end
+  before { User.send(:public, *User.protected_instance_methods) }
 
-  it 'it valid with example attributes' do
-    expect(User.new(user_attributes)).to be_valid
+  it 'it has a valid factory' do
+    expect(build(:user)).to be_valid
   end
 
   describe 'ActiveRecord' do
@@ -41,7 +38,7 @@ describe User, type: :model do
   end
 
   describe 'ActiveModel' do
-    before { User.new }
+    let(:user) { User.new }
 
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:email) }
@@ -57,9 +54,11 @@ describe User, type: :model do
     end
 
     it 'does not require a password when updating' do
-      @user.password = ''
+      user = create(:user)
 
-      expect(@user).to be_valid
+      user.password = ''
+
+      expect(user).to be_valid
     end
 
     it { should allow_value('user@example.com').for(:email) }
@@ -76,18 +75,18 @@ describe User, type: :model do
   end
 
   describe 'public instance methods' do
+    let(:user) { create(:user) }
+
     context 'responds to its methods' do
       it { should respond_to(:gravatar_id) }
 
       it 'returns a digest to be used by the Gravatar web service' do
-        expect(Digest::MD5.hexdigest(@user.email.downcase)).to eql('b58996c504c5638798eb6b511e6f49af')
+        expect(Digest::MD5.hexdigest(user.email.downcase)).to eql('b58996c504c5638798eb6b511e6f49af')
       end
     end
   end
 
   describe 'module and mixin methods' do
-    before { create_user }
-
     describe 'Account module' do
       it { should respond_to(:activate) }
       it { should respond_to(:deactivate) }

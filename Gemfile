@@ -34,6 +34,7 @@ gem 'holder_rails'
 # test & development gems:
 group :test do
   gem 'rspec-rails', '~> 3.1'
+  gem 'factory_girl_rails'
   gem 'shoulda-matchers'
   gem 'shoulda-callback-matchers', '~> 1.1.1'
   gem 'capybara'

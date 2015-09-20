@@ -14,13 +14,10 @@ require 'rails_helper'
 
 describe Story, type: :model do
 
-  before do
-    Story.send(:public, *Story.protected_instance_methods)
-    create_user
-  end
+  before { Story.send(:public, *Story.protected_instance_methods) }
 
   it 'is valid with example attributes' do
-    expect(@user.stories.new(story_attributes)).to be_valid
+    expect(build(:story)).to be_valid
   end
 
   describe 'ActiveModel validations' do

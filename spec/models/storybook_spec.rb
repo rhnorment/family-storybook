@@ -17,13 +17,10 @@ require 'rails_helper'
 
 describe Storybook, type: :model do
 
-  before do
-    Storybook.send(:public, *Storybook.protected_instance_methods)
-    create_user
-  end
+  before { Storybook.send(:public, *Storybook.protected_instance_methods) }
 
-  it 'is valid with example attributes' do
-    expect(@user.storybooks.new(storybook_attributes)).to be_valid
+  it 'is has a valid factory' do
+    expect(build(:storybook)).to be_valid
   end
 
   describe 'ActiveRecord' do

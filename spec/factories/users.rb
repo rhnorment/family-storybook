@@ -22,6 +22,11 @@ FactoryGirl.define do
     password_confirmation   'secret'
     active                  true
 
+    trait :bad_user do
+      name                  'Bad User'
+      email                 nil
+    end
+
     trait :inactive_user do
       name                  'Inactive User'
       email                 'inactive_user@example.com'

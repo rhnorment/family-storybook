@@ -11,7 +11,10 @@
 
 class Chapter < ActiveRecord::Base
 
-  belongs_to :storybook
   belongs_to :story
+  belongs_to :storybook
+
+  validates   :story_id,      presence: true
+  validates   :storybook_id,  presence: true
 
 end

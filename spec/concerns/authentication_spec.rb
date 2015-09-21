@@ -3,9 +3,9 @@ require 'rails_helper'
 describe Authentication, type: :concern do
 
   describe '.authenticate' do
-    context 'user is valid and active' do
-      before { create_user }
+    let(:user) { create(:user) }
 
+    context 'user is valid and active' do
       it 'authenticates the user' do
         expect(User.authenticate('user@example.com', 'secret')).to eql(@user)
       end

@@ -28,6 +28,8 @@ class UsersController < ApplicationController
 
       redirect_to @user, success: 'Thanks for signing up!'
     else
+      flash.now[:danger] = 'There was a problem with your registration.  Please try again.'
+
       render :new, layout: 'session'
     end
   end
@@ -40,6 +42,8 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to @user, success: 'Account successfully updated!'
     else
+      flash.now[:warning] = 'There was a problem updating your account.  Please try again.'
+
       render :edit
     end
   end

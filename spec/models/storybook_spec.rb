@@ -19,7 +19,7 @@ describe Storybook, type: :model do
 
   before { Storybook.send(:public, *Storybook.protected_instance_methods) }
 
-  it 'is has a valid factory' do
+  it 'has a valid factory' do
     expect(build(:storybook)).to be_valid
   end
 

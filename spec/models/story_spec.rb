@@ -16,7 +16,7 @@ describe Story, type: :model do
 
   before { Story.send(:public, *Story.protected_instance_methods) }
 
-  it 'is valid with example attributes' do
+  it 'has a valid factory' do
     expect(build(:story)).to be_valid
   end
 

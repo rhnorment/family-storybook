@@ -19,7 +19,7 @@ describe User, type: :model do
 
   before { User.send(:public, *User.protected_instance_methods) }
 
-  it 'it has a valid factory' do
+  it 'has a valid factory' do
     expect(build(:user)).to be_valid
   end
 

@@ -18,5 +18,4 @@ FactoryGirl.define do
     recipient_email   'recipient@example.com'
   end
 
-
 end

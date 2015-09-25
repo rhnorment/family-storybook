@@ -16,13 +16,13 @@
 FactoryGirl.define do
 
   factory :storybook do
-    title
+    title         { generate(:storybook_title) }
     description   'This is the storybook description.'
     cover         'cover.jpg'
     association   :user, factory: :user
   end
 
-  sequence :title do |n|
+  sequence :storybook_title do |n|
     "Storybook-#{n} Title"
   end
 

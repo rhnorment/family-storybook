@@ -2,113 +2,124 @@ require 'rails_helper'
 
 describe StoriesController, type: :controller do
 
-  before do
-    create_user
-    create_user_stories
-  end
+  describe 'GET => :index' do
+    let(:user)        { create(:user) }
+    let(:wrong_user)  { create(:user, :wrong_user) }
+    let(:story_1)     { create(:story, user: user) }
+    let(:story_2)     { create(:story, user: user) }
+    let(:wrong_story) { create(:story, user: wrong_user) }
 
-  describe 'GET :index' do
     context 'user not signed in' do
-      before do
-        sign_out_current_user
-        get :index
-      end
+      before { get :index }
 
       it_behaves_like 'user not signed in'
     end
 
-    context 'signed in as current user' do
-      before { sign_in_current_user }
+    context 'signed in as the current user' do
+      before { session_for_user }
 
-      context 'when requesting HTML format' do
+      context 'requesting HTML format' do
         before { get :index }
 
-        it { should route(:get, '/stories').to(action: :index) }
-        it { should respond_with(:success) }
-        it { should render_with_layout(:application) }
-        it { should render_template(:index) }
-        it { should_not set_flash }
+        it { is_expected.to route(:get, '/stories').to(action: :index) }
+        it { is_expected.to respond_with(:success) }
+        it { is_expected.to render_with_layout(:application) }
+        it { is_expected.to render_template(:index) }
+        it { is_expected.to_not set_flash }
 
         it 'should set the page title' do
           expect(assigns(:page_title)).to eql('My stories')
         end
 
         it 'should correctly assign the story collection' do
-          expect(assigns(:stories)).to include(@story_1, @story_2)
+          expect(assigns(:stories)).to include(story_1, story_2)
+        end
+
+        it 'should correctly assign the story collection' do
+          expect(assigns(:stories)).to_not include(wrong_story)
         end
       end
     end
   end
 
-  describe 'GET :show' do
-    context 'when not signed in' do
-      before { get(:show, id: @story_1.id) }
+  describe 'GET => :show' do
+    let(:user)        { create(:user) }
+    let(:wrong_user)  { create(:user, :wrong_user) }
+    let(:story)       { create(:story, user: user) }
+
+    context 'user not signed in' do
+      before { get(:show, id: story.id) }
 
       it_behaves_like 'user not signed in'
     end
 
-    context 'when signed in as the current user' do
-      before { sign_in_current_user }
+    context 'when signed in as current user' do
+      before { session_for_user }
 
-      context 'when requesting the HTML content type' do
-        before { get(:show, id: @story_1.id) }
+      describe 'requesting HTML format' do
+        before { get(:show, id: story.id) }
 
-        it { should route(:get, '/stories/1').to(action: :show, id: '1') }
-        it { should respond_with(:success) }
-        it { should render_with_layout(:application) }
-        it { should render_template(:show) }
-        it { should_not set_flash }
+        it { is_expected.to route(:get, "/stories/#{story.id}").to(action: :show, id: story.id) }
+        it { is_expected.to respond_with(:success) }
+        it { is_expected.to render_with_layout(:application) }
+        it { is_expected.to render_template(:show) }
+        it { is_expected.to_not set_flash }
 
         it 'assigns the page title' do
-          expect(assigns(:page_title)).to eql('Showing: Story Title')
+          expect(assigns(:page_title)).to eql("Showing: #{story.title}")
         end
-
       end
 
-      context 'when requesting JSON content type' do
-        before { get(:show, id: @story_1.id, format: :json) }
+      context 'requesting JSON format' do
+        before { get(:show, id: story.id, format: :json) }
 
-        it { should route(:get, '/stories/1.json').to(action: :show, id: '1', format: :json) }
-        it { should respond_with(:success) }
+        it { is_expected.to route(:get, "/stories/#{story.id}.json").to(action: :show, id: story.id, format: :json) }
+        it { is_expected.to respond_with(:success) }
 
         it 'should retrieve a JSON content type' do
           expect(response.content_type).to eql('application/json')
         end
 
-        it 'should include the user stories in the response body' do
-          story = json(response.body)
-          expect(@story_1.title).to eql(story[:title])
+        it 'should return the story by ID' do
+          story_response = json(response.body)
+          expect(story.title).to eql(story_response[:title])
         end
       end
     end
 
-    context 'when signed in as a different user'
+    context 'when signed in as a different user' do
+      before do
+        session_for_wrong_user
+        get(:show, id: story.id)
+      end
+
+      it_behaves_like 'signed in as a different user'
+    end
   end
 
-  describe 'GET :new' do
+  describe 'GET => :new' do
+    let(:user) { create(:user) }
+
     context 'user not signed in' do
-      before do
-        sign_out_current_user
-        get :new
-      end
+      before { get(:new) }
 
       it_behaves_like 'user not signed in'
     end
 
-    context 'signed in as current user' do
+    context 'signed in as the current user' do
       before do
-        sign_in_current_user
-        get :new
+        session_for_user
+        get(:new)
       end
 
-      it { should route(:get, '/stories/new').to(action: :new) }
-      it { should respond_with(:success) }
-      it { should render_with_layout(:application) }
-      it { should render_template(:new) }
-      it { should_not set_flash }
+      it { is_expected.to route(:get, '/stories/new').to(action: :new) }
+      it { is_expected.to respond_with(:success) }
+      it { is_expected.to render_with_layout(:application) }
+      it { is_expected.to render_template(:new) }
+      it { is_expected.to_not set_flash }
 
       it 'should set the page title' do
-        expect(assigns(:page_title)).to eql('Create a story')
+        expect(assigns(:page_title)).to eql('Write a story')
       end
 
       it 'should be a new story object' do
@@ -117,125 +128,135 @@ describe StoriesController, type: :controller do
     end
   end
 
-  context 'POST :create' do
-    before do
-      @good_story = { title: 'Good Story', content: 'Good story content.' }
-      @bad_story = { title: nil, content: nil }
-    end
+  describe 'POST => :create' do
+    let(:user)          { create(:user) }
+    let(:valid_story)   { story_attributes }
+    let(:invalid_story) { story_attributes(title: nil) }
 
     context 'user not signed in' do
-      before do
-        sign_out_current_user
-        post(:create, story: @good_story)
-      end
+      before { post(:create, story: valid_story) }
 
       it_behaves_like 'user not signed in'
     end
 
-    context 'signed in as current user' do
-      before { sign_in_current_user }
+    context 'signed in as the current user' do
+      before { session_for_user }
 
-      context 'when successfully creating a story' do
-        before { post(:create, story: @good_story) }
+      context 'successfully creates a new story' do
+        before { post(:create, story: valid_story) }
 
-        it { should route(:post, '/stories').to(action: :create) }
-        it { should respond_with(:found) } # Why is this response????
-        it { should redirect_to(Story.last) }  # Why does @good_story not work in this test???
-        it { should set_flash[:success] }
+        it { is_expected.to route(:post, '/stories').to(action: :create) }
+        it { is_expected.to respond_with(:redirect) }
+        it { is_expected.to redirect_to(Story.last) }
+        it { is_expected.to set_flash[:success] }
 
-        it 'should change the Story count' do
-          expect(@user.stories.count).to eql(3) # 2 original stories + the new story.
+        it 'should change the story count' do
+          expect(user.stories.count).to eql(1)
         end
+
       end
 
-      context 'when unsuccessfully creating a story' do
-        before { post(:create, story: @bad_story) }
+      context 'does not create a new story' do
+        before { post(:create, story: invalid_story) }
 
-        it { should respond_with(:success) }  # Why is this the response?
-        it { should render_template(:new) }
-        it { should set_flash.now[:danger] }
+        it { is_expected.to respond_with(:success) }
+        it { is_expected.to render_template(:new) }
+        it { is_expected.to set_flash.now[:danger] }
 
-        it 'should not change the Story count' do
-          expect(@user.stories.count).to eql(2) # 2 original stories
+        it 'should not change the story count' do
+          expect(user.stories.count).to eql(0)
         end
       end
     end
   end
 
-  context 'GET :edit' do
-    context 'user not signed in' do
-      before do
-        sign_out_current_user
-        get :edit, id: @story_1.id
-      end
+  describe 'GET => :edit' do
+    let(:user)  { create(:user) }
+    let(:story) { create(:story, user: user) }
+
+    context 'when not signed in' do
+      before { get(:edit, id: story.id) }
 
       it_behaves_like 'user not signed in'
     end
 
-    context 'signed in as current user' do
+    context 'when signed in as current user' do
+      before do
+        session_for_user
+        get(:edit, id: story.id)
+      end
 
+      it { is_expected.to route(:get, "/stories/#{story.id}/edit").to(action: :edit, id: story.id) }
+      it { is_expected.to respond_with(:success) }
+      it { is_expected.to render_with_layout(:application) }
+      it { is_expected.to render_template(:edit) }
+      it { is_expected.to_not set_flash }
+
+      it 'should set the page title' do
+        expect(assigns(:page_title)).to eql("Editing #{story.title}")
+      end
     end
   end
 
-  context 'PATCH :update' do
-    context 'user not signed in' do
-      before do
-        sign_out_current_user
-        patch(:update, id: @story_1.id, story: { title: 'Title Change' })
-      end
+  describe 'PATCH => :update' do
+    let(:user)  { create(:user) }
+    let(:story) { create(:story, user: user) }
+
+    context 'when not signed in' do
+      before { patch(:update, id: story.id, story: { title: 'Title Change' }) }
 
       it_behaves_like 'user not signed in'
     end
 
-    context 'signed in as current user' do
-      before { sign_in_current_user }
+    context 'signed in as the current user' do
+      before { session_for_user }
 
       context 'when successfully updating a story' do
-        before { patch(:update, id: @story_1.id, story: { title: 'Title Change' }) }
+        before { patch(:update, id: story.id, story: { title: 'Title Change' }) }
 
-        it { should route(:patch, '/stories/1').to(action: :update, id: '1') }
-        it { should respond_with(:found) }
-        it { should redirect_to(@story_1) }
-        it { should set_flash[:success] }
+        it { is_expected.to route(:patch, "/stories/#{story.id}").to(action: :update, id: story.id) }
+        it { is_expected.to respond_with(:found) }
+        it { is_expected.to redirect_to(story) }
+        it { is_expected.to set_flash[:success] }
 
-        it 'should save the new title to the database' do
-          expect(@story_1.reload.title).to eql('Title Change')
+        it 'should save the new title in the database' do
+          expect(story.reload.title).to eql('Title Change')
         end
       end
 
-      context 'when unsuccessfully updating a story' do
-        before { patch(:update, id: @story_1.id, story: { title: nil }) }
+      context 'when unsucessfully updating a story' do
+        before { patch(:update, id: story.id, story: { title: nil }) }
 
-        it { should respond_with(:success) }
-        it { should render_template(:edit) }
-        it { should set_flash.now[:danger] }
+        it { is_expected.to respond_with(:success) }
+        it { is_expected.to render_template(:edit) }
+        it { is_expected.to set_flash.now[:danger] }
       end
     end
   end
 
-  context 'DELETE :destroy' do
-    context 'user not signed in' do
-      before do
-        sign_out_current_user
-        delete(:destroy, id: @story_2.id)
-      end
+  describe 'DELETE => :destroy' do
+    let(:user)  { create(:user) }
+    let(:story) { create(:story, user: user) }
+
+    context 'when not signed in' do
+      before { delete(:destroy, id: story.id) }
 
       it_behaves_like 'user not signed in'
     end
 
-    context 'signed in as current user' do
+    context 'when signed in as the current user' do
       before do
-        sign_in_current_user
-        delete(:destroy, id: @story_2.id)
+        session_for_user
+        delete(:destroy, id: story.id)
       end
 
-      it { should route(:delete, '/stories/2').to(action: :destroy, id: '2') }
-      it { should respond_with(:found) }
-      it { should redirect_to(stories_url) }
-      it { should set_flash[:warning] }
+      it { is_expected.to route(:delete, "/stories/#{story.id}").to(action: :destroy, id: story.id) }
+      it { is_expected.to respond_with(:found) }
+      it { is_expected.to redirect_to(stories_url) }
+      it { is_expected.to set_flash[:warning] }
 
-      it 'should remove the story fron the database' do
-        expect(@user.stories.count).to eql(1)  # 2 initial stories less the one destroyed.
+      it 'should remove the story from the database' do
+        expect(user.stories.count).to eql(0)
       end
     end
   end

@@ -19,7 +19,7 @@ class StoriesController < ApplicationController
   end
 
   def new
-    @page_title = 'Create a story'
+    @page_title = 'Write a story'
     @story = @user.stories.new
   end
 

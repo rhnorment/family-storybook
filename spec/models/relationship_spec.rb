@@ -18,27 +18,27 @@ describe Relationship, type: :model do
     expect(build(:relationship)).to be_valid
   end
 
-  it { is_expected.to validate_presence_of(:user_id) }
-  it { is_expected.to validate_presence_of(:relative_id) }
-  it { is_expected.to validate_presence_of(:user_id) }
+  it { should validate_presence_of(:user_id) }
+  it { should validate_presence_of(:relative_id) }
+  it { should validate_presence_of(:user_id) }
 
-  it { is_expected.to have_db_column(:user_id).of_type(:integer) }
-  it { is_expected.to have_db_column(:relative_id).of_type(:integer) }
-  it { is_expected.to have_db_column(:pending).of_type(:boolean).with_options(default: true) }
+  it { should have_db_column(:user_id).of_type(:integer) }
+  it { should have_db_column(:relative_id).of_type(:integer) }
+  it { should have_db_column(:pending).of_type(:boolean).with_options(default: true) }
 
-  it { is_expected.to have_db_index([:user_id, :relative_id]).unique(:true) }
+  it { should have_db_index([:user_id, :relative_id]).unique(:true) }
 
-  it { is_expected.to belong_to(:user) }
-  it { is_expected.to belong_to(:user).class_name('User') }
+  it { should belong_to(:user) }
+  it { should belong_to(:user).class_name('User') }
 
   it 'should callback to create_activity on create'
 
-  it { is_expected.to respond_to(:user_id) }
-  it { is_expected.to respond_to(:relative_id) }
-  it { is_expected.to respond_to(:pending) }
+  it { should respond_to(:user_id) }
+  it { should respond_to(:relative_id) }
+  it { should respond_to(:pending) }
 
-  it { is_expected.to respond_to(:approved?) }
-  it { is_expected.to respond_to(:pending?) }
+  it { should respond_to(:approved?) }
+  it { should respond_to(:pending?) }
 
   let(:relationship) { create(:relationship) }
 

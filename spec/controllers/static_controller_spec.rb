@@ -3,6 +3,8 @@ require 'rails_helper'
 describe StaticController, type: :controller do
 
   describe 'GET :home' do
+    let(:user) { create(:user) }
+
     context 'when not signed in' do
       before { get :home }
 
@@ -15,8 +17,7 @@ describe StaticController, type: :controller do
 
     context 'when signed in' do
       before do
-        create_user
-        sign_in_current_user
+        session_for_user
         get :home
       end
 
@@ -25,6 +26,8 @@ describe StaticController, type: :controller do
   end
 
   describe 'GET :how' do
+    let(:user) { create(:user) }
+
     context 'when not signed in' do
       before { get :how }
 
@@ -37,8 +40,7 @@ describe StaticController, type: :controller do
 
     context 'when signed in' do
       before do
-        create_user
-        sign_in_current_user
+        session_for_user
         get :how
       end
 
@@ -47,6 +49,8 @@ describe StaticController, type: :controller do
   end
 
   describe 'GET :showcase' do
+    let(:user) { create(:user) }
+
     context 'when not signed in' do
       before { get :showcase }
 
@@ -59,8 +63,7 @@ describe StaticController, type: :controller do
 
     context 'when signed in' do
       before do
-        create_user
-        sign_in_current_user
+        session_for_user
         get :showcase
       end
 

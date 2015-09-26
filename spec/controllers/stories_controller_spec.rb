@@ -21,11 +21,11 @@ describe StoriesController, type: :controller do
       context 'requesting HTML format' do
         before { get :index }
 
-        it { is_expected.to route(:get, '/stories').to(action: :index) }
-        it { is_expected.to respond_with(:success) }
-        it { is_expected.to render_with_layout(:application) }
-        it { is_expected.to render_template(:index) }
-        it { is_expected.to_not set_flash }
+        it { should route(:get, '/stories').to(action: :index) }
+        it { should respond_with(:success) }
+        it { should render_with_layout(:application) }
+        it { should render_template(:index) }
+        it { should_not set_flash }
 
         it 'should set the page title' do
           expect(assigns(:page_title)).to eql('My stories')
@@ -59,11 +59,11 @@ describe StoriesController, type: :controller do
       describe 'requesting HTML format' do
         before { get(:show, id: story.id) }
 
-        it { is_expected.to route(:get, "/stories/#{story.id}").to(action: :show, id: story.id) }
-        it { is_expected.to respond_with(:success) }
-        it { is_expected.to render_with_layout(:application) }
-        it { is_expected.to render_template(:show) }
-        it { is_expected.to_not set_flash }
+        it { should route(:get, "/stories/#{story.id}").to(action: :show, id: story.id) }
+        it { should respond_with(:success) }
+        it { should render_with_layout(:application) }
+        it { should render_template(:show) }
+        it { should_not set_flash }
 
         it 'assigns the page title' do
           expect(assigns(:page_title)).to eql("Showing: #{story.title}")
@@ -73,8 +73,8 @@ describe StoriesController, type: :controller do
       context 'requesting JSON format' do
         before { get(:show, id: story.id, format: :json) }
 
-        it { is_expected.to route(:get, "/stories/#{story.id}.json").to(action: :show, id: story.id, format: :json) }
-        it { is_expected.to respond_with(:success) }
+        it { should route(:get, "/stories/#{story.id}.json").to(action: :show, id: story.id, format: :json) }
+        it { should respond_with(:success) }
 
         it 'should retrieve a JSON content type' do
           expect(response.content_type).to eql('application/json')
@@ -112,11 +112,11 @@ describe StoriesController, type: :controller do
         get(:new)
       end
 
-      it { is_expected.to route(:get, '/stories/new').to(action: :new) }
-      it { is_expected.to respond_with(:success) }
-      it { is_expected.to render_with_layout(:application) }
-      it { is_expected.to render_template(:new) }
-      it { is_expected.to_not set_flash }
+      it { should route(:get, '/stories/new').to(action: :new) }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:application) }
+      it { should render_template(:new) }
+      it { should_not set_flash }
 
       it 'should set the page title' do
         expect(assigns(:page_title)).to eql('Write a story')
@@ -145,10 +145,10 @@ describe StoriesController, type: :controller do
       context 'successfully creates a new story' do
         before { post(:create, story: valid_story) }
 
-        it { is_expected.to route(:post, '/stories').to(action: :create) }
-        it { is_expected.to respond_with(:redirect) }
-        it { is_expected.to redirect_to(Story.last) }
-        it { is_expected.to set_flash[:success] }
+        it { should route(:post, '/stories').to(action: :create) }
+        it { should respond_with(:redirect) }
+        it { should redirect_to(Story.last) }
+        it { should set_flash[:success] }
 
         it 'should change the story count' do
           expect(user.stories.count).to eql(1)
@@ -159,9 +159,9 @@ describe StoriesController, type: :controller do
       context 'does not create a new story' do
         before { post(:create, story: invalid_story) }
 
-        it { is_expected.to respond_with(:success) }
-        it { is_expected.to render_template(:new) }
-        it { is_expected.to set_flash.now[:danger] }
+        it { should respond_with(:success) }
+        it { should render_template(:new) }
+        it { should set_flash.now[:danger] }
 
         it 'should not change the story count' do
           expect(user.stories.count).to eql(0)
@@ -186,11 +186,11 @@ describe StoriesController, type: :controller do
         get(:edit, id: story.id)
       end
 
-      it { is_expected.to route(:get, "/stories/#{story.id}/edit").to(action: :edit, id: story.id) }
-      it { is_expected.to respond_with(:success) }
-      it { is_expected.to render_with_layout(:application) }
-      it { is_expected.to render_template(:edit) }
-      it { is_expected.to_not set_flash }
+      it { should route(:get, "/stories/#{story.id}/edit").to(action: :edit, id: story.id) }
+      it { should respond_with(:success) }
+      it { should render_with_layout(:application) }
+      it { should render_template(:edit) }
+      it { should_not set_flash }
 
       it 'should set the page title' do
         expect(assigns(:page_title)).to eql("Editing #{story.title}")
@@ -214,10 +214,10 @@ describe StoriesController, type: :controller do
       context 'when successfully updating a story' do
         before { patch(:update, id: story.id, story: { title: 'Title Change' }) }
 
-        it { is_expected.to route(:patch, "/stories/#{story.id}").to(action: :update, id: story.id) }
-        it { is_expected.to respond_with(:found) }
-        it { is_expected.to redirect_to(story) }
-        it { is_expected.to set_flash[:success] }
+        it { should route(:patch, "/stories/#{story.id}").to(action: :update, id: story.id) }
+        it { should respond_with(:found) }
+        it { should redirect_to(story) }
+        it { should set_flash[:success] }
 
         it 'should save the new title in the database' do
           expect(story.reload.title).to eql('Title Change')
@@ -227,9 +227,9 @@ describe StoriesController, type: :controller do
       context 'when unsucessfully updating a story' do
         before { patch(:update, id: story.id, story: { title: nil }) }
 
-        it { is_expected.to respond_with(:success) }
-        it { is_expected.to render_template(:edit) }
-        it { is_expected.to set_flash.now[:danger] }
+        it { should respond_with(:success) }
+        it { should render_template(:edit) }
+        it { should set_flash.now[:danger] }
       end
     end
   end
@@ -250,10 +250,10 @@ describe StoriesController, type: :controller do
         delete(:destroy, id: story.id)
       end
 
-      it { is_expected.to route(:delete, "/stories/#{story.id}").to(action: :destroy, id: story.id) }
-      it { is_expected.to respond_with(:found) }
-      it { is_expected.to redirect_to(stories_url) }
-      it { is_expected.to set_flash[:warning] }
+      it { should route(:delete, "/stories/#{story.id}").to(action: :destroy, id: story.id) }
+      it { should respond_with(:found) }
+      it { should redirect_to(stories_url) }
+      it { should set_flash[:warning] }
 
       it 'should remove the story from the database' do
         expect(user.stories.count).to eql(0)

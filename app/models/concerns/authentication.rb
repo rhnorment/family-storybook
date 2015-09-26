@@ -7,7 +7,7 @@ module Authentication
   end
 
   module ClassMethods
-    def authenticate(email, password)
+    def User.authenticate(email, password)
       user = User.find_by(email: email)
 
       user && user.authenticate(password)

@@ -2,22 +2,18 @@ require 'rails_helper'
 
 describe SearchController, type: :controller do
 
-  before do
-    create_user
-  end
-
   describe 'SEARCH :search' do
+    let(:user) { create(:user) }
+
     context 'user not signed in' do
-      before do
-        get :search
-      end
+      before { get :search }
 
       it_behaves_like 'user not signed in'
     end
 
     context 'sign in as the current user' do
       before do
-        sign_in_current_user
+        session_for_user
         get :search
       end
 

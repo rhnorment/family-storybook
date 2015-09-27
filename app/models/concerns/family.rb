@@ -66,6 +66,16 @@ module Family
     self.invited(false).count + self.invited_by(false).count
   end
 
+  # total number of pending_invited and pending_invited_by relatives without association loading
+  def total_pending_relatives
+    self.pending_invited(false).count + self.pending_invited_by(false).count
+  end
+
+  # total number of pending_invited and pending_invited_by relatives without association loading
+  def total_prospective_relatives
+    self.class.all.count - total_relatives - total_pending_relatives
+  end
+
   # returns the date the relationship was approved via the update method in the controller:
   def invitation_approved_on(user)
     find_any_relationship_with(user).updated_at

@@ -2,13 +2,9 @@ require 'rails_helper'
 
 describe InvitationsController, type: :controller do
 
-  before do
-    create_user
-    create_other_users
-    create_user_relationships
-  end
-
   describe 'GET :new' do
+    let(:user) { create(:user) }
+
     context 'when not signed in' do
       before { get :new }
 
@@ -17,7 +13,7 @@ describe InvitationsController, type: :controller do
 
     context 'when signed in' do
       before do
-        sign_in_current_user
+        session_for_user
         get :new
       end
 
@@ -29,19 +25,23 @@ describe InvitationsController, type: :controller do
     end
   end
 
-  describe 'POST :create' do
+  describe 'POST => :create' do
+    let(:user)              { create(:user) }
+    let(:invited_user)      { create(:user, :invited_user) }
+    let(:relative)          { create(:relative) }
+
     context 'when not signed in' do
-      before { post(:create, recipient_email: 'invitee@example.com' ) }
+      before { post(:create, recipient_email: 'recipient@example.com' ) }
 
       it_behaves_like 'user not signed in'
     end
 
-    context 'when signed in' do
-      before { sign_in_current_user }
+    context 'when signed in as current user' do
+      before { session_for_user }
 
       context 'when inviting a user that has already been invited' do
         before do
-          @user.invitations.create!(recipient_email: 'invited_user@example.com')
+          user.invitations.create!(recipient_email: invited_user.email)
           post(:create, invitation: { recipient_email: 'invited_user@example.com' })
         end
 
@@ -59,7 +59,10 @@ describe InvitationsController, type: :controller do
       end
 
       context 'when inviting a user that is already family member' do
-        before { post(:create, invitation: { recipient_email: 'user_2@example.com' }) }
+        before do
+          Relationship.create!(user_id: user.id, relative_id: relative.id, pending: false)
+          post(:create, invitation: { recipient_email: 'relative@example.com' })
+        end
 
         it { should respond_with(:redirect) }
         it { should redirect_to(relationships_url) }
@@ -67,7 +70,10 @@ describe InvitationsController, type: :controller do
       end
 
       context 'when inviting a user that is already a member of the site' do
-        before { post(:create, invitation: { recipient_email: 'user_4@example.com' }) }
+        before do
+          create(:user, :member_user)
+          post(:create, invitation: { recipient_email: 'member_user@example.com' })
+        end
 
         it { should respond_with(:redirect) }
         it { should redirect_to(new_relationship_url) }
@@ -75,7 +81,7 @@ describe InvitationsController, type: :controller do
       end
 
       context 'when successfully inviting a user' do
-        before { post(:create, invitation: { recipient_email: 'invitee@example.com' }) }
+        before { post(:create, invitation: { recipient_email: 'recipient@example.com' }) }
 
         it { should route(:post, '/invitations').to(action: :create) }
         it { should respond_with(:found) }
@@ -83,7 +89,7 @@ describe InvitationsController, type: :controller do
         it { should set_flash[:success] }
 
         it 'should save the invitation in the database' do
-          expect(@user.invitations.size).to eql(1) # 1 newly created invitation.
+          expect(user.invitations.count).to eql(1)
         end
       end
 

@@ -48,6 +48,11 @@ FactoryGirl.define do
       name                  'Member User'
       email                 'member_user@example.com'
     end
+
+    trait :invited_user do
+      name                  'Invited User'
+      email                 'invited_user@example.com'
+    end
   end
 
   factory :relative, class: User do
@@ -55,6 +60,15 @@ FactoryGirl.define do
     email                   'relative@example.com'
     password                'secret'
     password_confirmation   'secret'
+    active                  true
+  end
+
+  factory :member, class: User do
+    name                    'Member User'
+    email                   'member_user@example.com'
+    password                'secret'
+    password_confirmation   'secret'
+    active                  true
   end
 
 end

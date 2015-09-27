@@ -18,4 +18,9 @@ FactoryGirl.define do
     recipient_email   'recipient@example.com'
   end
 
+  factory :sent_invitation do
+    association       :user,  factory: :user, trait: :invited_user
+    recipient_email   'invited_user@example.com'
+  end
+
 end

@@ -95,11 +95,11 @@ describe Family, type: :concern do
       expect(user.relatives).to_not include(user_2, user_3)
     end
 
-    it 'should list all recommended relatives' do
+    it 'should list all prospective relatives' do
       expect(user.prospective_relatives).to include(user_3)
     end
 
-    it 'should not list all non-recommended relatives' do
+    it 'should not list all non-prospective relatives' do
       expect(user.prospective_relatives).to_not include(user_2, user_4, user_5)
     end
 

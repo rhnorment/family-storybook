@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe 'Signing out', type: :feature do
 
-  it 'removes the user id from the session' do
-    create_user
+  let(:user) { create(:user) }
 
-    sign_in(@user)
+  it 'removes the user id from the session' do
+    sign_in(user)
 
     click_link 'Sign out'
 

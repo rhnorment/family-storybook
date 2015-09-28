@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'resetting a user password', type: :feature do
-  before { create_user }
 
   it 'redirects the user to a page that allows the user to enter their email address' do
     visit signin_url
@@ -11,9 +10,11 @@ describe 'resetting a user password', type: :feature do
     expect(page).to have_field('Email')
   end
 
-
   describe 'user is entering his/her email address for the password reset instructions' do
-    before { visit new_password_reset_url }
+    before do
+      create(:user)
+      visit new_password_reset_url
+    end
 
     context 'the user is found' do
       it 'finds the user by email address if the user is active and sends an email with a link' do
@@ -41,10 +42,12 @@ describe 'resetting a user password', type: :feature do
   end
 
   describe 'user is resetting his/her password' do
+    let(:user)  { create(:user) }
+
     before do
-      @user.create_reset_digest
+      user.create_reset_digest
       @email_string = "user%40example.com"
-      visit "http://localhost:3000/password_resets/#{@user.reset_token}/edit?email=#{@email_string}"
+      visit "http://localhost:3000/password_resets/#{user.reset_token}/edit?email=#{@email_string}"
     end
 
     it 'displays the user prompts' do

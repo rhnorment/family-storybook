@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 describe 'delete a user', type: :feature do
+
+  let(:user) { create(:user) }
+
   before do
-    create_user
-    sign_in(@user)
-    visit edit_user_path(@user)
+    sign_in(user)
+    visit edit_user_path(user)
   end
 
   describe 'delete action is visible and accessible to the user' do

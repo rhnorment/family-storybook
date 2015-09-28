@@ -2,28 +2,29 @@ require 'rails_helper'
 
 describe 'list storybooks', type: :feature do
 
-  before do
-    create_user
-    sign_in(@user)
-  end
+  let(:user)    { create(:user) }
+  let(:user_2)  { create(:user, email: 'user_2@example.com') }
+
+  before { sign_in(user) }
 
   context 'there are storybooks to render' do
     before do
-      create_user_storybooks
+      @storybook_1 = create(:storybook, user: user)
+      @storybook_2 = create(:storybook, user: user)
+      @storybook_3 = create(:storybook, user: user_2)
+
       visit storybooks_url
-      user2 = User.create!(user_attributes(email: 'user2@example.com'))
-      user2.storybooks.create!(storybook_attributes(title: 'Storybook Four Title'))
     end
 
     it 'shows the storybooks belonging to the correct user' do
-      expect(page).to have_text('Storybook Title')
-      expect(page).to have_text('Storybook Two Title')
+      expect(page).to have_text(@storybook_1.title)
+      expect(page).to have_text(@storybook_2.title)
       expect(page).to have_text('Not published')
       expect(page).to have_text('Started')
     end
 
     it 'does not show storybooks not belonging to the correct user' do
-      expect(page).to_not have_text('Storybook Four Title')
+      expect(page).to_not have_text(@storybook_3.title)
     end
   end
 

@@ -2,10 +2,9 @@ require 'rails_helper'
 
 describe 'create story', type: :feature do
 
-  before do
-    create_user
-    sign_in(@user)
-  end
+  let(:user) { create(:user) }
+
+  before { sign_in(user) }
 
   describe 'CREATE action is accessible and prompts the user for :create attributes' do
     before do

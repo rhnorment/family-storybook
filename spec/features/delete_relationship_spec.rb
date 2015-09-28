@@ -2,14 +2,22 @@ require 'rails_helper'
 
 describe 'delete a relationship', type: :feature do
 
+  let(:user)    { create(:user) }
+  let(:user_2)  { create(:user, name: 'User Two', email: 'user_2@example.com') }
+  let(:user_3)  { create(:user, name: 'User Three', email: 'user_3@example.com') }
+  let(:user_4)  { create(:user, name: 'User Four', email: 'user_4@example.com') }
+
   before do
-    create_user
-    create_other_users
-    sign_in(@user)
-    create_user_relationships
+    sign_in(user)
   end
 
   describe 'delete action is visible and actionable to the user' do
+    before do
+      Relationship.create!(user_id: user.id, relative_id: user_2.id, pending: false)
+      user.invite(user_3)
+      user_4.invite(user)
+    end
+
     context 'when removing an approved relationship' do
       it 'is visible and actionable to the user' do
         visit relationships_url
@@ -20,8 +28,6 @@ describe 'delete a relationship', type: :feature do
 
     context 'when cancelling an outgoing relationship request that has not been approved' do
       it 'is visible and actionable to the user' do
-        @user.invite(@user_4)
-
         visit pending_relationships_url
 
         within(:css, '#outgoing-requests') do
@@ -32,8 +38,6 @@ describe 'delete a relationship', type: :feature do
 
     context 'when rejecting an incoming relationship request' do
       it 'is visible and actionable to the user' do
-        @user_5.invite(@user)
-
         visit pending_relationships_url
 
         within(:css, '#incoming-requests') do
@@ -44,7 +48,13 @@ describe 'delete a relationship', type: :feature do
   end
 
   describe 'user deletes the relationship' do
-    context 'deleting an active relationship' do    # relatives listed LIFO
+    before do
+      Relationship.create!(user_id: user.id, relative_id: user_2.id, pending: false)
+      user.invite(user_3)
+      user_4.invite(user)
+    end
+
+    context 'deleting an active relationship' do
       before do
         visit relationships_url
 
@@ -54,40 +64,32 @@ describe 'delete a relationship', type: :feature do
       end
 
       it 'removes the existing relationship' do
-        expect(page).to_not have_text('User Three')
-      end
-
-      it 'keeps the remaining relationships' do
-        expect(page).to have_text('User Two')
+        expect(page).to_not have_text(user_2.name)
       end
     end
 
     context 'cancelling an outgoing relationship request' do
       it 'cancels tje outgoing request' do
-        @user.invite(@user_4)
-
         visit pending_relationships_url
 
         within(:css, '#outgoing-requests') do
           first('.list-group-item').click_link('Cancel')
         end
 
-        expect(page).to_not have_text('User Four')
+        expect(page).to_not have_text(user_3.name)
       end
 
     end
 
     context 'rejecting an incoming relationship request' do
       it 'cancels tje outgoing request' do
-        @user_5.invite(@user)
-
         visit pending_relationships_url
 
         within(:css, '#incoming-requests') do
           first('.list-group-item').click_link('Reject')
         end
 
-        expect(page).to_not have_text('User Five')
+        expect(page).to_not have_text(user_4.name)
       end
     end
   end

@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe 'page not found exception handling', type: :feature do
 
+  let(:user) { create(:user) }
+
   context 'when a page is not found' do
     it 'should present the page not found error page when visiting an unavailable page' do
       visit '/foo'
@@ -22,14 +24,12 @@ describe 'page not found exception handling', type: :feature do
   end
 
   context 'when a record is not found' do
-    it 'should flash an error message and redirect the user back to his profile page' do
-      create_user
-      sign_in(@user)
-
-      visit storybooks_url
+    before do
+      sign_in(user)
       visit storybook_url(42)
-
-      expect(current_path).to eq(user_path(@user))
+    end
+    it 'should flash an error message and redirect the user back to his profile page' do
+      expect(current_path).to eq(user_path(user))
       expect(page).to have_text('The item you are looking for is not available.')
     end
   end

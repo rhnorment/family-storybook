@@ -2,11 +2,14 @@ require 'rails_helper'
 
 describe 'Search', type: :feature do
 
+  let(:user) { create(:user) }
+
   before do
-    create_user
-    sign_in(@user)
-    create_user_storybooks
-    create_user_stories
+    sign_in(user)
+    @storybook_1 = create(:storybook, user: user)
+    @storybook_2 = create(:storybook, user: user)
+    @story_1 = create(:story, user: user)
+    @story_2 = create(:story, user: user)
    end
 
   it 'presents a search form to the user on all application pages' do
@@ -45,8 +48,8 @@ describe 'Search', type: :feature do
         fill_in 'query', with: 'storybook'
         click_button 'Submit'
 
-        expect(page).to have_link('Storybook Title')
-        expect(page).to have_link('Storybook Two Title')
+        expect(page).to have_link(@storybook_1.title)
+        expect(page).to have_link(@storybook_2.title)
         expect(page).to have_link('Storybook')
         expect(page).to have_text('Example User')
         expect(page).to have_text('created')
@@ -59,8 +62,8 @@ describe 'Search', type: :feature do
 
         click_button 'Submit'
 
-        expect(page).to_not have_link('Storybook Title')
-        expect(page).to_not have_link('Storybook Two Title')
+        expect(page).to_not have_link(@storybook_1.title)
+        expect(page).to_not have_link(@storybook_2.title)
       end
     end
   end

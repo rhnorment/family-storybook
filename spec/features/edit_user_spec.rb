@@ -2,18 +2,17 @@ require 'rails_helper'
 
 describe 'Editing a user', type: :feature do
 
-  before do
-    create_user
-    sign_in(@user)
-  end
+  let(:user) { create(:user) }
+
+  before { sign_in(user) }
 
   describe 'the edit view is accessible and prompts the user for the right information' do
     it 'updates the user and shows the user updated details' do
-      visit user_url(@user)
+      visit user_url(user)
 
       click_link 'Edit'
 
-      expect(current_path).to eq(edit_user_path(@user))
+      expect(current_path).to eq(edit_user_path(user))
 
       expect(find_field('Name').value).to eql('Example User')
       expect(find_field('Email').value).to eql('user@example.com')
@@ -21,7 +20,7 @@ describe 'Editing a user', type: :feature do
   end
 
   describe 'user updates his/her profile' do
-    before { visit edit_user_url(@user) }
+    before { visit edit_user_url(user) }
 
     context 'user enters correct update attributes' do
       it 'updates the record if the update attributes are valid' do

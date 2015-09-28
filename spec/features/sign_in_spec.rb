@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Signing in', type: :feature do
-  before { create_user }
 
   describe 'the signin page is accessible and prompts the user to enter his/her user_id and password' do
     it 'prompts for an email and password' do
@@ -15,9 +14,12 @@ describe 'Signing in', type: :feature do
   end
 
   describe 'user attempts to sign into the system' do
-    before { visit signin_url }
-
     context 'user enters a valid email/password combination AND is active' do
+      before do
+        create(:user)
+        visit signin_url
+      end
+
       it 'signs the user in' do
         fill_in 'Email', with: 'user@example.com'
         fill_in 'Password', with: 'secret'
@@ -33,23 +35,28 @@ describe 'Signing in', type: :feature do
 
     context 'user enters a valid email/password combination BUT is not active' do
       before do
-        create_inactive_user
+        create(:user, :inactive_user)
         visit signin_url
       end
 
       it 'does not sign the user in' do
-        fill_in 'Email', with: 'inactive@example.com'
+        fill_in 'Email', with: 'inactive_user@example.com'
         fill_in 'Password', with: 'secret'
 
         click_button 'Sign in'
 
         expect(page).to have_text('Your account is currently inactive.')
-        expect(page).not_to have_link(@user.name)
+        expect(page).not_to have_link('Inactive User')
         expect(page).not_to have_link('Sign out')
       end
     end
 
     context 'user enters an invalid email / password combination' do
+      before do
+        create(:user)
+        visit signin_url
+      end
+
       it 'does not sign the user in' do
         fill_in 'Email', with: 'wrong_user@example.com'
         fill_in 'Password', with: 'no match'
@@ -57,7 +64,7 @@ describe 'Signing in', type: :feature do
         click_button 'Sign in'
 
         expect(page).to have_text('Invalid email/password combination.')
-        expect(page).not_to have_link(@user.name)
+        expect(page).not_to have_link('Invalid User')
         expect(page).not_to have_link('Sign out')
       end
     end

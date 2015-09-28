@@ -2,31 +2,32 @@ require 'rails_helper'
 
 describe 'listing a users stories', type: :feature do
 
-  before do
-    create_user
-    sign_in(@user)
+  let(:user)    { create(:user) }
+  let(:user_2)  { create(:user, email: 'user_2@example.com') }
 
-  end
+  before { sign_in(user) }
 
   context 'there are stories to render' do
     before do
-      create_user_stories
+      @story_1 = create(:story, user: user)
+      @story_2 = create(:story, user: user)
+      @story_3 = create(:story, user: user_2)
+
       visit stories_url
-      user2 = User.create!(user_attributes(email: 'user2@example.com'))
-      user2.storybooks.create!(storybook_attributes(title: 'Story Four Title'))
     end
 
     it 'shows the stories belonging to the correct user and show their relevant data' do
-      expect(page).to have_text('Story Title')
-      expect(page).to have_text('Story Two Title')
+      expect(page).to have_text(@story_1.title)
+      expect(page).to have_text(@story_2.title)
       expect(page).to have_text(@story_1.storybooks.count)
+      expect(page).to have_text(@story_2.storybooks.count)
       expect(page).to have_text('ago')
     end
 
     it 'does not show stories not belonging to the correct user' do
       visit stories_url
 
-      expect(page).to_not have_text('Story Four Title')
+      expect(page).to_not have_text(@story_3.title)
     end
   end
 

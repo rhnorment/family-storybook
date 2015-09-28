@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Creating a new user', type: :feature do
 
   describe 'the user registration page is accessible and prompts for the attributes' do
-    it 'is assessible and prompts the user for account creation attributes' do
+    it 'is accessible and prompts the user for account creation attributes' do
       visit root_url
 
       click_link 'Sign up'

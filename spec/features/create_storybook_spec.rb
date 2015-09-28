@@ -2,10 +2,9 @@ require 'rails_helper'
 
 describe 'create storybook', type: :feature do
 
-  before do
-    create_user
-    sign_in(@user)
-  end
+  let(:user) { create(:user) }
+
+  before { sign_in(user) }
 
   describe ':create action is accessible and prompts the user to enter :create attributes' do
     before do

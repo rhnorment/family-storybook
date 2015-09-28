@@ -29,47 +29,47 @@ describe 'Viewing a user profile page', type: :feature do
 
   describe 'listing user storybooks' do
     before do
-      create(:storybook, user: user)
-      create(:storybook, user: user)
-      create(:storybook, user: user_2)
+      @storybook_1 = create(:storybook, user: user)
+      @storybook_2 = create(:storybook, user: user)
+      @storybook_3 = create(:storybook, user: user_2)
 
       visit user_url(user)
     end
 
     it 'lists ONLY the user storybooks in the storybooks tab' do
       within('#user-storybooks') do
-        expect(page).to have_text('Storybook-1 Title')
-        expect(page).to have_text('Storybook-2 Title')
+        expect(page).to have_text(@storybook_1.title)
+        expect(page).to have_text(@storybook_2.title)
         expect(page).to have_text('Not published')
         expect(page).to have_text('Started')
       end
     end
 
     it 'does not list storybooks not owned storybooks' do
-      expect(page).to_not have_text('Storybook-3 Title')
+      expect(page).to_not have_text(@storybook_3.title)
     end
   end
 
   describe 'listing user stories' do
     before do
-      create(:story, user: user)
-      create(:story, user: user)
-      create(:story, user: user_2)
+      @story_1 = create(:story, user: user)
+      @story_2 = create(:story, user: user)
+      @story_3 = create(:story, user: user_2)
 
       visit user_url(user)
     end
 
     it 'lists ONLY the user stories in the stories tab' do
       within('#user-stories') do
-        expect(page).to have_text('Story-1 Title')
-        expect(page).to have_text('Story-2 Title')
+        expect(page).to have_text(@story_1.title)
+        expect(page).to have_text(@story_2.title)
         expect(page).to have_text('Inclusions')
         expect(page).to have_text('Written')
       end
     end
 
     it 'does not list stories not owned by the user' do
-      expect(page).to_not have_text('Story-3 Title')
+      expect(page).to_not have_text(@story_3.title)
     end
   end
 

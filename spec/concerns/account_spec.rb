@@ -4,7 +4,7 @@ describe Account, type: :concern do
 
   describe '#activate' do
     context 'activation is not valid' do
-      let(:bad_user) { create(:user, :bad_user) }
+      let(:bad_user) { build(:user, :bad_user) }
 
       it 'returns FALSE if the new user is not valid' do
         expect(bad_user.activate).to be_falsey
@@ -53,7 +53,7 @@ describe Account, type: :concern do
       let(:user) { create(:user) }
 
       it 'it makes the active field false' do
-        expect { user.deactivate }.to change(@user, :active).from(true).to(false)
+        expect { user.deactivate }.to change(user, :active).from(true).to(false)
       end
 
       it 'sends a deactivation email' do
@@ -82,7 +82,7 @@ describe Account, type: :concern do
 
   describe '#is_inactive' do
     context 'for an active user' do
-      before { create_user }
+      let(:user) { create(:user) }
 
       it 'is not inactive' do
         expect(user.is_inactive?).to be_falsey

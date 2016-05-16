@@ -2,47 +2,67 @@ source 'https://rubygems.org'
 
 ruby '2.2.3'
 
-# core gems:
-gem 'rails', '4.2.1'
-gem 'sass-rails', '~> 5.0.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
-gem 'bcrypt', '~> 3.1.7'
-gem 'jquery-turbolinks'
-gem 'pg'
-
-# application gems:
+gem 'activeadmin', github: 'activeadmin'
 gem 'bootstrap-sass', '3.3.3'
+gem 'bootstrap_form'
 gem 'carrierwave'
 gem 'cloudinary'
-gem 'pg_search'
-gem 'prawn'
-gem 'devise'
-gem 'activeadmin', github: 'activeadmin'
-
-# helper gems:
-gem 'font-awesome-sass'
-gem 'nav_lynx'
-gem 'bootstrap_form'
+gem 'delayed_job_active_record'
 gem 'data-confirm-modal', github: 'ifad/data-confirm-modal'
-gem 'kaminari'
+gem 'devise'
+gem 'email_validator'
+gem 'faker'
+gem 'flutie'
+gem 'font-awesome-sass'
 gem 'holder_rails'
+gem 'i18n-tasks'
+gem 'jquery-rails'
+gem 'jquery-turbolinks'
+gem 'kaminari'
+gem 'nav_lynx'
+gem 'newrelic_rpm', '>= 3.9.8'
+gem 'pg_search'
+gem 'rack-canonical-host'
+gem 'rails', '4.2.4'
+gem 'recipient_interceptor'
+gem 'refills'
+gem 'sass-rails', '~> 5.0'
+gem 'spreadsheet'
+gem 'title'
+gem 'turbolinks'
+gem 'uglifier'
 
-# test & development gems:
-group :test do
-  gem 'rspec-rails', '~> 3.1'
-  gem 'factory_girl_rails'
-  gem 'shoulda-matchers'
-  gem 'shoulda-callback-matchers', '~> 1.1.1'
-  gem 'capybara'
-  gem 'database_cleaner'
+group :development do
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'web-console'
 end
 
-# production gems:
-group :production do
-  gem 'puma'
+group :development, :test do
+  gem 'awesome_print'
+  gem 'bundler-audit', require: false
+  gem 'byebug'
+  gem 'dotenv-rails'
+  gem 'factory_girl_rails'
+  gem 'rspec-rails', '~> 3.3.0'
+  gem 'sqlite3'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'formulaic'
+  gem 'launchy'
+  gem 'shoulda-matchers', '~> 3.0'
+  gem 'shoulda-callback-matchers', '~> 1.1.1'
+  gem 'simplecov', require: false
+  gem 'timecop'
+  gem 'webmock'
+end
+
+group :staging, :production do
   gem 'rails_12factor'
+  gem 'rack-timeout'
+  gem 'pg'
+  gem 'puma'
 end
